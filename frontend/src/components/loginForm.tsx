@@ -73,6 +73,10 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   private handleSubmit = (event: any) => {
     event.preventDefault();
 
+    // call the server here
+    // save the changes
+    // redirect user to different pages
+
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) {
