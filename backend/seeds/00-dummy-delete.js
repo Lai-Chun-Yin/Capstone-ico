@@ -1,6 +1,6 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
+  // Deletes existing entries following dependency structure
   return knex("watchlists").del()
     .then(function() {
       return knex("comments").del()
