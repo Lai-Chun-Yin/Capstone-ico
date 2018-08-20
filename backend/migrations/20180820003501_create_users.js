@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.boolean('is_admin');
     table.string('pw');
     table.string('login_type');
+    table.string("oauthid");
     table.timestamps(false,true);
   })
 };

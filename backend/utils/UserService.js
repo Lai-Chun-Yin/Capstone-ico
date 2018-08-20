@@ -8,20 +8,20 @@ class UserService {
 
     localLogin(email,password){
         return this.knex.select('id').from('users')
-            .where({email: email,password:password});
+            .where({email: email,pw:password});
     }
 
     localSignUp(email,password){
-        return this.knex('users').insert({email,password,type:'local'}).returning('id');
+        return this.knex('users').insert({email,pw:password,login_type:'local'}).returning('id');
     }
 
     facebookSignUp(oauthId){
-        return this.knex('users').insert({type:'facebook',oauthid:oauthId}).returning('id');
+        return this.knex('users').insert({login_type:'facebook',oauthid:oauthId}).returning('id');
     }
 
     findUserByOAuthId(strategy,oauthId){
         return this.knex.select('id').from('users').where({
-            type:strategy,
+            login_type:strategy,
             oauthid:oauthId
         });
     }
@@ -36,13 +36,13 @@ class UserService {
             .where('email',email)
     }
 
-    fetchProfilePic(id){
-        return this.knex.select('profilePic').from('users').where("id",id);
-    }
+    // fetchProfilePic(id){
+    //     return this.knex.select('profilePic').from('users').where("id",id);
+    // }
 
-    uploadProfilePic(id,url){
-        return this.knex('users').where('id',id).update('profilePic',url);
-    }
+    // uploadProfilePic(id,url){
+    //     return this.knex('users').where('id',id).update('profilePic',url);
+    // }
 }
 
 module.exports = UserService;
