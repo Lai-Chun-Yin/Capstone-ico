@@ -3,34 +3,39 @@ import * as React from "react";
 import { IErrors } from "../modules";
 import Input from "./common/input";
 
-interface ILoginFormProps {
-  history: any;
-  location: any;
-  match: any;
-}
+// export interface RegisterFormProps {
 
-interface ILoginFormState {
-  account: {
+// }
+
+export interface IRegisterFormState {
+  data: {
     password: string;
     username: string;
+    name: string;
   };
   errors: IErrors;
 }
 
-class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
+class RegisterForm extends React.Component<any, IRegisterFormState> {
   private schema = {
+    name: Joi.string()
+      .required()
+      .label("Name"),
     password: Joi.string()
       .required()
+      .min(5)
       .label("Password"),
     username: Joi.string()
       .required()
+      .email()
       .label("Username")
   };
 
   constructor(props: any) {
     super(props);
     this.state = {
-      account: {
+      data: {
+        name: "",
         password: "",
         username: ""
       },
@@ -39,28 +44,35 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   }
 
   public render() {
-    const { account, errors } = this.state;
+    const { data, errors } = this.state;
 
     return (
       <div>
-        <h1>Login</h1>
+        <h1>Register</h1>
         <form onSubmit={this.handleSubmit}>
           <Input
             name="username"
-            value={account.username}
+            value={data.username}
             label="Username"
             onChange={this.handleChange}
             error={errors.username}
           />
           <Input
             name="password"
-            value={account.password}
+            value={data.password}
             label="Password"
             onChange={this.handleChange}
             error={errors.password}
           />
+          <Input
+            name="name"
+            value={data.name}
+            label="name"
+            onChange={this.handleChange}
+            error={errors.name}
+          />
           <button disabled={!!this.validate()} className="btn btn-primary">
-            Login
+            Register
           </button>
         </form>
       </div>
@@ -70,7 +82,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   private handleSubmit = (event: any) => {
     event.preventDefault();
 
-    // call the server here
+    // call the server
     // save the changes
     // redirect user to different pages
 
@@ -90,14 +102,14 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       delete errors[event.currentTarget.name];
     }
 
-    const account = { ...this.state.account };
-    account[event.currentTarget.name] = event.currentTarget.value;
-    this.setState({ account, errors });
+    const data = { ...this.state.data };
+    data[event.currentTarget.name] = event.currentTarget.value;
+    this.setState({ data, errors });
   };
 
   private validate = () => {
     const options = { abortEarly: false };
-    const { error } = Joi.validate(this.state.account, this.schema, options);
+    const { error } = Joi.validate(this.state.data, this.schema, options);
 
     if (!error) {
       return null;
@@ -123,4 +135,4 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   };
 }
 
-export default LoginForm;
+export default RegisterForm;

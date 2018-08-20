@@ -45,7 +45,7 @@ class NavBar extends React.Component<any, INavBar> {
               <NavLink href="/login">login</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/signup">signup</NavLink>
+              <NavLink href="/register">signup</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
