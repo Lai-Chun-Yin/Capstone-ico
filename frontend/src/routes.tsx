@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import LoginForm from "./components/loginForm";
 import NavBar from "./components/navbar";
 import NotFound from "./components/notFound";
+import RegisterForm from "./components/registerForm";
 
 import App from "./App";
 import ContactForm from "./components//form";
@@ -14,6 +15,7 @@ const Routes = () => {
       <main className="container">
         <Switch>
           <Route path="/campaign/create/basic" component={ContactForm} />
+          <Route path="/register" component={RegisterForm} />
           <Route path="/login" component={LoginForm} />
           <Route path="/not-found" component={NotFound} />
           <Route path="/" exact={true} component={App} />
