@@ -32,15 +32,13 @@ const authStart = (): AuthStartAction => {
 
 export interface AuthSuccessAction extends Action {
     type: AUTH_SUCCESS,
-    token: string | null,
-    userId: string | null
+    token: string | null
 }
 
-const authSuccess = (token: string | null, userId: string | null): AuthSuccessAction => {
+const authSuccess = (token: string | null): AuthSuccessAction => {
     return {
         type: AUTH_SUCCESS,
-        token: token,
-        userId: userId
+        token: token
     };
 };
 
@@ -80,23 +78,23 @@ export const setAuthRedirectPath = (path:string) => {
     };
 };
 
-export const auth = (email: string, password: string, isSignup: boolean) => {
+export const auth = (email: string, password: string, isSignup: boolean, username = "" ) => {
     return (dispatch: Dispatch<AuthActions>) => {
         dispatch(authStart());
         const authData = {
             email,
-            password
+            password,
+            username
         }
         let url = `${process.env.REACT_APP_API_SERVER}/api/auth/login`;
         if (isSignup) { url = `${process.env.REACT_APP_API_SERVER}/api/auth/signup` }
         axios.post(url, authData)
             .then((response:any) => {
-                if(!response.data.token||!response.data.userId){throw new Error("Incorrect entry")}
+                if(!response.data.token){throw new Error("Incorrect entry")}
                 // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
                 localStorage.setItem('token', response.data.token);
                 // localStorage.setItem('expirationDate', expirationDate.toString());
-                localStorage.setItem('userId', response.data.userId);
-                dispatch(authSuccess(response.data.token, response.data.userId));
+                dispatch(authSuccess(response.data.token));
             }).catch((err:any) => {
                 dispatch(authFail(err));
             })
@@ -116,8 +114,7 @@ export const loginFacebook = (accessToken:string)=>{
             else if(!response.data.token){throw new Error(response.data.message || 'Unknown error')}
             else {
                 localStorage.setItem('token', response.data.token);
-                localStorage.setItem('userId', response.data.userId+"");
-                dispatch(authSuccess(response.data.token, response.data.userId+""));
+                dispatch(authSuccess(response.data.token));
             }
         }).catch((err:any)=>{
             dispatch(authFail(err));
@@ -143,8 +140,7 @@ export const authCheckState = () => {
         if (!token) {
             dispatch(logout());
         } else {
-            const userId = localStorage.getItem('userId');
-            dispatch(authSuccess(token, userId));
+            dispatch(authSuccess(token));
         }
     }
 };

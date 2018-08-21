@@ -6,13 +6,13 @@ class UserService {
         this.knex = knex;
     }
 
-    localLogin(email,password){
-        return this.knex.select('id').from('users')
-            .where({email: email,pw:password});
+    localLogin(email){
+        return this.knex.select('id','pw').from('users')
+            .where({email: email});
     }
 
-    localSignUp(email,password){
-        return this.knex('users').insert({email,pw:password,login_type:'local'}).returning('id');
+    localSignUp(email,password,username){
+        return this.knex('users').insert({email,pw:password,login_type:'local',alias:username}).returning('id');
     }
 
     facebookSignUp(username,oauthId){

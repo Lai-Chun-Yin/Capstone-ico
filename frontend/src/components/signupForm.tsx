@@ -12,7 +12,7 @@ interface ILoginFormProps {
   history: any;
   location: any;
   match: any;
-  onLogin: (email: string, password: string) => void;
+  onSignup: (email: string, password: string, username:string) => void;
   onSetAuthRedirectPath: () => void;
   loginFacebook: (accessToken: string) => void;
 }
@@ -21,6 +21,7 @@ interface ILoginFormState {
   account: {
     email: string;
     password: string;
+    username: string;
   };
   errors: IErrors;
 }
@@ -34,7 +35,10 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       ),
     password: Joi.string()
       .required()
-      .label("Password")
+      .label("Password"),
+    username: Joi.string()
+      .required()
+      .label("User Name")
   };
 
   constructor(props: any) {
@@ -42,7 +46,8 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     this.state = {
       account: {
         email: "",
-        password: ""
+        password: "",
+        username: ""
       },
       errors: {}
     };
@@ -52,9 +57,8 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     const { account, errors } = this.state;
 
     return (
-      <React.Fragment>
       <div>
-        <h1>Login</h1>
+        <h1>Sign Up</h1>
         <form onSubmit={this.handleSubmit}>
           <Input
             name="email"
@@ -70,11 +74,17 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
             onChange={this.handleChange}
             error={errors.password}
           />
+          <Input
+            name="username"
+            value={account.username}
+            label="User Name"
+            onChange={this.handleChange}
+            error={errors.username}
+          />
           <button disabled={!!this.validate()} className="btn btn-primary">
-            Login
+            Sign Up
           </button>
         </form>
-      </div>
         <FacebookLogin
           appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
           autoLoad={false}
@@ -82,8 +92,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
           scope="public_profile,email"
           onClick={this.componentClicked}
           callback={this.responseFacebook} />
-      </React.Fragment>
-      
+      </div>
     );
   }
 
@@ -98,11 +107,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     // save the changes
     // redirect user to different pages
     const errors = this.validate();
+    this.props.onSignup(this.state.account.email, this.state.account.password, this.state.account.username);
     this.setState({ errors: errors || {} });
     if (errors) {
       return;
     }
-    this.props.onLogin(this.state.account.email, this.state.account.password);
+    
   };
 
   private handleChange = (event: any) => {
@@ -169,8 +179,8 @@ const mapStateToProps = (state: IRootState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     loginFacebook: (accessToken: string) => dispatch(actions.loginFacebook(accessToken)),
-    onLogin: (email: string, password: string) => dispatch(actions.auth(email, password, false)),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
+    onSignup: (email: string, password: string, username: string) => dispatch(actions.auth(email, password, true,username))
   };
 };
 
