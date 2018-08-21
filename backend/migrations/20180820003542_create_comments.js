@@ -3,7 +3,8 @@ exports.up = function(knex, Promise) {
     table.increments().primary();
     table.integer("user_id").unsigned();
     table.foreign("user_id").references("users.id");
-    table.string('content');
+    table.string('content').notNullable();
+    table.timestamp('date').notNullable();
     table.timestamps(false,true);
   })
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 
-class CampaignRouter {
+module.exports = class CampaignRouter {
   constructor(campaignService) {
     this.campaignService = campaignService;
   }
@@ -20,7 +20,7 @@ class CampaignRouter {
   }
 
   post(req, res) {
-    return this.campaignService.postCampaign(req.body.campaign)
+    return this.campaignService.postCampaign(req.body.newCampaign)
     .then(() => this.campaignService.getCampaign())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));

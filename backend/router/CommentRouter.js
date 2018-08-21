@@ -1,0 +1,45 @@
+const express = require("express");
+
+module.exports = class CommentRouter {
+  constructor(commentService) {
+    this.commentService = commentService;
+  }
+
+  router() {
+    let router = express.Router();
+    router.get("/:co_id", this.get.bind(this));
+    router.post("/", this.post.bind(this));
+    router.put("/:co_id", this.put.bind(this));
+    router.delete("/:co_id", this.delete.bind(this));
+  }
+
+  get(req, res) {
+    return this.commentService.getComment(req.params.co_id)
+      .then()(results => res.json(results))
+      .catch(err => res.status(500).json(err));
+  }
+
+  post(req, res) {
+    return this.commentService
+      .postComment(req.body.newComment)
+      .then(() => this.commentService.getComment())
+      .then(results => res.json(results))
+      .catch(err => res.status(500).json(err));
+  }
+
+  put(req, res) {
+    return this.commentService
+      .putComment(req.body.comment, req.params.co_id)
+      .then(() => this.commentService.getComment())
+      .then(results => res.json(results))
+      .catch(err => res.status(500).json(err));
+  }
+
+  delete(req, res) {
+    return this.commentService
+      .deleteComment(req.params.co_id)
+      .then(() => this.commentService.getComment())
+      .then(results => res.json(results))
+      .catch(err => res.status(500).json(err));
+  }
+};
