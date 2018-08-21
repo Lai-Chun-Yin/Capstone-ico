@@ -1,18 +1,18 @@
 // tslint:disable-next-line:ordered-imports
 import * as Joi from "joi";
 import * as React from "react";
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { IErrors } from "../modules";
-import { IRootState } from "../reducers"
-import * as actions from '../reducers/auth/actions';
+import { IRootState } from "../reducers";
+import * as actions from "../reducers/auth/actions";
 import Input from "./common/input";
 
 interface ILoginFormProps {
   history: any;
   location: any;
   match: any;
-  onSignup: (email: string, password: string, username:string) => void;
+  onSignup: (email: string, password: string, username: string) => void;
   onSetAuthRedirectPath: () => void;
   loginFacebook: (accessToken: string) => void;
 }
@@ -30,11 +30,11 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   private schema = {
     email: Joi.string()
       .required()
-      .label(
-        "Email"
-      ),
+      .email()
+      .label("Email"),
     password: Joi.string()
       .required()
+      .min(5)
       .label("Password"),
     username: Joi.string()
       .required()
@@ -86,12 +86,13 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
           </button>
         </form>
         <FacebookLogin
-          appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
+          appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
           autoLoad={false}
           fields="name,email,picture"
           scope="public_profile,email"
           onClick={this.componentClicked}
-          callback={this.responseFacebook} />
+          callback={this.responseFacebook}
+        />
       </div>
     );
   }
@@ -107,12 +108,15 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     // save the changes
     // redirect user to different pages
     const errors = this.validate();
-    this.props.onSignup(this.state.account.email, this.state.account.password, this.state.account.username);
+    this.props.onSignup(
+      this.state.account.email,
+      this.state.account.password,
+      this.state.account.username
+    );
     this.setState({ errors: errors || {} });
     if (errors) {
       return;
     }
-    
   };
 
   private handleChange = (event: any) => {
@@ -157,12 +161,11 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   };
 
   private responseFacebook = (userInfo: any) => {
-    
     if (userInfo.accessToken) {
       this.props.loginFacebook(userInfo.accessToken);
     }
     return null;
-  }
+  };
 }
 
 // export default LoginForm;
@@ -178,10 +181,15 @@ const mapStateToProps = (state: IRootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    loginFacebook: (accessToken: string) => dispatch(actions.loginFacebook(accessToken)),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/')),
-    onSignup: (email: string, password: string, username: string) => dispatch(actions.auth(email, password, true,username))
+    loginFacebook: (accessToken: string) =>
+      dispatch(actions.loginFacebook(accessToken)),
+    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/")),
+    onSignup: (email: string, password: string, username: string) =>
+      dispatch(actions.auth(email, password, true, username))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);
