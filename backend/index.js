@@ -7,7 +7,9 @@ const cors = require('cors');
 const authClass = require('./utils/auth');
 const auth = authClass();
 
-const UserRouter = require('./userRouter/UserRouter');
+const CampaignService = require('./utils/CampaignService');
+
+const UserRouter = require('./router/UserRouter');
 const UserService = require('./utils/UserService');
 
 app.use(cors());
@@ -16,6 +18,6 @@ app.use(bodyParser.json());
 
 app.use('/api',(new UserRouter(userService)).router());
 
-app.listen(8080,() => console.log('listening on port 8080'))
+app.listen(8080,() => console.log('listening on port 8080'));
 
 

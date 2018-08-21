@@ -3,7 +3,6 @@ import {AuthActions,AUTH_START,AUTH_SUCCESS,AUTH_FAILURE,AUTH_LOGOUT,SET_AUTH_RE
 
 export interface IAuthState {
     token: string|null;
-    userId: string|null;
     error: Error|null;
     loading: boolean;
     authRedirectPath: string;
@@ -11,7 +10,6 @@ export interface IAuthState {
 
 const initialState:IAuthState = {
     token: null,
-    userId: null,
     error: null,
     loading: false,
     authRedirectPath: '/'
@@ -27,7 +25,6 @@ export function authReducer(state:IAuthState = initialState,action:AuthActions){
         case AUTH_SUCCESS: return {
             ...state,
             token: action.token,
-            userId: action.userId,
             error: null,
             loading: false
         }
