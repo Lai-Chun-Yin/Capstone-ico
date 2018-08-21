@@ -4,11 +4,11 @@
 Add a .env file with following parameter:
 
 REACT_APP_API_SERVER=http://localhost:8080
-REACT_APP_FACEBOOK_APP_ID=465220010641219
+REACT_APP_FACEBOOK_APP_ID={ your app id }
 HTTPS=true
 
 Backend .env content:
-JWT_SECRET=jsakdlfljadsmview12
+JWT_SECRET={ your jwt secret key}
 ```
 
 For backend:
