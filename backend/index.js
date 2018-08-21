@@ -16,7 +16,7 @@ app.use(cors());
 app.use(auth.initialize());
 app.use(bodyParser.json());
 
-app.use('/api',(new UserRouter(userService)).router());
+app.use('/api',(new UserRouter(UserService)).router());
 
 app.listen(8080,() => console.log('listening on port 8080'));
 
