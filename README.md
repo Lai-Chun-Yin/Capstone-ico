@@ -22,6 +22,7 @@ DB_PASSWORD={database_pw}
 
 2. Create a database for backend
 
+```
 a. install PostgreSQL Server
 
 b. sudo service postgresql start
@@ -39,7 +40,7 @@ g. install knex
 h. run command: knex init in the backend folder
 
 i. run command: knex seed:run
-
+```
 
 
 
