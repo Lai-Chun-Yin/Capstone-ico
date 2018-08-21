@@ -15,7 +15,6 @@ module.exports = class UserRouter {
         router.post('/auth/login',this.localLogin.bind(this));
         router.post('/auth/signup',this.localSignUp.bind(this));
         router.post('/auth/facebook',this.facebookLogin.bind(this));
-        router.post('/auth/google',this.googleLogin.bind(this));
         router.get('/user/profilePic',passport.authenticate('jwt', { session: false }),this.fetchProfilePic.bind(this));
         router.post('/user/profilePic',passport.authenticate('jwt', { session: false }),this.uploadProfilePic.bind(this));
         
@@ -74,13 +73,14 @@ module.exports = class UserRouter {
             try{
                 let data = await axios.get(`https://graph.facebook.com/me?access_token=${accessToken}`);
                 if(data.data.error){throw new Error("Error on verifying FB Access Token");}
-                
+                console.log(data);
                 let userId;
                 let user = await this.userService.findUserByOAuthId('facebook',data.data.id);
                 if(user[0]){
                     userId = user[0].id
                 }else{
-                    let newUser = await this.userService.facebookSignUp(data.data.id);
+                    let newUser = await this.userService.facebookSignUp(data.data.name,data.data.id);
+                    console.log(newUser);
                     userId =  newUser[0];
                 }
                 let payload = {
@@ -96,7 +96,7 @@ module.exports = class UserRouter {
                     userId
                 });
             }catch(err){
-                res.sendStatus(401).json({Error:err});
+                res.sendStatus(401).json(err);
             }
             
         } else {

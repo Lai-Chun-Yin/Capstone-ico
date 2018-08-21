@@ -77,6 +77,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
           appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
           autoLoad={true}
           fields="name,email,picture"
+          scope="public_profile,email"
           onClick={this.componentClicked}
           callback={this.responseFacebook} />
       </div>
@@ -144,6 +145,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   };
 
   private responseFacebook = (userInfo: any) => {
+    
     if (userInfo.accessToken) {
       this.props.loginFacebook(userInfo.accessToken);
     }

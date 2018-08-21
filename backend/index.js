@@ -9,7 +9,7 @@ const auth = authClass();
 
 const CampaignService = require('./utils/CampaignService');
 
-const UserRouter = require('./userRouter/UserRouter');
+const UserRouter = require('./router/UserRouter');
 const UserService = require('./utils/UserService');
 
 app.use(cors());
@@ -21,7 +21,7 @@ let userService = new UserService(knex);
 
 app.use('/api',(new UserRouter(userService)).router());
 
-app.listen(8080,() => console.log('listening on port 8080'))
+app.listen(8080,() => console.log('listening on port 8080'));
 
 (async () => {
   await campaignService.postCampaign({title: "Dafuq is this"});

@@ -15,8 +15,8 @@ class UserService {
         return this.knex('users').insert({email,pw:password,login_type:'local'}).returning('id');
     }
 
-    facebookSignUp(oauthId){
-        return this.knex('users').insert({login_type:'facebook',oauthid:oauthId}).returning('id');
+    facebookSignUp(username,oauthId){
+        return this.knex('users').insert({login_type:'facebook',oauthid:oauthId,alias:username,is_admin:false}).returning('id');
     }
 
     findUserByOAuthId(strategy,oauthId){
