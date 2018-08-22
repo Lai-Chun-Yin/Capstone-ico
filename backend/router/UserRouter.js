@@ -25,14 +25,14 @@ module.exports = class UserRouter {
     async localLogin(req, res) {
         try {
             if (!req.body.email || !req.body.password) {
-                throw new Error("Inadequate login details");
+                res.status(400).send("Invalid email or password");
             }
             var email = req.body.email;
             var password = req.body.password;
             const result = await this.userService.localLogin(email, password);
             if (result[0]) {
                 let pwMatch = await bcrypt.checkPassword(password, result[0].pw);
-                if (!pwMatch) { throw new Error("Incorrect password") }
+                if (!pwMatch) { res.status(400).send("Incorrect password") }
                 var payload = {
                     id: result[0].id
                 };
@@ -42,7 +42,7 @@ module.exports = class UserRouter {
                     token: token
                 });
             } else {
-                throw new Error('User not found');
+                res.status(400).send('User not found');
             }
         } catch (err) {
             res.sendStatus(401).json(err);
@@ -52,7 +52,7 @@ module.exports = class UserRouter {
     async localSignUp(req, res) {
         try {
             let checkEmail = await this.userService.verifyUserByEmail(req.body.email);
-            if (checkEmail.length > 0) { throw new Error("Email has been used") }
+            if (checkEmail.length > 0) { res.status(400).send("User already registered") }
             let hash = await bcrypt.hashPassword(req.body.password)
             let newUser = await this.userService.localSignUp(req.body.email, hash, req.body.username)
             var payload = {
@@ -73,7 +73,7 @@ module.exports = class UserRouter {
             var accessToken = req.body.access_token;
             try {
                 let data = await axios.get(`https://graph.facebook.com/me?access_token=${accessToken}`);
-                if (data.data.error) { throw new Error("Error on verifying FB Access Token"); }
+                if (data.data.error) { res.status(400).send("Error on verifying FB Access Token"); }
                 console.log(data);
                 let userId;
                 let user = await this.userService.findUserByOAuthId('facebook', data.data.id);

@@ -1,17 +1,18 @@
 // tslint:disable-next-line:ordered-imports
 import * as Joi from "joi";
 import * as React from "react";
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { IErrors } from "../modules";
-import { IRootState } from "../reducers"
-import * as actions from '../reducers/auth/actions';
+import { IRootState } from "../reducers";
+import * as Authactions from "../reducers/auth/actions";
 import Input from "./common/input";
 
 interface ILoginFormProps {
   history: any;
   location: any;
   match: any;
+  error: any;
   onLogin: (email: string, password: string) => void;
   onSetAuthRedirectPath: () => void;
   loginFacebook: (accessToken: string) => void;
@@ -29,9 +30,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   private schema = {
     email: Joi.string()
       .required()
-      .label(
-        "Email"
-      ),
+      .label("Email"),
     password: Joi.string()
       .required()
       .label("Password")
@@ -53,37 +52,38 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
 
     return (
       <React.Fragment>
-      <div>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <Input
-            name="email"
-            value={account.email}
-            label="Email"
-            onChange={this.handleChange}
-            error={errors.email}
-          />
-          <Input
-            name="password"
-            value={account.password}
-            label="Password"
-            onChange={this.handleChange}
-            error={errors.password}
-          />
-          <button disabled={!!this.validate()} className="btn btn-primary">
-            Login
-          </button>
-        </form>
-      </div>
+        {console.log(this.props.error)}
+        <div>
+          <h1>Login</h1>
+          <form onSubmit={this.handleSubmit}>
+            <Input
+              name="email"
+              value={account.email}
+              label="Email"
+              onChange={this.handleChange}
+              error={errors.email}
+            />
+            <Input
+              name="password"
+              value={account.password}
+              label="Password"
+              onChange={this.handleChange}
+              error={errors.password}
+            />
+            <button disabled={!!this.validate()} className="btn btn-primary">
+              Login
+            </button>
+          </form>
+        </div>
         <FacebookLogin
-          appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
+          appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
           autoLoad={false}
           fields="name,email,picture"
           scope="public_profile,email"
           onClick={this.componentClicked}
-          callback={this.responseFacebook} />
+          callback={this.responseFacebook}
+        />
       </React.Fragment>
-      
     );
   }
 
@@ -103,6 +103,8 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       return;
     }
     this.props.onLogin(this.state.account.email, this.state.account.password);
+
+    console.log();
   };
 
   private handleChange = (event: any) => {
@@ -147,12 +149,11 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
   };
 
   private responseFacebook = (userInfo: any) => {
-    
     if (userInfo.accessToken) {
       this.props.loginFacebook(userInfo.accessToken);
     }
     return null;
-  }
+  };
 }
 
 // export default LoginForm;
@@ -168,10 +169,15 @@ const mapStateToProps = (state: IRootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    loginFacebook: (accessToken: string) => dispatch(actions.loginFacebook(accessToken)),
-    onLogin: (email: string, password: string) => dispatch(actions.auth(email, password, false)),
-    onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+    loginFacebook: (accessToken: string) =>
+      dispatch(Authactions.loginFacebook(accessToken)),
+    onLogin: (email: string, password: string) =>
+      dispatch(Authactions.auth(email, password, false)),
+    onSetAuthRedirectPath: () => dispatch(Authactions.setAuthRedirectPath("/"))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginForm);
