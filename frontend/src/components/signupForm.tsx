@@ -3,6 +3,7 @@ import * as Joi from "joi";
 import * as React from "react";
 import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { IErrors } from "../modules";
 import { IRootState } from "../reducers";
 import * as actions from "../reducers/auth/actions";
@@ -13,6 +14,8 @@ interface ILoginFormProps {
   location: any;
   match: any;
   error: any;
+  isAuthenticated: boolean;
+  authRedirectPath: string;
   onSignup: (email: string, password: string, username: string) => void;
   onSetAuthRedirectPath: () => void;
   loginFacebook: (accessToken: string) => void;
@@ -58,46 +61,53 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     const { account, errors } = this.state;
 
     return (
-      <div>
-        <h1>Sign Up</h1>
-        <form onSubmit={this.handleSubmit}>
-          <Input
-            name="email"
-            value={account.email}
-            label="Email"
-            onChange={this.handleChange}
-            error={
-              errors.email ||
-              (this.props.error ? this.props.error.response.data : null)
-            }
+      <React.Fragment>
+        {/* Redirect to target route */}
+
+        {this.props.isAuthenticated === true && (
+          <Redirect to={this.props.authRedirectPath} />
+        )}
+        <div>
+          <h1>Sign Up</h1>
+          <form onSubmit={this.handleSubmit}>
+            <Input
+              name="email"
+              value={account.email}
+              label="Email"
+              onChange={this.handleChange}
+              error={
+                errors.email ||
+                (this.props.error ? this.props.error.response.data : null)
+              }
+            />
+            <Input
+              name="password"
+              value={account.password}
+              label="Password"
+              onChange={this.handleChange}
+              error={errors.password}
+            />
+            <Input
+              name="username"
+              value={account.username}
+              label="User Name"
+              onChange={this.handleChange}
+              error={errors.username}
+            />
+            <button disabled={!!this.validate()} className="btn btn-primary">
+              Sign Up
+            </button>
+          </form>
+          <FacebookLogin
+            appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+            autoLoad={false}
+            fields="name,email,picture"
+            scope="public_profile,email"
+            onClick={this.componentClicked}
+            callback={this.responseFacebook}
           />
-          <Input
-            name="password"
-            value={account.password}
-            label="Password"
-            onChange={this.handleChange}
-            error={errors.password}
-          />
-          <Input
-            name="username"
-            value={account.username}
-            label="User Name"
-            onChange={this.handleChange}
-            error={errors.username}
-          />
-          <button disabled={!!this.validate()} className="btn btn-primary">
-            Sign Up
-          </button>
-        </form>
-        <FacebookLogin
-          appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-          autoLoad={false}
-          fields="name,email,picture"
-          scope="public_profile,email"
-          onClick={this.componentClicked}
-          callback={this.responseFacebook}
-        />
-      </div>
+        </div>
+      </React.Fragment>
     );
   }
 

@@ -109,6 +109,8 @@ export const auth = (
         localStorage.setItem("token", response.data.token);
         // localStorage.setItem('expirationDate', expirationDate.toString());
         dispatch(authSuccess(response.data.token));
+
+        // window.location.href = "/campaign/create/basic";
       })
       .catch((err: any) => {
         dispatch(authFail(err));

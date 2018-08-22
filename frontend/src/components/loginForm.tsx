@@ -3,6 +3,7 @@ import * as Joi from "joi";
 import * as React from "react";
 import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import { IErrors } from "../modules";
 import { IRootState } from "../reducers";
 import * as Authactions from "../reducers/auth/actions";
@@ -13,6 +14,8 @@ interface ILoginFormProps {
   location: any;
   match: any;
   error: any;
+  authRedirectPath: string;
+  isAuthenticated: boolean;
   onLogin: (email: string, password: string) => void;
   onSetAuthRedirectPath: () => void;
   loginFacebook: (accessToken: string) => void;
@@ -49,12 +52,14 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
 
   public render() {
     const { account, errors } = this.state;
-    // this.props.error
-    //   ? console.log(this.props.error.response.data)
-    //   : console.log("");
 
     return (
       <React.Fragment>
+        {/* Redirect to target route */}
+
+        {this.props.isAuthenticated === true && (
+          <Redirect to={this.props.authRedirectPath} />
+        )}
         <div>
           <h1>Login</h1>
           <form onSubmit={this.handleSubmit}>
@@ -107,7 +112,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     if (errors) {
       return;
     }
+
     this.props.onLogin(this.state.account.email, this.state.account.password);
+
+    if (this.props.isAuthenticated === true) {
+      window.location.href = this.props.authRedirectPath;
+    }
   };
 
   private handleChange = (event: any) => {

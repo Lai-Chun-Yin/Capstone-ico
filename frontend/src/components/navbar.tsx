@@ -1,5 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { NavLink as RRNavLink } from "react-router-dom";
+
 import {
   Collapse,
   Nav,
@@ -12,7 +14,7 @@ import {
 import { IRootState } from "../reducers";
 
 interface INavBarProps {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
 }
 
 interface INavBar {
@@ -28,42 +30,56 @@ class NavBar extends React.Component<INavBarProps, INavBar> {
       isOpen: false
     };
   }
+
   public render() {
-    let authButtons = (
-      <React.Fragment>
-        <NavItem>
-          <NavLink href="/login">login</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="/register">signup</NavLink>
-        </NavItem>
-      </React.Fragment>
-    )
-    if (this.props.isAuthenticated){
-      authButtons = (
-        <NavItem>
-          <NavLink href="/logout">logout</NavLink>
-        </NavItem>
-      )
-    }
     return (
       <Navbar color="light" light={true} expand="md">
-        <NavbarBrand href="/">App logo</NavbarBrand>
+        <NavbarBrand to="/" tag={RRNavLink}>
+          App logo
+        </NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar={true}>
           <Nav navbar={true}>
             <NavItem>
-              <NavLink href="/campaign/create/basic">Create Campaign</NavLink>
+              <NavLink to="/campaign/create/basic" tag={RRNavLink}>
+                Create Campaign
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/news">news</NavLink>
+              <NavLink to="/news" tag={RRNavLink}>
+                news
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/blog">blog</NavLink>
+              <NavLink to="/blog" tag={RRNavLink}>
+                blog
+              </NavLink>
             </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar={true}>
-            {authButtons}
+            {!this.props.isAuthenticated === true && (
+              <React.Fragment>
+                <NavItem>
+                  <NavLink to="/login" tag={RRNavLink}>
+                    login
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/register" tag={RRNavLink}>
+                    signup
+                  </NavLink>
+                </NavItem>
+              </React.Fragment>
+            )}
+            {this.props.isAuthenticated === true && (
+              <React.Fragment>
+                <NavItem>
+                  <NavLink to="/logout" tag={RRNavLink}>
+                    Logout
+                  </NavLink>
+                </NavItem>
+              </React.Fragment>
+            )}
           </Nav>
         </Collapse>
       </Navbar>
