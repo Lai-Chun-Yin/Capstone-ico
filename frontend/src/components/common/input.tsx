@@ -6,6 +6,7 @@ interface IInputProps {
   value: string;
   onChange: (event: any) => void;
   error: string;
+  type?: string;
 }
 
 class Input extends React.Component<IInputProps> {
@@ -14,7 +15,7 @@ class Input extends React.Component<IInputProps> {
   }
 
   public render() {
-    const { name, label, value, onChange, error } = this.props;
+    const { name, label, value, onChange, error, type = "text" } = this.props;
 
     return (
       <div className="form-group">
@@ -24,7 +25,7 @@ class Input extends React.Component<IInputProps> {
           id={name}
           name={name}
           onChange={onChange}
-          type="text"
+          type={type}
           value={value}
         />
         {error && <div className="alert alert-danger">{error}</div>}

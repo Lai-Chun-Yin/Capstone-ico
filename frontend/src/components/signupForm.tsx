@@ -86,6 +86,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
               label="Password"
               onChange={this.handleChange}
               error={errors.password}
+              type="password"
             />
             <Input
               name="username"
