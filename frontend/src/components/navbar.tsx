@@ -4,17 +4,24 @@ import { NavLink as RRNavLink } from "react-router-dom";
 
 import {
   Collapse,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Nav,
   Navbar,
   NavbarBrand,
   NavbarToggler,
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledDropdown
 } from "reactstrap";
 import { IRootState } from "../reducers";
 
 interface INavBarProps {
   isAuthenticated: boolean;
+  user: {
+    [key: string]: any;
+  };
 }
 
 interface INavBar {
@@ -73,6 +80,17 @@ class NavBar extends React.Component<INavBarProps, INavBar> {
             )}
             {this.props.isAuthenticated === true && (
               <React.Fragment>
+                <UncontrolledDropdown nav={true} inNavbar={true}>
+                  <DropdownToggle nav={true} caret={true}>
+                    {this.props.user.alias}
+                  </DropdownToggle>
+                  <DropdownMenu right={true}>
+                    <DropdownItem>Setting</DropdownItem>
+                    <DropdownItem>Profile</DropdownItem>
+                    <DropdownItem divider={true} />
+                    <DropdownItem>other fucking option</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
                 <NavItem>
                   <NavLink to="/logout" tag={RRNavLink}>
                     Logout
@@ -94,7 +112,8 @@ class NavBar extends React.Component<INavBarProps, INavBar> {
 
 const mapStateToProps = (state: IRootState) => {
   return {
-    isAuthenticated: state.auth.token !== null
+    isAuthenticated: state.auth.token !== null,
+    user: state.auth.user
   };
 };
 

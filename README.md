@@ -25,21 +25,21 @@ DB_PASSWORD={database_pw}
 ```
 a. install PostgreSQL Server
 
-b. sudo service postgresql start
+b. command: sudo service postgresql start
 
-c. sudo su postgres
+c. command: sudo su postgres
 
-d. createdb {database_name}
+d. command: createdb {database_name}
 
-e. psql {database_name}
+e. command: psql {database_name}
 
-f. CREATE USER {database_name} WITH PASSWORD '{database_pw}' SUPERUSER;
+f. command: CREATE USER {database_name} WITH PASSWORD '{database_pw}' SUPERUSER;
 
-g. install knex
+g. command: install knex
 
-h. run command: knex init in the backend folder
+h. command: knex migrate:latest
 
-i. run command: knex seed:run
+i. command: knex seed:run
 ```
 
 

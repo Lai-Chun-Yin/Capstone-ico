@@ -1,6 +1,7 @@
 /* tslint:disable */
 import axios from "axios";
 import { Dispatch, Action } from "redux";
+import * as jwtDecode from "jwt-decode";
 
 export type AuthActions =
   | AuthStartAction
@@ -37,12 +38,14 @@ const authStart = (): AuthStartAction => {
 export interface AuthSuccessAction extends Action {
   type: AUTH_SUCCESS;
   token: string | null;
+  user: object;
 }
 
-const authSuccess = (token: string | null): AuthSuccessAction => {
+const authSuccess = (token: string): AuthSuccessAction => {
   return {
     type: AUTH_SUCCESS,
-    token: token
+    token: token,
+    user: jwtDecode(token)
   };
 };
 

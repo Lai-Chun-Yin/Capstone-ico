@@ -55,8 +55,6 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
 
     return (
       <React.Fragment>
-        {/* Redirect to target route */}
-
         {this.props.isAuthenticated === true && (
           <Redirect to={this.props.authRedirectPath} />
         )}
