@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { connect } from "react-redux";
 import {
   Collapse,
   Nav,
@@ -9,12 +9,17 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
+import { IRootState } from "../reducers";
+
+interface INavBarProps {
+  isAuthenticated: boolean
+}
 
 interface INavBar {
   isOpen: any;
 }
 
-class NavBar extends React.Component<any, INavBar> {
+class NavBar extends React.Component<INavBarProps, INavBar> {
   constructor(props: any) {
     super(props);
 
@@ -24,6 +29,23 @@ class NavBar extends React.Component<any, INavBar> {
     };
   }
   public render() {
+    let authButtons = (
+      <React.Fragment>
+        <NavItem>
+          <NavLink href="/login">login</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink href="/register">signup</NavLink>
+        </NavItem>
+      </React.Fragment>
+    )
+    if (this.props.isAuthenticated){
+      authButtons = (
+        <NavItem>
+          <NavLink href="/logout">logout</NavLink>
+        </NavItem>
+      )
+    }
     return (
       <Navbar color="light" light={true} expand="md">
         <NavbarBrand href="/">App logo</NavbarBrand>
@@ -41,12 +63,7 @@ class NavBar extends React.Component<any, INavBar> {
             </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar={true}>
-            <NavItem>
-              <NavLink href="/login">login</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/register">signup</NavLink>
-            </NavItem>
+            {authButtons}
           </Nav>
         </Collapse>
       </Navbar>
@@ -59,4 +76,10 @@ class NavBar extends React.Component<any, INavBar> {
   }
 }
 
-export default NavBar;
+const mapStateToProps = (state: IRootState) => {
+  return {
+    isAuthenticated: state.auth.token !== null
+  };
+};
+
+export default connect(mapStateToProps)(NavBar);

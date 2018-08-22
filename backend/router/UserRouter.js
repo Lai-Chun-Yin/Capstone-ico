@@ -34,12 +34,16 @@ module.exports = class UserRouter {
                 let pwMatch = await bcrypt.checkPassword(password, result[0].pw);
                 if (!pwMatch) { res.status(400).send("Incorrect password") }
                 var payload = {
-                    id: result[0].id
+                    id: result[0].id,
+                    alias: result[0].alias,
+                    photo: result[0].photo,
+                    is_admin: result[0].is_admin
                 };
                 var token = jwt.encode(payload, process.env.JWT_SECRET);
 
                 res.json({
-                    token: token
+                    token: token,
+                    is_admin: result[0].is_admin
                 });
             } else {
                 res.status(400).send('User not found');
@@ -54,14 +58,19 @@ module.exports = class UserRouter {
             let checkEmail = await this.userService.verifyUserByEmail(req.body.email);
             if (checkEmail.length > 0) { res.status(400).send("User already registered") }
             let hash = await bcrypt.hashPassword(req.body.password)
-            let newUser = await this.userService.localSignUp(req.body.email, hash, req.body.username)
+            let newUser = await this.userService.localSignUp(req.body.email, hash, req.body.username);
+            let userDetails = await this.userService.getUserDetailsById(newUser[0]);
             var payload = {
-                id: newUser[0]
+                id: newUser[0],
+                alias: userDetails[0].alias,
+                photo: userDetails[0].photo,
+                is_admin: userDetails[0].is_admin
             };
             var token = jwt.encode(payload, process.env.JWT_SECRET);
 
             res.json({
-                token: token
+                token,
+                is_admin: userDetails[0].is_admin
             });
         } catch (err) {
             res.sendStatus(401).json(err);
@@ -84,9 +93,12 @@ module.exports = class UserRouter {
                     console.log(newUser);
                     userId = newUser[0];
                 }
+                let userDetails = await this.userService.getUserDetailsById(userId);
                 let payload = {
                     id: userId,
-                    accessToken
+                    alias: userDetails[0].alias,
+                    photo: userDetails[0].photo,
+                    is_admin: userDetails[0].is_admin
                 }
 
                 // Return the JWT token after checking
@@ -94,7 +106,7 @@ module.exports = class UserRouter {
                 console.log({ token, userId })
                 res.json({
                     token,
-                    userId
+                    is_admin: userDetails[0].is_admin
                 });
             } catch (err) {
                 res.sendStatus(401).json(err);

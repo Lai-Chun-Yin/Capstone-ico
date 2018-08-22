@@ -35,8 +35,7 @@ export function authReducer(state:IAuthState = initialState,action:AuthActions){
         }
         case AUTH_LOGOUT: return {
             ...state,
-            token: null,
-            userId: null
+            token: null
         }
         case SET_AUTH_REDIRECT_PATH: return {
             ...state,
