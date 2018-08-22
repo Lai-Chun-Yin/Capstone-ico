@@ -16,7 +16,7 @@ module.exports = ()=>{
         try{
             const user = await userService.verifyUser(payload.id);
             if (user) {
-                return done(null, {id: payload.id});
+                return done(null, {id: payload.id,is_admin: payload.is_admin});
             } else {
                 throw new Error("User not found");
             }

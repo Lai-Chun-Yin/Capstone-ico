@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('title').notNullable();
     table.string('short_description');
-    table.binary('project_photo');  // Binary Large Object (BLOB)
+    table.string('project_photo');  // Can store path to AWS S3
     table.string('video_url');
     table.string('long_description');
     table.string('full_name');

@@ -7,12 +7,12 @@ class UserService {
     }
 
     localLogin(email){
-        return this.knex.select('id','pw').from('users')
+        return this.knex.select().from('users')
             .where({email: email});
     }
 
     localSignUp(email,password,username){
-        return this.knex('users').insert({email,pw:password,login_type:'local',alias:username}).returning('id');
+        return this.knex('users').insert({email,pw:password,login_type:'local',alias:username,is_admin:false}).returning('id');
     }
 
     facebookSignUp(username,oauthId){
@@ -20,10 +20,15 @@ class UserService {
     }
 
     findUserByOAuthId(strategy,oauthId){
-        return this.knex.select('id').from('users').where({
+        return this.knex.select().from('users').where({
             login_type:strategy,
             oauthid:oauthId
         });
+    }
+
+    getUserDetailsById(id){
+        return this.knex.select().from('users')
+            .where('id',id);
     }
 
     verifyUser(id){

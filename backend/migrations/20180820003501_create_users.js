@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments().primary();
     table.string('email');
     table.string('alias').notNullable();
-    table.binary('photo');  // Binary Large Object (BLOB)
+    table.string('photo'); //Can store path to AWS S3
     table.boolean('is_admin');
     table.string('pw');
     table.string('login_type');
