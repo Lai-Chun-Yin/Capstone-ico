@@ -7,21 +7,24 @@ module.exports = class CommentRouter {
 
   router() {
     let router = express.Router();
+    router.get('/', this.get.bind(this));
     router.get("/:co_id", this.get.bind(this));
     router.post("/", this.post.bind(this));
     router.put("/:co_id", this.put.bind(this));
     router.delete("/:co_id", this.delete.bind(this));
+
+    return router;
   }
 
   get(req, res) {
     return this.commentService.getComment(req.params.co_id)
-      .then()(results => res.json(results))
+      .then(results => res.json(results))
       .catch(err => res.status(500).json(err));
   }
 
   post(req, res) {
     return this.commentService
-      .postComment(req.body.newComment)
+      .postComment(req.body)
       .then(() => this.commentService.getComment())
       .then(results => res.json(results))
       .catch(err => res.status(500).json(err));
@@ -29,7 +32,7 @@ module.exports = class CommentRouter {
 
   put(req, res) {
     return this.commentService
-      .putComment(req.body.comment, req.params.co_id)
+      .putComment(req.body, req.params.co_id)
       .then(() => this.commentService.getComment())
       .then(results => res.json(results))
       .catch(err => res.status(500).json(err));

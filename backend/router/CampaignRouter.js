@@ -7,10 +7,13 @@ module.exports = class CampaignRouter {
 
   router() {
     let router = express.Router();
+    router.get('/', this.get.bind(this));
     router.get('/:cid', this.get.bind(this));
     router.post('/', this.post.bind(this));
     router.put('/:cid', this.put.bind(this));
     router.delete('/:cid', this.delete.bind(this));
+
+    return router;
   }
 
   get(req, res) {
@@ -20,14 +23,14 @@ module.exports = class CampaignRouter {
   }
 
   post(req, res) {
-    return this.campaignService.postCampaign(req.body.newCampaign)
+    return this.campaignService.postCampaign(req.body)
     .then(() => this.campaignService.getCampaign())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }
 
   put(req, res) {
-    return this.campaignService.putCampaign(req.body.campaign,req.params.cid)
+    return this.campaignService.putCampaign(req.body,req.params.cid)
     .then(() => this.campaignService.getCampaign())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));

@@ -8,7 +8,7 @@ module.exports = class CommentService {
   getComment(co_id) {
     if (co_id) {
       let query = this.knex
-        .selct()
+        .select()
         .from('comments')
         .where('id',co_id);
 

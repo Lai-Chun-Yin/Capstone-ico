@@ -7,27 +7,30 @@ module.exports = class TokenRouter {
 
   router() {
     let router = express.Router();
+    router.get('/', this.get.bind(this));
     router.get('/:tid', this.get.bind(this));
     router.post('/', this.post.bind(this));
     router.put('/:tid', this.put.bind(this));
     router.delete('/:tid', this.delete.bind(this));
+
+    return router;
   }
 
   get(req, res) {
     return this.tokenService.getToken(req.params.tid)
-    .then()(results => res.json(results))
+    .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }
 
   post(req, res) {
-    return this.tokenService.postToken(req.body.newToken)
+    return this.tokenService.postToken(req.body)
     .then(() => this.tokenService.getToken())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }
 
   put(req, res) {
-    return this.tokenService.putToken(req.body.token,req.params.tid)
+    return this.tokenService.putToken(req.body,req.params.tid)
     .then(() => this.tokenService.getToken())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));

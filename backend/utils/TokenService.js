@@ -6,7 +6,7 @@ module.exports = class TokenService {
   getToken(tid) {
     if (tid) {
       // return specific tokens
-      let query = this.knex.select.from("tokens").where("id", tid);
+      let query = this.knex.select().from("tokens").where("id", tid);
 
       return query;
     } else {
