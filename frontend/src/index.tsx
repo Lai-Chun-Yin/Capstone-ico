@@ -6,7 +6,9 @@ import { BrowserRouter } from "react-router-dom";
 import { applyMiddleware, compose, createStore } from "redux";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
+import "./index.css";
 import rootReducer from "./reducers";
+import registerServiceWorker from "./registerServiceWorker";
 import Routes from "./routes";
 
 declare global {
@@ -23,8 +25,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(logger, thunk))
 );
 
-import "./index.css";
-import registerServiceWorker from "./registerServiceWorker";
+
 
 ReactDOM.render(
   <Provider store={store}>

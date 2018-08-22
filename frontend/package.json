@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@types/joi": "^13.4.2",
     "@types/react-facebook-login": "^3.6.5",
     "@types/react-redux": "^6.0.6",
