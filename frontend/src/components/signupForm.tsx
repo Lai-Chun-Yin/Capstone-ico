@@ -12,6 +12,7 @@ interface ILoginFormProps {
   history: any;
   location: any;
   match: any;
+  error: any;
   onSignup: (email: string, password: string, username: string) => void;
   onSetAuthRedirectPath: () => void;
   loginFacebook: (accessToken: string) => void;
@@ -65,7 +66,10 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
             value={account.email}
             label="Email"
             onChange={this.handleChange}
-            error={errors.email}
+            error={
+              errors.email ||
+              (this.props.error ? this.props.error.response.data : null)
+            }
           />
           <Input
             name="password"

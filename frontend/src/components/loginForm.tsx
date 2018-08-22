@@ -49,10 +49,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
 
   public render() {
     const { account, errors } = this.state;
+    // this.props.error
+    //   ? console.log(this.props.error.response.data)
+    //   : console.log("");
 
     return (
       <React.Fragment>
-        {console.log(this.props.error)}
         <div>
           <h1>Login</h1>
           <form onSubmit={this.handleSubmit}>
@@ -68,7 +70,10 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
               value={account.password}
               label="Password"
               onChange={this.handleChange}
-              error={errors.password}
+              error={
+                errors.password ||
+                (this.props.error ? this.props.error.response.data : null)
+              }
             />
             <button disabled={!!this.validate()} className="btn btn-primary">
               Login
@@ -103,8 +108,6 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       return;
     }
     this.props.onLogin(this.state.account.email, this.state.account.password);
-
-    console.log();
   };
 
   private handleChange = (event: any) => {
