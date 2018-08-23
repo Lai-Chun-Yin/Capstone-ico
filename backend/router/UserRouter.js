@@ -32,7 +32,10 @@ module.exports = class UserRouter {
             const result = await this.userService.localLogin(email, password);
             if (result[0]) {
                 let pwMatch = await bcrypt.checkPassword(password, result[0].pw);
-                if (!pwMatch) { res.status(400).send("Incorrect password") }
+                if (!pwMatch) { 
+                  res.status(400).end("Incorrect password");
+                  return;   // add this line to prevent "Can't set headers after they are sent" error
+                }
                 var payload = {
                     id: result[0].id,
                     alias: result[0].alias,
