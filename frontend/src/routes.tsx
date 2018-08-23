@@ -8,6 +8,7 @@ import NavBar from "./components/navbar";
 import News from "./components/news";
 import NotFound from "./components/notFound";
 import SignupForm from "./components/signupForm";
+import { TestApi } from "./components/testApi_ck";
 
 const Routes = () => {
   return (
@@ -22,6 +23,7 @@ const Routes = () => {
           <Route path="/logout" component={Logout} />
           <Route path="/not-found" component={NotFound} />
           <Route path="/" exact={true} component={App} />
+          <Route path="/test" component={TestApi} />
           <Redirect to="/not-found" />
         </Switch>
       </main>
