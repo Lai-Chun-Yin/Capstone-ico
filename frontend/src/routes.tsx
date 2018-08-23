@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import App from "./App";
-import campaignForm from "./components/campaignForm";
+import CampaignForm from "./components/campaign-form/CampaignForm";
 import LoginForm from "./components/loginForm";
 import Logout from "./components/logout";
 import NavBar from "./components/navbar";
@@ -16,7 +16,7 @@ const Routes = () => {
       <NavBar />
       <main className="container">
         <Switch>
-          <Route path="/campaign/create/basic" component={campaignForm} />
+          <Route path="/campaign/create/basic" component={CampaignForm} />
           <Route path="/news" component={News} />
           <Route path="/register" component={SignupForm} />
           <Route path="/login" component={LoginForm} />
