@@ -1,23 +1,7 @@
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import renderField from "./renderField";
 import validate from "./validate";
-const colors = ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Violet"];
-
-const renderColorSelector = ({ input, meta: { touched, error } }: any) => {
-  return (
-    <div>
-      <select {...input}>
-        <option value="">Select a color...</option>
-        {colors.map(val => (
-          <option value={val} key={val}>
-            {val}
-          </option>
-        ))}
-      </select>
-      {touched && error && <span>{error}</span>}
-    </div>
-  );
-};
 
 export interface IThirdPageProps {
   // handleSubmit: () => void;
@@ -33,27 +17,45 @@ const ThirdPage: React.ComponentType<
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>Favorite Color</label>
-        <Field name="favoriteColor" component={renderColorSelector} />
-      </div>
-      <div>
-        <label htmlFor="employed">Employed</label>
-        <div>
-          <Field
-            name="employed"
-            id="employed"
-            component="input"
-            type="checkbox"
-          />
-        </div>
-      </div>
-      <div>
-        <label>Notes</label>
-        <div>
-          <Field name="notes" component="textarea" placeholder="Notes" />
-        </div>
-      </div>
+      <h2>Now, a little bit about you</h2>
+      <Field
+        name="fullName"
+        type="text"
+        component={renderField}
+        label="Full Name"
+      />
+      <Field
+        name="email"
+        type="email"
+        component={renderField}
+        label="Email"
+      />
+      <h2>and your company</h2>
+      <Field
+        name="companyName"
+        type="text"
+        component={renderField}
+        label="Company Name"
+      />
+      <Field
+        name="legalForm"
+        type="text"
+        component={renderField}
+        label="Legel Form"
+      />
+      <Field
+        name="regId"
+        type="text"
+        component={renderField}
+        label="Entity Reg. ID"
+      />
+      <Field
+        name="country"
+        type="text"
+        component={renderField}
+        label="Country"
+      />
+      
       <div>
         <button type="button" className="previous" onClick={previousPage}>
           Previous
