@@ -3,27 +3,32 @@ import { Dispatch } from 'redux';
 
 export type CampaignActions = ILoadCampaignListAction;
 
-export const LOAD_CAMPAIGN_LIST = 'LOAD_CAMPAIGN_LIST';
-export type LOAD_CAMPAIGN_LIST = typeof LOAD_CAMPAIGN_LIST;
+export const LOAD_CAMPAIGNS = 'LOAD_CAMPAIGNS';
+export type LOAD_CAMPAIGNS = typeof LOAD_CAMPAIGNS;
 
 export interface ILoadCampaignListAction {
-  type: LOAD_CAMPAIGN_LIST;
+  type: LOAD_CAMPAIGNS;
   campaigns: CapstoneICO.ICampaign[];
 }
 
 // normal action creator
-export function LoadCampaignList(campaigns: CapstoneICO.ICampaign[]): ILoadCampaignListAction {
+export function loadCampaigns(campaigns: CapstoneICO.ICampaign[]): ILoadCampaignListAction {
   return {
     campaigns,
-    type: LOAD_CAMPAIGN_LIST,
+    type: LOAD_CAMPAIGNS,
   }
 }
 
 // thunk action creator
-export function LoadCampaignListThunk() {
+export function loadCampaignsThunk() {
   return (dispatch: Dispatch<CampaignActions>) => {
-    axios.get(`${process.env.REACT_APP_API_SERVER}/api/campaign`).then(res => {
-      dispatch(LoadCampaignList(res.data));
+    axios.get<CapstoneICO.ICampaign[]>(`${process.env.REACT_APP_API_SERVER}/api/campaign`, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+    .then(res => {
+      dispatch(loadCampaigns(res.data));
     });
   };
 }

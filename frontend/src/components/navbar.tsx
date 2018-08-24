@@ -62,6 +62,11 @@ class NavBar extends React.Component<INavBarProps, INavBar> {
                 blog
               </NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink to="/test" tag={RRNavLink}>
+                test
+              </NavLink>
+            </NavItem>
           </Nav>
           <Nav className="ml-auto" navbar={true}>
             {!this.props.isAuthenticated === true && (

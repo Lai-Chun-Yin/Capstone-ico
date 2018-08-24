@@ -1,18 +1,18 @@
-import { CampaignActions, LOAD_CAMPAIGN_LIST } from './actions';
+import { CampaignActions, LOAD_CAMPAIGNS } from './actions';
 
 const initialState = {
-  campaignList: []
+  campaigns: []
 }
 
 export interface ICampaignState {
-  campaignList: CapstoneICO.ICampaign[];
+  campaigns: CapstoneICO.ICampaign[];
 }
 
-export function campaignReducer(state: ICampaignState = initialState, action: CampaignActions) {
+export function campaignReducer(state: ICampaignState = initialState, action: CampaignActions):ICampaignState {
   switch (action.type) {
-    case LOAD_CAMPAIGN_LIST:
+    case LOAD_CAMPAIGNS:
       return {
-        campaignList: action.campaigns
+        campaigns: action.campaigns
       }
   }
   return state;
