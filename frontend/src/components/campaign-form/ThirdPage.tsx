@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import * as validation from "./fieldLevelValidation";
 import renderField from "./renderField";
-import validate from "./validate";
+// import validate from "./validate";
 
 export interface IThirdPageProps {
   previousPage: any;
@@ -20,12 +21,14 @@ const ThirdPage: React.ComponentType<
         type="text"
         component={renderField}
         label="Full Name"
+        validate={validation.required}
       />
       <Field
         name="email"
         type="email"
         component={renderField}
         label="Email"
+        validate={validation.required}
       />
       <h2>and your company</h2>
       <Field
@@ -33,24 +36,28 @@ const ThirdPage: React.ComponentType<
         type="text"
         component={renderField}
         label="Company Name"
+        validate={validation.required}
       />
       <Field
         name="legalForm"
         type="text"
         component={renderField}
         label="Legel Form"
+        validate={validation.required}
       />
       <Field
         name="regId"
         type="text"
         component={renderField}
         label="Entity Reg. ID"
+        validate={validation.required}
       />
       <Field
         name="country"
         type="text"
         component={renderField}
         label="Country"
+        validate={validation.required}
       />
       
       <div>
@@ -68,6 +75,5 @@ const ThirdPage: React.ComponentType<
 export default reduxForm<{}, IThirdPageProps>({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
-  form: "wizard",
-  validate
+  form: "wizard"
 })(ThirdPage);

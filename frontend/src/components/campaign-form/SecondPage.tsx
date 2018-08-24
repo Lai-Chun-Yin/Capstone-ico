@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
-// import imageUploadField from "./imageUploadField";
+import * as validation from "./fieldLevelValidation";
 import FileInput from "./imageUploadField";
 import renderField from "./renderField";
 import textAreaField from "./textAreaField";
-import validate from "./validate";
+// import validate from "./validate";
 
 // const renderError = ({ meta: { touched, error } }: any) =>
 //   touched && error ? <span>{error}</span> : false;
@@ -26,11 +26,13 @@ const SecondPage: React.ComponentType<
         type="text"
         component={renderField}
         label="Link to the campaign video"
+        validate={validation.ytlink}
       />
       <Field
         name="longDescription"
         component={textAreaField}
         label="Campaign Description"
+        validate={validation.required}
       />
       <div>
         <button type="button" className="previous" onClick={previousPage}>
@@ -47,6 +49,5 @@ const SecondPage: React.ComponentType<
 export default reduxForm<{}, ISecondPageProps>({
   destroyOnUnmount: false,
   forceUnregisterOnUnmount: true,
-  form: "wizard",
-  validate
+  form: "wizard"
 })(SecondPage);
