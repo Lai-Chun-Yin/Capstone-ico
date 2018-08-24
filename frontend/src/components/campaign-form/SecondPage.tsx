@@ -7,7 +7,6 @@ const renderError = ({ meta: { touched, error } }: any) =>
   touched && error ? <span>{error}</span> : false;
 
 export interface ISecondPageProps {
-  // handleSubmit: () => void;
   previousPage: any;
 }
 

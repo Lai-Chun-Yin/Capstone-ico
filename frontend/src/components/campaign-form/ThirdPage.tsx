@@ -20,10 +20,7 @@ const renderColorSelector = ({ input, meta: { touched, error } }: any) => {
 };
 
 export interface IThirdPageProps {
-  // handleSubmit: () => void;
-  // pristine: any;
   previousPage: any;
-  // submitting: any;
 }
 
 const ThirdPage: React.ComponentType<

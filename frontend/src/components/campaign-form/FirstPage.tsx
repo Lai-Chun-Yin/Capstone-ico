@@ -3,10 +3,6 @@ import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import renderField from "./renderField";
 import validate from "./validate";
 
-// export interface IFirstPageProps {
-//   [key: string]: any;
-// }
-
 const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
   const { handleSubmit } = props;
 

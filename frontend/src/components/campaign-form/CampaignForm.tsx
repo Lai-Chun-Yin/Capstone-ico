@@ -3,11 +3,6 @@ import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import ThirdPage from "./ThirdPage";
 
-// export interface ICampaignFormProps {
-//   onSubmit: () => void;
-//   page: number;
-// }
-
 export interface ICampaignFormState {
   page: number;
 }
