@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
-import imageUploadField from "./imageUploadField";
+// import imageUploadField from "./imageUploadField";
+import FileInput from "./imageUploadField";
 import renderField from "./renderField";
 import textAreaField from "./textAreaField";
 import validate from "./validate";
@@ -19,7 +20,7 @@ const SecondPage: React.ComponentType<
 
   return (
     <form onSubmit={handleSubmit}>
-      <Field name="image" component={imageUploadField} label="Campaign Card Image" />
+      <Field component={FileInput} name="imageFile" />
       <Field
         name="video"
         type="text"
@@ -30,7 +31,7 @@ const SecondPage: React.ComponentType<
         name="longDescription"
         component={textAreaField}
         label="Campaign Description"
-        />
+      />
       <div>
         <button type="button" className="previous" onClick={previousPage}>
           Previous
