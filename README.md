@@ -68,3 +68,9 @@ yarn install
 
 yarn start
 ```
+
+To build or update sass: 
+
+```
+yarn run sass
+```
