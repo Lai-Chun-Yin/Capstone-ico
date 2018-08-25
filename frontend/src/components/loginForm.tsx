@@ -1,9 +1,14 @@
-// tslint:disable-next-line:ordered-imports
+// import Button from "@material-ui/core/Button";
+// import CircularProgress from "@material-ui/core/CircularProgress";
+// import IconButton from "@material-ui/core/IconButton";
+// import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
 import * as Joi from "joi";
 import * as React from "react";
-import FacebookLogin from "react-facebook-login";
+// import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IErrors } from "../modules";
 import { IRootState } from "../reducers";
 import * as Authactions from "../reducers/auth/actions";
@@ -58,47 +63,119 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         {this.props.isAuthenticated === true && (
           <Redirect to={this.props.authRedirectPath} />
         )}
-        <div>
-          <h1>Login</h1>
-          <form onSubmit={this.handleSubmit}>
-            <Input
-              name="email"
-              value={account.email}
-              label="Email"
-              onChange={this.handleChange}
-              error={errors.email}
-            />
-            <Input
-              name="password"
-              value={account.password}
-              label="Password"
-              onChange={this.handleChange}
-              type="password"
-              error={
-                errors.password ||
-                (this.props.error ? this.props.error.response.data : null)
-              }
-            />
-            <button disabled={!!this.validate()} className="btn btn-primary">
-              Login
-            </button>
-          </form>
+        <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
+          <div className="app-login-main-content">
+            <div className="app-logo-content d-flex align-items-center justify-content-center">
+              <Link className="logo-lg" to="/" title="Jambo">
+                <img
+                  src="http://via.placeholder.com/177x65"
+                  alt="jambo"
+                  title="jambo"
+                />
+              </Link>
+            </div>
+
+            <div className="app-login-content">
+              <div className="app-login-header mb-4">
+                <h1>{/* <IntlMessages id="appModule.email" /> */}</h1>
+              </div>
+
+              <div className="app-login-form">
+                <form onSubmit={this.handleSubmit}>
+                  <Input
+                    name="email"
+                    value={account.email}
+                    label="Email"
+                    onChange={this.handleChange}
+                    error={errors.email}
+                  />
+                  <Input
+                    name="password"
+                    value={account.password}
+                    label="Password"
+                    onChange={this.handleChange}
+                    type="password"
+                    error={
+                      errors.password ||
+                      (this.props.error ? this.props.error.response.data : null)
+                    }
+                  />
+                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                    <button
+                      disabled={!!this.validate()}
+                      className="btn btn-primary"
+                    >
+                      Login
+                    </button>
+
+                    <Link to="/register">Sign up</Link>
+                  </div>
+
+                  <div className="app-social-block my-1 my-sm-3">
+                    {/* <IntlMessages id="signIn.connectWith" /> */}
+                    <p>or connect with</p>
+                    <ul className="social-link">
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userFacebookSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-facebook" />
+                        </IconButton>
+                      </li>
+
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userTwitterSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-twitter" />
+                        </IconButton>
+                      </li>
+
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userGoogleSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-google-plus" />
+                        </IconButton>
+                      </li>
+
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userGithubSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-github" />
+                        </IconButton>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <FacebookLogin
-          appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-          autoLoad={false}
-          fields="name,email,picture"
-          scope="public_profile,email"
-          onClick={this.componentClicked}
-          callback={this.responseFacebook}
-        />
       </React.Fragment>
     );
   }
 
-  private componentClicked() {
-    return null;
-  }
+  // private componentClicked() {
+  //   return null;
+  // }
 
   private handleSubmit = (event: any) => {
     event.preventDefault();
@@ -160,12 +237,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     return error ? error.details[0].message : null;
   };
 
-  private responseFacebook = (userInfo: any) => {
-    if (userInfo.accessToken) {
-      this.props.loginFacebook(userInfo.accessToken);
-    }
-    return null;
-  };
+  // private responseFacebook = (userInfo: any) => {
+  //   if (userInfo.accessToken) {
+  //     this.props.loginFacebook(userInfo.accessToken);
+  //   }
+  //   return null;
+  // };
 }
 
 // export default LoginForm;
