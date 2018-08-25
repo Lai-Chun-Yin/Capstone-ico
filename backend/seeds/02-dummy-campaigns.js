@@ -32,6 +32,54 @@ exports.seed = function(knex, Promise) {
       status: "pending",
       user_id: 2,
       token_id: 1
+    },
+    {
+      title: "Test Campaign 1",
+      short_description: "Test project",
+      project_photo: "",
+      long_description: "Let's do some testing",
+      full_name: "Testing 1",
+      email: "tester@tester.com",
+      company_name: "Some Testy Company",
+      start_date: "2019-01-16 00:00:00+08",
+      end_date: "2019-02-15 00:00:00+08",
+      soft_cap: 88.5,
+      hard_cap: 220.8,
+      status: "pending",
+      user_id: 1,
+      token_id: 1
+    },
+    {
+      title: "Test Campaign 2",
+      short_description: "Test project 2",
+      project_photo: "",
+      long_description: "Let's do some testing again",
+      full_name: "Testing 2",
+      email: "tester2@tester.com",
+      company_name: "Some Testish Company",
+      start_date: "2018-12-16 00:00:00+08",
+      end_date: "2018-12-30 00:00:00+08",
+      soft_cap: 128.5,
+      hard_cap: 320.8,
+      status: "pending",
+      user_id: 1,
+      token_id: 2
+    },
+    {
+      title: "Test Campaign 3",
+      short_description: "Test project 3",
+      project_photo: "",
+      long_description: "Let's do some testing again",
+      full_name: "Testing 3",
+      email: "tester3@tester.com",
+      company_name: "Some Testishty Company",
+      start_date: "2018-12-16 00:00:00+08",
+      end_date: "2018-12-30 00:00:00+08",
+      soft_cap: 103.5,
+      hard_cap: 450.8,
+      status: "pending",
+      user_id: 2,
+      token_id: 1
     }
   ]);
 };
