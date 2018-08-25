@@ -1,6 +1,5 @@
 // import Button from "@material-ui/core/Button";
 // import CircularProgress from "@material-ui/core/CircularProgress";
-// import IconButton from "@material-ui/core/IconButton";
 // import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import * as Joi from "joi";
@@ -69,15 +68,15 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
               <Link className="logo-lg" to="/" title="Jambo">
                 <img
                   src="http://via.placeholder.com/177x65"
-                  alt="jambo"
-                  title="jambo"
+                  alt="app-logo"
+                  title="app-logo"
                 />
               </Link>
             </div>
 
             <div className="app-login-content">
               <div className="app-login-header mb-4">
-                <h1>{/* <IntlMessages id="appModule.email" /> */}</h1>
+                <h1>Login</h1>
               </div>
 
               <div className="app-login-form">
@@ -105,7 +104,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                       disabled={!!this.validate()}
                       className="btn btn-primary"
                     >
-                      Login
+                      LOGIN
                     </button>
 
                     <Link to="/register">Sign up</Link>
