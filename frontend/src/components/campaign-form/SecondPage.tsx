@@ -20,6 +20,7 @@ const SecondPage: React.ComponentType<
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>2 of 4: story</h2>
       <Field component={FileInput} name="imageFile" />
       <Field
         name="video"

@@ -11,6 +11,7 @@ const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>1 of 4: basic information</h2>
       <Field
         name="campaignName"
         type="text"

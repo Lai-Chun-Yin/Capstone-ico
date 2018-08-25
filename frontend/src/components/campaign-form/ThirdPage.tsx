@@ -11,11 +11,12 @@ export interface IThirdPageProps {
 const ThirdPage: React.ComponentType<
   IThirdPageProps & InjectedFormProps<{}, IThirdPageProps>
 > = (props: any) => {
-  const { handleSubmit, pristine, previousPage, submitting } = props;
+  const { handleSubmit, previousPage } = props;
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Now, a little bit about you</h2>
+      <h2>3 of 4: profile and legal entity</h2>
+      <h3>Now, a little bit about you</h3>
       <Field
         name="fullName"
         type="text"
@@ -28,9 +29,9 @@ const ThirdPage: React.ComponentType<
         type="email"
         component={renderField}
         label="Email"
-        validate={validation.required}
+        validate={[validation.required,validation.email]}
       />
-      <h2>and your company</h2>
+      <h3>and your company</h3>
       <Field
         name="companyName"
         type="text"
@@ -64,8 +65,8 @@ const ThirdPage: React.ComponentType<
         <button type="button" className="previous" onClick={previousPage}>
           Previous
         </button>
-        <button type="submit" disabled={pristine || submitting}>
-          Submit
+        <button type="submit" className="next">
+          Next
         </button>
       </div>
     </form>

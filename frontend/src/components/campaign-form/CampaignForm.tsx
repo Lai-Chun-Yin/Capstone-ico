@@ -2,6 +2,8 @@ import * as React from "react";
 import FirstPage from "./FirstPage";
 import SecondPage from "./SecondPage";
 import ThirdPage from "./ThirdPage";
+// tslint:disable-next-line:ordered-imports
+import FourthPage from "./FourthPage";
 
 export interface ICampaignFormState {
   page: number;
@@ -30,7 +32,10 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
           />
         )}
         {page === 3 && (
-          <ThirdPage previousPage={this.previousPage} onSubmit={onSubmit} />
+          <ThirdPage previousPage={this.previousPage} onSubmit={this.nextPage} />
+        )}
+        {page === 4 && (
+          <FourthPage previousPage={this.previousPage} onSubmit={onSubmit} />
         )}
       </div>
     );
