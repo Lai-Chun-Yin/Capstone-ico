@@ -93,7 +93,7 @@ class NavBar extends React.Component<INavBarProps, INavBar> {
                     <DropdownItem>Setting</DropdownItem>
                     <DropdownItem>Profile</DropdownItem>
                     <DropdownItem divider={true} />
-                    <DropdownItem>other fucking option</DropdownItem>
+                    <DropdownItem>Logout</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>
