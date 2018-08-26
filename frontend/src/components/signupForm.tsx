@@ -1,8 +1,7 @@
-// tslint:disable-next-line:ordered-imports
 import IconButton from "@material-ui/core/IconButton";
 import * as Joi from "joi";
 import * as React from "react";
-// import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -131,22 +130,17 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                     <p>or connect with</p>
                     <ul className="social-link">
                       <li>
-                        <IconButton
-                          className="icon"
-                          // onClick={() => {
-                          //   this.props.showAuthLoader();
-                          //   this.props.userFacebookSignIn();
-                          // }}
-                        >
-                          <i className="zmdi zmdi-facebook" />
-                          {/* <FacebookLogin
+                        <IconButton className="icon">
+                          <FacebookLogin
                             appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
                             autoLoad={false}
                             fields="name,email,picture"
                             scope="public_profile,email"
                             onClick={this.componentClicked}
                             callback={this.responseFacebook}
-                          /> */}
+                            textButton=""
+                            cssClass="icon zmdi zmdi-facebook bg-light"
+                          />
                         </IconButton>
                       </li>
 
@@ -204,9 +198,9 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     );
   }
 
-  // private componentClicked() {
-  //   return null;
-  // }
+  private componentClicked() {
+    return null;
+  }
 
   private handleSubmit = (event: any) => {
     event.preventDefault();
@@ -267,12 +261,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     return error ? error.details[0].message : null;
   };
 
-  // private responseFacebook = (userInfo: any) => {
-  //   if (userInfo.accessToken) {
-  //     this.props.loginFacebook(userInfo.accessToken);
-  //   }
-  //   return null;
-  // };
+  private responseFacebook = (userInfo: any) => {
+    if (userInfo.accessToken) {
+      this.props.loginFacebook(userInfo.accessToken);
+    }
+    return null;
+  };
 }
 
 // export default LoginForm;
