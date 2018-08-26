@@ -1,8 +1,24 @@
 import * as React from "react";
+import TopNav from "./components/newNavBar";
+// import NavBar from "./components/navbar";
+import Routes from "./routes";
+
+// export interface IAppProps {
+
+// }
+
+// export interface IAppState {
+
+// }
 
 class App extends React.Component {
   public render() {
-    return <h1>Home Page</h1>;
+    return (
+      <React.Fragment>
+        <TopNav />
+        <Routes />
+      </React.Fragment>
+    );
   }
 }
 
