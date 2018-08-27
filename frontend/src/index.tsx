@@ -3,34 +3,17 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { applyMiddleware, compose, createStore } from "redux";
-import logger from "redux-logger";
-import thunk from "redux-thunk";
+import App from "./App";
 import "./index.css";
-import rootReducer from "./reducers";
+import configureStore from "./reduxStore";
 import registerServiceWorker from "./registerServiceWorker";
-import Routes from "./routes";
 
-declare global {
-  // tslint:disable-next-line:interface-name
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any;
-  }
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(logger, thunk))
-);
-
-
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <Routes />
+      <App />
     </BrowserRouter>
   </Provider>,
   document.getElementById("root") as HTMLElement

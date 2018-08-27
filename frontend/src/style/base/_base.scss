@@ -13,7 +13,7 @@ body {
   color: $body-color;
   background-color: $body-bg;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
 }
 
 body.ios-mobile-view-height {

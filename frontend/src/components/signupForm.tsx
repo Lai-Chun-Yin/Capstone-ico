@@ -1,9 +1,10 @@
-// tslint:disable-next-line:ordered-imports
+import IconButton from "@material-ui/core/IconButton";
 import * as Joi from "joi";
 import * as React from "react";
 import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IErrors } from "../modules";
 import { IRootState } from "../reducers";
 import * as actions from "../reducers/auth/actions";
@@ -67,46 +68,131 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         {this.props.isAuthenticated === true && (
           <Redirect to={this.props.authRedirectPath} />
         )}
-        <div>
-          <h1>Sign Up</h1>
-          <form onSubmit={this.handleSubmit}>
-            <Input
-              name="email"
-              value={account.email}
-              label="Email"
-              onChange={this.handleChange}
-              error={
-                errors.email ||
-                (this.props.error ? this.props.error.response.data : null)
-              }
-            />
-            <Input
-              name="password"
-              value={account.password}
-              label="Password"
-              onChange={this.handleChange}
-              error={errors.password}
-              type="password"
-            />
-            <Input
-              name="username"
-              value={account.username}
-              label="User Name"
-              onChange={this.handleChange}
-              error={errors.username}
-            />
-            <button disabled={!!this.validate()} className="btn btn-primary">
-              Sign Up
-            </button>
-          </form>
-          <FacebookLogin
-            appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
-            autoLoad={false}
-            fields="name,email,picture"
-            scope="public_profile,email"
-            onClick={this.componentClicked}
-            callback={this.responseFacebook}
-          />
+        <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
+          <div className="app-login-main-content">
+            <div className="app-logo-content d-flex align-items-center justify-content-center">
+              <Link className="logo-lg" to="/" title="Jambo">
+                <img
+                  src="http://via.placeholder.com/177x65"
+                  alt="app-logo"
+                  title="app-logo"
+                />
+              </Link>
+            </div>
+
+            <div className="app-login-content">
+              <div className="app-login-header">
+                <h1>Sign Up</h1>
+              </div>
+
+              <div className="mb-4">
+                <h2>{/* <IntlMessages id="appModule.createAccount" /> */}</h2>
+              </div>
+
+              <div className="app-login-form">
+                <form onSubmit={this.handleSubmit}>
+                  <Input
+                    name="email"
+                    value={account.email}
+                    label="Email"
+                    onChange={this.handleChange}
+                    error={
+                      errors.email ||
+                      (this.props.error ? this.props.error.response.data : null)
+                    }
+                  />
+                  <Input
+                    name="password"
+                    value={account.password}
+                    label="Password"
+                    onChange={this.handleChange}
+                    error={errors.password}
+                    type="password"
+                  />
+                  <Input
+                    name="username"
+                    value={account.username}
+                    label="User Name"
+                    onChange={this.handleChange}
+                    error={errors.username}
+                  />
+                  <div className="mb-3 d-flex align-items-center justify-content-between">
+                    <button
+                      disabled={!!this.validate()}
+                      className="btn btn-primary"
+                    >
+                      REGISTER
+                    </button>
+                    <Link to="/login">Already registered?</Link>
+                  </div>
+                  <div className="app-social-block my-1 my-sm-3">
+                    {/* <IntlMessages id="signIn.connectWith" /> */}
+                    <p>or connect with</p>
+                    <ul className="social-link">
+                      <li>
+                        <IconButton className="icon">
+                          <FacebookLogin
+                            appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            scope="public_profile,email"
+                            onClick={this.componentClicked}
+                            callback={this.responseFacebook}
+                            textButton=""
+                            cssClass="icon zmdi zmdi-facebook bg-light"
+                          />
+                        </IconButton>
+                      </li>
+
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userTwitterSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-twitter" />
+                        </IconButton>
+                      </li>
+
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userGoogleSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-google-plus" />
+                        </IconButton>
+                      </li>
+
+                      <li>
+                        <IconButton
+                          className="icon"
+                          // onClick={() => {
+                          //   this.props.showAuthLoader();
+                          //   this.props.userGithubSignIn();
+                          // }}
+                        >
+                          <i className="zmdi zmdi-github" />
+                        </IconButton>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+                {/* <FacebookLogin
+                  appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+                  autoLoad={false}
+                  fields="name,email,picture"
+                  scope="public_profile,email"
+                  onClick={this.componentClicked}
+                  callback={this.responseFacebook}
+                /> */}
+              </div>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     );

@@ -1,11 +1,7 @@
-// import Button from "@material-ui/core/Button";
-// import CircularProgress from "@material-ui/core/CircularProgress";
-// import IconButton from "@material-ui/core/IconButton";
-// import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import * as Joi from "joi";
 import * as React from "react";
-// import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -66,18 +62,18 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
         <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
           <div className="app-login-main-content">
             <div className="app-logo-content d-flex align-items-center justify-content-center">
-              <Link className="logo-lg" to="/" title="Jambo">
+              <Link className="logo-lg" to="/" title="app-logo">
                 <img
                   src="http://via.placeholder.com/177x65"
-                  alt="jambo"
-                  title="jambo"
+                  alt="app-logo"
+                  title="app-logo"
                 />
               </Link>
             </div>
 
             <div className="app-login-content">
               <div className="app-login-header mb-4">
-                <h1>{/* <IntlMessages id="appModule.email" /> */}</h1>
+                <h1>Login</h1>
               </div>
 
               <div className="app-login-form">
@@ -105,7 +101,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                       disabled={!!this.validate()}
                       className="btn btn-primary"
                     >
-                      Login
+                      LOGIN
                     </button>
 
                     <Link to="/register">Sign up</Link>
@@ -116,14 +112,17 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                     <p>or connect with</p>
                     <ul className="social-link">
                       <li>
-                        <IconButton
-                          className="icon"
-                          // onClick={() => {
-                          //   this.props.showAuthLoader();
-                          //   this.props.userFacebookSignIn();
-                          // }}
-                        >
-                          <i className="zmdi zmdi-facebook" />
+                        <IconButton className="icon">
+                          <FacebookLogin
+                            appId={process.env.REACT_APP_FACEBOOK_APP_ID || ""}
+                            autoLoad={false}
+                            fields="name,email,picture"
+                            scope="public_profile,email"
+                            onClick={this.componentClicked}
+                            callback={this.responseFacebook}
+                            textButton=""
+                            cssClass="icon zmdi zmdi-facebook bg-light"
+                          />
                         </IconButton>
                       </li>
 
@@ -173,9 +172,9 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     );
   }
 
-  // private componentClicked() {
-  //   return null;
-  // }
+  private componentClicked() {
+    return null;
+  }
 
   private handleSubmit = (event: any) => {
     event.preventDefault();
@@ -237,12 +236,12 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
     return error ? error.details[0].message : null;
   };
 
-  // private responseFacebook = (userInfo: any) => {
-  //   if (userInfo.accessToken) {
-  //     this.props.loginFacebook(userInfo.accessToken);
-  //   }
-  //   return null;
-  // };
+  private responseFacebook = (userInfo: any) => {
+    if (userInfo.accessToken) {
+      this.props.loginFacebook(userInfo.accessToken);
+    }
+    return null;
+  };
 }
 
 // export default LoginForm;
