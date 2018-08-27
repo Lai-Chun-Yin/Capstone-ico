@@ -12,7 +12,7 @@ interface ITestApiProps {
   comments: CapstoneICO.IComment[];
   tokens: CapstoneICO.IToken[];
   transactions: CapstoneICO.ITransaction[];
-  watchlists: CapstoneICO.IWatchlist[];
+  watchlists: CapstoneICO.ICampaign[];
   isAuthenticated: boolean;
   user: {
     [key: string]: any;
@@ -73,21 +73,26 @@ class PureTestApi extends React.Component<ITestApiProps> {
           ))}
         </div>
         <div>
-          <h4>Transactions</h4>
+          <h4>Displaying Logged-In User's Transactions only</h4>
           {this.props.transactions.map(transaction => (
             <ul className="list-transaction" key={transaction.id}>
               <li className="list-transaction-item">{transaction.date}</li>
               <li className="list-transaction-item">{transaction.amount}</li>
               <li className="list-transaction-item">{transaction.tx_hash}</li>
+              <li className="list-transaction-item">{transaction.campaign_id}</li>
             </ul>
           ))}
         </div>
         <div>
-          <h4>Watchlists</h4>
+          <h4>Campaigns in User Watchlist</h4>
           {this.props.watchlists.map(watchlist => (
             <ul className="list-watchlist" key={watchlist.id}>
-              <li className="list-watchlist-item">{watchlist.user_id}</li>
-              <li className="list-watchlist-item">{watchlist.campaign_id}</li>
+              <li className="list-watchlist-item">{watchlist.title}</li>
+              <li className="list-watchlist-item">{watchlist.short_description}</li>
+              <li className="list-watchlist-item">{watchlist.start_date}</li>
+              <li className="list-watchlist-item">{watchlist.end_date}</li>
+              <li className="list-watchlist-item">{watchlist.soft_cap}</li>
+              <li className="list-watchlist-item">{watchlist.hard_cap}</li>
             </ul>
           ))}
         </div>

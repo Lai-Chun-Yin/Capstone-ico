@@ -1,7 +1,7 @@
 import { LOAD_WATCHLISTS, WatchlistActions } from './actions';
 
 export interface IWatchlistState {
-  watchlists: CapstoneICO.IWatchlist[];
+  watchlists: CapstoneICO.ICampaign[];
 }
 
 const initialState = {

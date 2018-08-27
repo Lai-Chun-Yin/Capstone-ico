@@ -6,12 +6,12 @@ export type LOAD_WATCHLISTS = typeof LOAD_WATCHLISTS;
 
 export interface ILoadWatchlistsAction {
   type: LOAD_WATCHLISTS;
-  watchlists: CapstoneICO.IWatchlist[];
+  watchlists: CapstoneICO.ICampaign[];
 }
 
 export type WatchlistActions = ILoadWatchlistsAction;
 
-export function loadWatchlists(watchlists: CapstoneICO.IWatchlist[]): WatchlistActions {
+export function loadWatchlists(watchlists: CapstoneICO.ICampaign[]): WatchlistActions {
   return {
     watchlists,
     type: LOAD_WATCHLISTS
@@ -20,7 +20,7 @@ export function loadWatchlists(watchlists: CapstoneICO.IWatchlist[]): WatchlistA
 
 export function loadWatchlistsThunk() {
   return (dispatch: Dispatch<WatchlistActions>) => {
-    axios.get<CapstoneICO.IWatchlist[]>(`${process.env.REACT_APP_API_SERVER}/api/watchlist`, {
+    axios.get<CapstoneICO.ICampaign[]>(`${process.env.REACT_APP_API_SERVER}/api/campaign/watchlist`, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }

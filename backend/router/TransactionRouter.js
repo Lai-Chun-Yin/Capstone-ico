@@ -8,7 +8,7 @@ module.exports = class TransactionRouter {
   router() {
     let router = express.Router();
     router.get('/', this.get.bind(this));
-    router.get('/:txid', this.get.bind(this));
+    // router.get('/:txid', this.get.bind(this));
     router.post('/', this.post.bind(this));
     router.put('/:txid', this.put.bind(this));
     router.delete('/:txid', this.delete.bind(this));
@@ -17,7 +17,7 @@ module.exports = class TransactionRouter {
   }
 
   get(req, res) {
-    return this.transactionService.getTxn(req.params.txid)
+    return this.transactionService.getTxn(req.user.id)
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }

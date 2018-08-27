@@ -17,7 +17,7 @@ module.exports = class WatchlistRouter {
   }
 
   get(req, res) {
-    return this.watchlistService.getWatchlist(req.params.wid)
+    return this.watchlistService.getWatchlist(req.user.id)
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }
