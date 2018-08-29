@@ -5,7 +5,22 @@ module.exports = class CampaignService {
     this.knex = knex;
   }
 
-  getCampaign(cid, user_id) {
+  searchCampaign(search) {
+    if (search) {
+      let query = this.knex('campaigns')
+      .where('title', 'like', `%${search}%`)
+      .orWhere('short_description', 'like', `%${search}%`)
+      .orWhere('long_description', 'like', `%${search}%`);
+
+      return query;
+    } else {
+      let query = this.knex('campaigns');
+
+      return query;
+    }
+  }
+
+  getCampaign(cid, user_id) { 
     if (!user_id) {
       if (cid) {
         // return specific campaigns
@@ -22,7 +37,7 @@ module.exports = class CampaignService {
         return query;
       }
     } else {
-      // console.log('getting Watchlisted Campaigns...ID: ', user_id);
+      // return campaigns in watchlist (of particular user)
       let query = this.knex('watchlists')
       .leftJoin('campaigns', 'watchlists.campaign_id', 'campaigns.id')
       .select('*')
