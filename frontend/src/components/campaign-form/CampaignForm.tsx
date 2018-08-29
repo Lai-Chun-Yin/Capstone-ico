@@ -1,9 +1,11 @@
 import * as React from "react";
+import { connect } from "react-redux";
+import * as campaignActions from "../../reducers/campaigns/actions";
 import FirstPage from "./FirstPage";
-import SecondPage from "./SecondPage";
-import ThirdPage from "./ThirdPage";
 // tslint:disable-next-line:ordered-imports
 import FourthPage from "./FourthPage";
+import SecondPage from "./SecondPage";
+import ThirdPage from "./ThirdPage";
 
 export interface ICampaignFormState {
   page: number;
@@ -19,7 +21,7 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
     };
   }
   public render() {
-    const { onSubmit } = this.props;
+    // const { onSubmit } = this.props;
     const { page } = this.state;
 
     return (
@@ -35,7 +37,7 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
           <ThirdPage previousPage={this.previousPage} onSubmit={this.nextPage} />
         )}
         {page === 4 && (
-          <FourthPage previousPage={this.previousPage} onSubmit={onSubmit} />
+          <FourthPage previousPage={this.previousPage} onSubmit={this.props.onSubmit} />
         )}
       </div>
     );
@@ -49,4 +51,21 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
   }
 }
 
-export default CampaignForm;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onSubmit: (values:any) => {
+      // tslint:disable-next-line:prefer-const
+      let campaign = Object.assign({},values);
+      campaign.startDate = new Date(values.startDate);
+      campaign.endDate = new Date(values.endDate);
+      campaign.softCap = +values.softCap;
+      campaign.hardCap = +values.hardCap;
+      dispatch(campaignActions.uploadCampaignThunk(campaign));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(CampaignForm);
