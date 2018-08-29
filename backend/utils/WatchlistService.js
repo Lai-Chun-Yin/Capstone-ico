@@ -3,53 +3,45 @@ module.exports = class WatchlistService {
     this.knex = knex;
   }
 
-  getWatchlist(co_id) {
-    if (co_id) {
+  getWatchlist(user_id, cid) {
+    if (cid) {
       let query = this.knex
         .select()
         .from('watchlists')
-        .where('id',co_id);
+        .where('campaign_id', cid)
+        .andWhere('user_id', user_id);
 
-    return query;
+      return query;
     } else {
-      let query = this.knex.select().from('watchlists');
+      let query = this.knex
+        .select()
+        .from('watchlists')
+        .where('user_id', user_id);
 
       return query;
     }
   }
 
-  postWatchlist(newWatchlist) {
+  postWatchlist(user_id, newWatchlist) {
     /* 
       any data pre-processing (trim, format, etc) belongs here
       VVVVVVVVVVVVVV
     */
 
     let action = this.knex('watchlists').insert({
-      user_id: newWatchlist.user_id,
+      user_id: user_id,
       campaign_id: newWatchlist.campaign_id
     });
 
     return action;
   }
 
-  putWatchlist(watchlist, co_id) {
-    /*
-      any data pre-processing (trim, format, etc) belongs here
-      VVVVVVVVVVVVVV
-    */
+  deleteWatchlist(user_id, cid) {
     let action = this.knex('watchlists')
-      .where('id', co_id)
-      .update({
-        user_id: watchlist.user_id,
-        campaign_id: watchlist.campaign_id
-      });
-    return action;
-  }
-
-  deleteWatchlist(co_id) {
-    let action = this.knex('watchlists')
-      .where('id', co_id)
+      .where('campaign_id', cid)
+      .andWhere('user_id', user_id)
       .del();
+      
     return action;
   }
 };

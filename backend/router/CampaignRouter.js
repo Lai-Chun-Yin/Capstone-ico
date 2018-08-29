@@ -8,6 +8,7 @@ module.exports = class CampaignRouter {
   router() {
     let router = express.Router();
     router.get('/', this.get.bind(this));
+    router.get('/search', this.searchCampaigns.bind(this));
     router.get('/watchlist', this.getWatchlistedCampaigns.bind(this));
     router.get('/:cid', this.get.bind(this));
     router.post('/', this.post.bind(this));
@@ -15,6 +16,12 @@ module.exports = class CampaignRouter {
     router.delete('/:cid', this.delete.bind(this));
 
     return router;
+  }
+
+  searchCampaigns(req, res) {
+    return this.campaignService.searchCampaign(req.query.keyword)
+    .then(results => res.json(results))
+    .catch(err => res.status(500).json(err));
   }
 
   get(req, res) {
