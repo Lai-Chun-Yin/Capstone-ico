@@ -1,4 +1,4 @@
-import { CampaignActions, LOAD_CAMPAIGNS, UPLOAD_CAMPAIGN_START, UPLOAD_CAMPAIGN_SUCCESS } from './actions';
+import { CampaignActions, LOAD_CAMPAIGNS, UPLOAD_CAMPAIGN_FAILURE, UPLOAD_CAMPAIGN_START, UPLOAD_CAMPAIGN_SUCCESS } from './actions';
 
 const initialState = {
   campaigns: [],
@@ -23,6 +23,11 @@ export function campaignReducer(state: ICampaignState = initialState, action: Ca
         uploading: true
       }
     case UPLOAD_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        uploading: false
+      }
+    case UPLOAD_CAMPAIGN_FAILURE:
       return {
         ...state,
         uploading: false

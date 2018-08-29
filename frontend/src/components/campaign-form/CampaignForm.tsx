@@ -9,6 +9,7 @@ import ThirdPage from "./ThirdPage";
 
 export interface ICampaignFormState {
   page: number;
+  imageFile: File|null;
 }
 
 class CampaignForm extends React.Component<any, ICampaignFormState> {
@@ -17,7 +18,8 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
     this.state = {
-      page: 1
+      page: 1,
+      imageFile: null
     };
   }
   public render() {
@@ -31,19 +33,27 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
           <SecondPage
             previousPage={this.previousPage}
             onSubmit={this.nextPage}
+            onFileChange={this.fileChangeHandler}
           />
         )}
         {page === 3 && (
           <ThirdPage previousPage={this.previousPage} onSubmit={this.nextPage} />
         )}
         {page === 4 && (
-          <FourthPage previousPage={this.previousPage} onSubmit={this.props.onSubmit} />
+          // tslint:disable-next-line:jsx-no-lambda
+          <FourthPage previousPage={this.previousPage} onSubmit={(values)=>{
+            return this.props.onSubmit(values, this.state.imageFile);
+          }} />
         )}
       </div>
     );
   }
   private nextPage() {
     this.setState({ page: this.state.page + 1 });
+  }
+
+  private fileChangeHandler = (event: any) => {
+    this.setState({ imageFile: event.target.files[0] });
   }
 
   private previousPage() {
@@ -53,13 +63,14 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSubmit: (values:any) => {
+    onSubmit: (values:any,imageFile:File|null) => {
       // tslint:disable-next-line:prefer-const
       let campaign = Object.assign({},values);
       campaign.startDate = new Date(values.startDate);
       campaign.endDate = new Date(values.endDate);
       campaign.softCap = +values.softCap;
       campaign.hardCap = +values.hardCap;
+      if(imageFile){campaign.imageFile = imageFile}
       dispatch(campaignActions.uploadCampaignThunk(campaign));
     }
   };

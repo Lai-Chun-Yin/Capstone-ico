@@ -56,7 +56,7 @@ module.exports = class CampaignService {
     let action = this.knex("campaigns").insert({
       title: newCampaign.campaignName,
       short_description: newCampaign.shortDescription,
-      project_photo: newCampaign.photo,
+      project_photo: newCampaign.imageFile,
       video_url: newCampaign.video,
       long_description: newCampaign.longDescription,
       full_name: newCampaign.fullName,
