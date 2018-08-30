@@ -1,4 +1,4 @@
-let generateToken = (symbol, name, decimal, supply, recipient)=> `pragma solidity ^0.4.18;
+pragma solidity ^0.4.18;
 
 import "./tokenfeatures.sol";
 
@@ -9,8 +9,8 @@ import "./tokenfeatures.sol";
 contract Token is ERC20Interface, Owned, SafeMath {
     string public symbol;
     string public  name;
-    uint8 public decimals;
-    uint public _totalSupply;
+    uint256 public decimals;
+    uint256 public _totalSupply;
 
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
@@ -18,26 +18,35 @@ contract Token is ERC20Interface, Owned, SafeMath {
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
-    constructor() public {
-        symbol = "${symbol}";
-        name = "${name}";
-        decimals = ${decimal};
-        _totalSupply = ${supply * 10 ** decimal};
-        balances[${recipient}] = _totalSupply;
-        emit Transfer(address(0), ${recipient}, _totalSupply);
+    constructor(string _symbol, string _name, uint256 _decimals, uint _supply, address _genesis) public {
+        symbol = _symbol;
+        name = _name;
+        decimals = _decimals;
+        _totalSupply = _supply * (10 ** decimals);
+        balances[_genesis] = _totalSupply;
+        emit Transfer(address(0), _genesis, _totalSupply);
     }
+
+    // constructor(string _symbol, string _name, uint8 _decimal, uint8 _supply, address _recipient) public {
+    //     symbol = _symbol;
+    //     name = _name;
+    //     decimals = _decimal;
+    //     _totalSupply = _supply * (10 ** _decimal);
+    //     balances[_recipient] = _totalSupply;
+    //     emit Transfer(address(0), _recipient, _totalSupply);
+    // }
 
     // ------------------------------------------------------------------------
     // Total supply
     // ------------------------------------------------------------------------
-    function totalSupply() public constant returns (uint) {
-        return _totalSupply  - balances[address(0)];
+    function totalSupply() public view returns (uint) {
+        return _totalSupply - balances[address(0)];
     }
 
     // ------------------------------------------------------------------------
     // Get the token balance for account tokenOwner
     // ------------------------------------------------------------------------
-    function balanceOf(address tokenOwner) public constant returns (uint balance) {
+    function balanceOf(address tokenOwner) public view returns (uint balance) {
         return balances[tokenOwner];
     }
 
@@ -88,7 +97,7 @@ contract Token is ERC20Interface, Owned, SafeMath {
     // Returns the amount of tokens approved by the owner that can be
     // transferred to the spender's account
     // ------------------------------------------------------------------------
-    function allowance(address tokenOwner, address spender) public constant returns (uint remaining) {
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
         return allowed[tokenOwner][spender];
     }
 
@@ -118,5 +127,3 @@ contract Token is ERC20Interface, Owned, SafeMath {
         return ERC20Interface(tokenAddress).transfer(owner, tokens);
     }
 }
-`
-module.exports = generateToken;

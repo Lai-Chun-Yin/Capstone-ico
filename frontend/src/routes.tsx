@@ -10,6 +10,7 @@ import News from "./components/news";
 import NotFound from "./components/notFound";
 import SignupForm from "./components/signupForm";
 import { TestApi } from "./components/testApi_ck";
+import TestWeb3 from "./components/testWeb3";
 
 const Routes = () => {
   return (

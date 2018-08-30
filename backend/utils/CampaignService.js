@@ -5,47 +5,72 @@ module.exports = class CampaignService {
     this.knex = knex;
   }
 
-  getCampaign(cid) {
-    if (cid) {
-      // return specific campaigns
-      let query = this.knex
-        .select()
-        .from("campaigns")
-        .where("id", cid);
+  searchCampaign(search) {
+    if (search) {
+      let query = this.knex('campaigns')
+      .where('title', 'like', `%${search}%`)
+      .orWhere('short_description', 'like', `%${search}%`)
+      .orWhere('long_description', 'like', `%${search}%`);
 
       return query;
     } else {
-      // return all campaigns
-      let query = this.knex.select().from("campaigns");
+      let query = this.knex('campaigns');
 
       return query;
     }
   }
 
-  postCampaign(newCampaign) {
+  getCampaign(cid, user_id) { 
+    if (!user_id) {
+      if (cid) {
+        // return specific campaigns
+        let query = this.knex
+          .select()
+          .from("campaigns")
+          .where("id", cid);
+
+        return query;
+      } else {
+        // return all campaigns
+        let query = this.knex.select().from("campaigns");
+
+        return query;
+      }
+    } else {
+      // return campaigns in watchlist (of particular user)
+      let query = this.knex('watchlists')
+      .leftJoin('campaigns', 'watchlists.campaign_id', 'campaigns.id')
+      .select('*')
+      .where('watchlists.user_id', user_id);
+
+      return query;
+    }
+  }
+
+  postCampaign(newCampaign, user_id) {
     /* 
       any data pre-processing (trim, format, etc) belongs here
       VVVVVVVVVVVVVV
     */
 
     let action = this.knex("campaigns").insert({
-      title: newCampaign.title,
-      short_description: newCampaign.sd,
-      project_photo: newCampaign.photo,
-      video_url: newCampaign.url,
-      long_description: newCampaign.ld,
-      full_name: newCampaign.name,
+      title: newCampaign.campaignName,
+      short_description: newCampaign.shortDescription,
+      project_photo: newCampaign.imageFile,
+      video_url: newCampaign.video,
+      long_description: newCampaign.longDescription,
+      full_name: newCampaign.fullName,
       email: newCampaign.email,
-      company_name: newCampaign.company_name,
-      company_legal_form: newCampaign.company_legal_form,
-      company_reg_id: newCampaign.company_reg_id,
-      company_country: newCampaign.company_country,
-      start_date: newCampaign.start_date,
-      end_date: newCampaign.end_date,
-      soft_cap: newCampaign.soft_cap,
-      hard_cap: newCampaign.hard_cap,
-      status: newCampaign.status,
-      user_id: newCampaign.user_id,
+      company_name: newCampaign.companyName,
+      company_legal_form: newCampaign.legalForm,
+      company_reg_id: newCampaign.regId,
+      company_country: newCampaign.country,
+      start_date: newCampaign.startDate,
+      end_date: newCampaign.endDate,
+      soft_cap: newCampaign.softCap,
+      hard_cap: newCampaign.hardCap,
+      status: "pending",
+      user_id: user_id,
       eth_address: newCampaign.eth_address,
       private_key: newCampaign.private_key,
       token_id: newCampaign.token_id

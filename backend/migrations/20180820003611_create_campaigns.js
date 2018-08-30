@@ -16,6 +16,7 @@ exports.up = function(knex, Promise) {
     table.timestamp('end_date');
     table.decimal('soft_cap');
     table.decimal('hard_cap');
+    table.decimal('conversion_ratio');
     table.string('status');
     table.integer('user_id').unsigned();
     table.foreign('user_id').references('users.id');

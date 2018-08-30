@@ -16,6 +16,7 @@ declare namespace CapstoneICO {
     end_date: Date;
     soft_cap: number;
     hard_cap: number;
+    conversion_ratio: number;
     status: string;
     user_id: number;
     eth_address: string;

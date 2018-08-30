@@ -26,6 +26,7 @@ module.exports = class UserRouter {
         try {
             if (!req.body.email || !req.body.password) {
                 res.status(400).send("Invalid email or password");
+                return;
             }
             var email = req.body.email;
             var password = req.body.password;

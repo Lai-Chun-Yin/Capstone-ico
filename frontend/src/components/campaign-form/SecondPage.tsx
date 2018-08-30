@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import * as validation from "./fieldLevelValidation";
-import FileInput from "./imageUploadField";
+// import FileInput from "./imageUploadField";
 import renderField from "./renderField";
 import textAreaField from "./textAreaField";
 // import validate from "./validate";
@@ -11,41 +11,46 @@ import textAreaField from "./textAreaField";
 
 export interface ISecondPageProps {
   previousPage: any;
+  onFileChange: (event: any) => void;
 }
 
 const SecondPage: React.ComponentType<
   ISecondPageProps & InjectedFormProps<{}, ISecondPageProps>
-> = (props: any) => {
-  const { handleSubmit, previousPage } = props;
+  > = (props: any) => {
+    const { handleSubmit, previousPage } = props;
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <h2>2 of 4: story</h2>
-      <Field component={FileInput} name="imageFile" />
-      <Field
-        name="video"
-        type="text"
-        component={renderField}
-        label="Link to the campaign video"
-        validate={validation.ytlink}
-      />
-      <Field
-        name="longDescription"
-        component={textAreaField}
-        label="Campaign Description"
-        validate={validation.required}
-      />
-      <div>
-        <button type="button" className="previous" onClick={previousPage}>
-          Previous
+    return (
+      <form onSubmit={handleSubmit}>
+        <h2>2 of 4: story</h2>
+        <input
+          onChange={props.onFileChange}
+          type="file"
+          accept="image/*"
+        />
+        <Field
+          name="video"
+          type="text"
+          component={renderField}
+          label="Link to the campaign video"
+          validate={validation.ytlink}
+        />
+        <Field
+          name="longDescription"
+          component={textAreaField}
+          label="Campaign Description"
+          validate={validation.required}
+        />
+        <div>
+          <button type="button" className="previous" onClick={previousPage}>
+            Previous
         </button>
-        <button type="submit" className="next">
-          Next
+          <button type="submit" className="next">
+            Next
         </button>
-      </div>
-    </form>
-  );
-};
+        </div>
+      </form>
+    );
+  };
 
 export default reduxForm<{}, ISecondPageProps>({
   destroyOnUnmount: false,

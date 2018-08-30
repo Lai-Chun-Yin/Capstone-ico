@@ -5,15 +5,15 @@ module.exports = class TransactionService {
     this.knex = knex;
   }
 
-  getTxn(txid) {
-    if (txid) {   // return specific tokens
+  getTxn(user_id) {
+    if (user_id) {   // return user's transactions
       let query = this.knex
         .select()
         .from('transactions')
-        .where('id',txid);
+        .where('user_id',user_id);
       
       return query;
-    } else {      // return all tokens
+    } else {      // return all transactions
       let query = this.knex.select().from('transactions');
 
       return query;
