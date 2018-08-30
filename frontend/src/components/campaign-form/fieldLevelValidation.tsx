@@ -14,3 +14,39 @@ export const ytlink = (link:string) => {
     return undefined;
 }
 export const maxChar100 = (value:string) => (value.length<=100?undefined:"Must be shorter than 100 characters");
+// export const dateCompare = (dateStr:string) => ();
+// export const dateEnd = (dateStr:string) => ()
+export const campaignDates:any = {
+    startDate : null,
+    endDate : null,
+
+    setStartDate: (dateStr:string)=>{
+        campaignDates.startDate = new Date(dateStr);
+    },
+    setEndDate : (dateStr:string)=>{
+        campaignDates.endDate = new Date(dateStr);
+    },
+    validateDates:()=>{
+        if(campaignDates.startDate<campaignDates.endDate){
+            return undefined;
+        }else{
+            return "Start date must be earlier than end date"
+        }
+    },
+    validateStartDate: (dateStr:string)=>{
+        campaignDates.setStartDate(dateStr);
+        if(campaignDates.startDate&&campaignDates.endDate){
+            return campaignDates.validateDates()
+        }else {
+            return "Campaign start and end dates are required";
+        }
+    },
+    validateEndDate: (dateStr:string)=>{
+        campaignDates.setEndDate(dateStr);
+        if(campaignDates.startDate&&campaignDates.endDate){
+            return campaignDates.validateDates()
+        }else {
+            return "Campaign start and end dates are required";
+        }
+    }
+}
