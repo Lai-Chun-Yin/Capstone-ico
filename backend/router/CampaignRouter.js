@@ -1,4 +1,6 @@
 const express = require('express');
+const authClass = require('../utils/auth');
+const auth = authClass();
 
 module.exports = class CampaignRouter {
   constructor(campaignService) {
@@ -9,11 +11,11 @@ module.exports = class CampaignRouter {
     let router = express.Router();
     router.get('/', this.get.bind(this));
     router.get('/search', this.searchCampaigns.bind(this));
-    router.get('/watchlist', this.getWatchlistedCampaigns.bind(this));
+    router.get('/watchlist', auth.authenticate(), this.getWatchlistedCampaigns.bind(this));
     router.get('/:cid', this.get.bind(this));
-    router.post('/', this.post.bind(this));
-    router.put('/:cid', this.put.bind(this));
-    router.delete('/:cid', this.delete.bind(this));
+    router.post('/', auth.authenticate(), this.post.bind(this));
+    router.put('/:cid', auth.authenticate(), this.put.bind(this));
+    router.delete('/:cid', auth.authenticate(), this.delete.bind(this));
 
     return router;
   }

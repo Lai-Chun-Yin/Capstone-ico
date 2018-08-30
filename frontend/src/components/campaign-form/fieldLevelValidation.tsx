@@ -50,3 +50,7 @@ export const campaignDates:any = {
         }
     }
 }
+export const positiveNum = (value:number)=>{
+    if(value>0){return undefined;}
+    else{return "Must be a positive number"}
+}
