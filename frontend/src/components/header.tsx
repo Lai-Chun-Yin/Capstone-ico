@@ -1,16 +1,13 @@
 import AppBar from "@material-ui/core/AppBar";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
+// import Avatar from "@material-ui/core/Avatar";
+import Button, { ButtonProps } from "@material-ui/core/Button";
+// import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
-// import { toggleCollapsedNav } from "actions/Setting";
-// import CardHeader from "components/dashboard/Common/CardHeader/index";
-// import { COLLAPSED_DRAWER, FIXED_DRAWER } from "constants/ActionTypes";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
+// import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import SearchBox from "./searchBox";
-// import Menu from "components/TopNav/Menu";
-import UserInfoPopup from "./userInfoPopup";
+// import UserInfoPopup from "./userInfoPopup";
 
 interface IHeaderProps {
   [key: string]: any;
@@ -19,6 +16,13 @@ interface IHeaderProps {
 interface IHeaderstate {
   [key: string]: any;
 }
+
+interface ILinkButtonProps extends ButtonProps {
+  to?: string;
+}
+
+// create a new LinkButton component for connect react router dom and material ui button
+const LinkButton: React.ReactType<ILinkButtonProps> = Button;
 
 class Header extends React.Component<IHeaderProps, IHeaderstate> {
   public constructor(props: any) {
@@ -121,14 +125,35 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
             // value={this.state.searchText}
           />
 
-          <ul className="header-notifications list-inline ml-auto">
-            <li className="d-inline-block d-lg-none list-inline-item">
+          <ul className="header-notifications list-inline ml-auto navbar p-0">
+            <li>
+              <LinkButton
+                size="small"
+                className="text-white d-none d-sm-block"
+                component={Link}
+                to="/login"
+              >
+                login
+              </LinkButton>
+            </li>
+
+            <li>
+              <LinkButton
+                size="small"
+                className="text-white d-none d-sm-block"
+                component={Link}
+                to="/register"
+              >
+                register
+              </LinkButton>
+            </li>
+            {/* <li className="d-inline-block d-lg-none list-inline-item">
               <Dropdown
                 className="quick-menu nav-searchbox"
                 // isOpen={this.state.searchBox}
                 // toggle={this.onSearchBoxSelect.bind(this)}
-              >
-                <DropdownToggle
+              > */}
+            {/* <DropdownToggle
                   className="d-inline-block"
                   tag="span"
                   data-toggle="dropdown"
@@ -136,9 +161,9 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                   <IconButton className="icon-btn size-30">
                     <i className="zmdi zmdi-search zmdi-hc-fw" />
                   </IconButton>
-                </DropdownToggle>
+                </DropdownToggle> */}
 
-                <DropdownMenu right={true} className="p-0">
+            {/* <DropdownMenu right={true} className="p-0">
                   <SearchBox
                     styleName="search-dropdown"
                     placeholder=""
@@ -147,33 +172,26 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                   />
                 </DropdownMenu>
               </Dropdown>
-            </li>
+            </li> */}
 
-            <li className="list-inline-item">
+            {/* <li className="list-inline-item">
               <Dropdown
                 className="quick-menu"
                 // isOpen={this.state.langSwitcher}
                 // toggle={this.onLangSwitcherSelect.bind(this)}
-              >
-                <DropdownToggle
+              > */}
+            {/* <DropdownToggle
                   className="d-inline-block"
                   tag="span"
                   data-toggle="dropdown"
                 >
-                  <div className="d-flex align-items-center pointer pt-1">
-                    {/* <i className={`flag flag-24 flag-${locale.icon}`} /> */}
-                  </div>
-                </DropdownToggle>
+                  <div className="d-flex align-items-center pointer pt-1"/>
+                </DropdownToggle> 
 
-                <DropdownMenu right={true} className="w-50">
-                  {/* <LanguageSwitcher
-                    switchLanguage={this.props.switchLanguage}
-                    handleRequestClose={this.handleRequestClose}
-                  /> */}
-                </DropdownMenu>
+                <DropdownMenu right={true} className="w-50"/>
               </Dropdown>
-            </li>
-            <li className="list-inline-item app-tour">
+            </li>*/}
+            {/* <li className="list-inline-item app-tour">
               <Dropdown
                 className="quick-menu"
                 // isOpen={this.state.appNotification}
@@ -189,14 +207,9 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                   </IconButton>
                 </DropdownToggle>
 
-                <DropdownMenu right={true}>
-                  {/* <CardHeader
-                    styleName="align-items-center"
-                    heading="appNotification.title"
-                  /> */}
-                </DropdownMenu>
+                <DropdownMenu right={true}/>
               </Dropdown>
-            </li>
+            </li> 
             <li className="list-inline-item mail-tour">
               <Dropdown
                 className="quick-menu"
@@ -213,9 +226,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                   </IconButton>
                 </DropdownToggle>
 
-                <DropdownMenu right={true}>
-                  {/* <CardHeader styleName="align-items-center" heading="AAA" /> */}
-                </DropdownMenu>
+                <DropdownMenu right={true}/>
               </Dropdown>
             </li>
 
@@ -243,7 +254,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                   <UserInfoPopup />
                 </DropdownMenu>
               </Dropdown>
-            </li>
+            </li>*/}
           </ul>
         </Toolbar>
       </AppBar>

@@ -8,6 +8,7 @@
     "@types/axios": "^0.14.0",
     "@types/joi": "^13.4.2",
     "@types/jwt-decode": "^2.2.1",
+    "@types/material-ui": "^0.21.5",
     "@types/react-custom-scrollbars": "^4.0.5",
     "@types/react-facebook-login": "^3.6.5",
     "@types/react-redux": "^6.0.6",
