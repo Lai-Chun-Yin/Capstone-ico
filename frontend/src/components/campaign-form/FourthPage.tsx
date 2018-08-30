@@ -43,6 +43,13 @@ const FourthPage: React.ComponentType<
         label="Token Symbol"
         validate={validation.required}
       />
+      <Field
+        name="conversionRatio"
+        type="number"
+        component={renderField}
+        label="How many tokens can be exchanged for 1 ETH"
+        validate={[validation.required,validation.positiveNum]}
+      />
       
       <div>
         <button type="button" className="previous" onClick={previousPage}>
