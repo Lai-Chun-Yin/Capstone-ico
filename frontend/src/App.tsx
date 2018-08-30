@@ -1,7 +1,12 @@
 import * as React from "react";
-import TopNav from "./components/newNavBar";
+import TopNav from "./components/topNav";
 // import NavBar from "./components/navbar";
 import Routes from "./routes";
+// tslint:disable-next-line:no-var-requires
+const isIOS = require("react-device-detect").isIOS;
+// tslint:disable-next-line:no-var-requires
+const isMobile = require("react-device-detect").isMobile;
+import Header from "./components/header";
 
 // export interface IAppProps {
 
@@ -13,9 +18,17 @@ import Routes from "./routes";
 
 class App extends React.Component {
   public render() {
+    if (isIOS && isMobile) {
+      document.body.classList.add("ios-mobile-view-height");
+    } else if (document.body.classList.contains("ios-mobile-view-height")) {
+      document.body.classList.remove("ios-mobile-view-height");
+    }
     return (
       <React.Fragment>
-        <TopNav />
+        <div className="app-header app-header-horizontal">
+          <Header />
+          <TopNav />
+        </div>
         <Routes />
       </React.Fragment>
     );

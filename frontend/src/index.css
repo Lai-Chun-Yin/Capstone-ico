@@ -16585,6 +16585,110 @@ label {
   margin-bottom: 0;
 }
 
+/*Faqs Styles*/
+.Collapsible {
+  background-color: #fff;
+  margin-bottom: 15px;
+}
+
+.Collapsible__contentInner {
+  padding: 20px;
+  border: 1px solid #fff;
+  border-top: 0;
+}
+.Collapsible__contentInner p {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.Collapsible__contentInner p:last-child {
+  margin-bottom: 0;
+}
+
+.Collapsible__trigger {
+  display: block;
+  font-weight: 400;
+  text-decoration: none;
+  position: relative;
+  padding: 18px 20px;
+  border-radius: 6px;
+  background: #3f51b5;
+  color: #fff;
+}
+.Collapsible__trigger:after {
+  content: "";
+  font-family: "Material-Design-Iconic-Font";
+  font-size: 20px;
+  position: absolute;
+  right: 24px;
+  top: 16px;
+  display: block;
+  transition: transform 300ms;
+}
+.Collapsible__trigger.is-open {
+  border-radius: 6px 6px 0 0;
+}
+.Collapsible__trigger.is-open:after {
+  transform: rotateZ(180deg);
+}
+
+.categories-list {
+  margin-bottom: 0;
+}
+.categories-list li {
+  margin-bottom: 10px;
+}
+.categories-list li:last-child {
+  margin-bottom: 0;
+}
+.categories-list li.active a {
+  color: #3f51b5;
+}
+.categories-list .badge {
+  font-size: 9px;
+}
+
+.articles-section .articles {
+  margin-bottom: 26px;
+}
+.articles-section .articles:last-child {
+  margin-bottom: 0;
+}
+
+.article-image {
+  display: block;
+  margin-bottom: 12px;
+}
+.article-image > img {
+  border-radius: 6px;
+  width: 100%;
+}
+
+.article-description p {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.meta-wrapper {
+  margin-bottom: 10px;
+}
+
+.meta-date,
+.meta-comment {
+  font-size: 12px;
+  color: #6c757d;
+  display: inline-block;
+}
+.meta-date i,
+.meta-comment i {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.meta-date + .meta-comment {
+  margin-left: 10px;
+}
+
 /* Color Theme
    ========================================================================== */
 /*Theme Indigo Styles*/

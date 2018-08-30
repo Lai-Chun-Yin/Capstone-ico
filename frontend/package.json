@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.5.1",
+    "@material-ui/icons": "^3.0.1",
     "@types/axios": "^0.14.0",
     "@types/joi": "^13.4.2",
     "@types/jwt-decode": "^2.2.1",
@@ -26,6 +27,7 @@
     "nprogress": "^0.2.0",
     "react": "^16.4.2",
     "react-custom-scrollbars": "^4.2.1",
+    "react-device-detect": "^1.5.9",
     "react-dom": "^16.4.2",
     "react-facebook-login": "^4.0.1",
     "react-redux": "^5.0.7",
