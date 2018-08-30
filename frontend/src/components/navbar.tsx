@@ -64,7 +64,12 @@ class NavBar extends React.Component<INavBarProps, INavBar> {
             </NavItem>
             <NavItem>
               <NavLink to="/test" tag={RRNavLink}>
-                test
+                test Web3
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink to="/testApi" tag={RRNavLink}>
+                test API
               </NavLink>
             </NavItem>
           </Nav>
