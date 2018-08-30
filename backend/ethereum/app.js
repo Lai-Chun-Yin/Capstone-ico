@@ -5,11 +5,11 @@ var fs = require('fs');
 var solc = require('solc');
 
 var web3 = new Web3(
-    new Web3.providers.HttpProvider('https://ropsten.infura.io/CF0hhTkBMfb9deEWlCHw')
+    new Web3.providers.HttpProvider('https://rinkeby.infura.io/CF0hhTkBMfb9deEWlCHw')
 );
 
-var address = '0xC6a55B4184Ca938c472FC7a7692009C65D1c2a6c';
-var key = '37d73f8a20cc898ec669687129c73468974530c1717b382b6d13318f55ef48b5';
+var address = '0xeC41A4423F95f21CD5e5E04D64D8f982fC844abB';
+var key = '68a80087c8d256658a719e3de888ec63d81e285463f1ab304541d3b5e59fbcb0';
 
 
 const input = {
@@ -62,4 +62,4 @@ async function sendRaw(rawTx) {
     web3.eth.sendSignedTransaction('0x' + serializedTx).on('receipt', console.log).catch(err => console.log(err));
 }
 
-sendRaw(rawTx);    
+sendRaw(rawTx);
