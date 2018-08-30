@@ -33,7 +33,7 @@ let tos = new TokenService(knex);
 let trs = new TransactionService(knex);
 let wls = new WatchlistService(knex);
 let userService = new UserService(knex);
-app.use('/api/campaign', auth.authenticate(), (new CampaignRouter(cas)).router());
+app.use('/api/campaign', (new CampaignRouter(cas)).router());
 app.use('/api/comment', auth.authenticate(), (new CommentRouter(cos)).router());
 app.use('/api/token', auth.authenticate(), (new TokenRouter(tos)).router());
 app.use('/api/transaction', auth.authenticate(), (new TransactionRouter(trs)).router());
