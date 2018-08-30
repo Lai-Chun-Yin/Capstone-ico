@@ -24,13 +24,13 @@ class App extends React.Component {
       document.body.classList.remove("ios-mobile-view-height");
     }
     return (
-      <React.Fragment>
+      <div className="app-main-container">
         <div className="app-header app-header-horizontal">
           <Header />
           <TopNav />
         </div>
         <Routes />
-      </React.Fragment>
+      </div>
     );
   }
 }
