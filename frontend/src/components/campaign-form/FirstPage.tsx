@@ -29,13 +29,13 @@ const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
         name="startDate"
         component={datePickerField}
         label="Start Date"
-        validate={validation.required}
+        validate={validation.campaignDates.validateStartDate}
       />
       <Field
         name="endDate"
         component={datePickerField}
         label="End Date"
-        validate={validation.required}
+        validate={validation.campaignDates.validateEndDate}
       />
       <Field
         name="softCap"

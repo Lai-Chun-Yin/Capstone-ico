@@ -1,5 +1,5 @@
 import * as React from "react";
-import TopNav from "./components/newNavBar";
+import TopNav from "./components/navbar";
 // import NavBar from "./components/navbar";
 import Routes from "./routes";
 

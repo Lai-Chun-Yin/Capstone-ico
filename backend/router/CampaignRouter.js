@@ -41,7 +41,7 @@ module.exports = class CampaignRouter {
   }
 
   post(req, res) {
-    return this.campaignService.postCampaign(req.body)
+    return this.campaignService.postCampaign(req.body,req.user.id)
     .then(() => this.campaignService.getCampaign())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));

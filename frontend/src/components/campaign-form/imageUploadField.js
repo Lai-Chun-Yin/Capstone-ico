@@ -18,7 +18,7 @@ const FileInput = ({
 // tslint:disable-next-line:no-unused-expression
 }) => (
   <input
-    onChange={adaptFileEventToValue(onChange)}
+    onChange={props.onFileChange}
     onBlur={adaptFileEventToValue(onBlur)}
     type="file"
     {...inputProps}

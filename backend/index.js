@@ -40,5 +40,6 @@ app.use('/api/transaction', auth.authenticate(), (new TransactionRouter(trs)).ro
 app.use('/api/watchlist', auth.authenticate(), (new WatchlistRouter(wls)).router());
 
 app.use('/api',(new UserRouter(userService)).router());
+require('./router/UploadRouter')(app);
 
 app.listen(8080,() => console.log('listening on port 8080'));

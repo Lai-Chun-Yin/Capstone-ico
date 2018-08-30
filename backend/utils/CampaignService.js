@@ -47,30 +47,30 @@ module.exports = class CampaignService {
     }
   }
 
-  postCampaign(newCampaign) {
+  postCampaign(newCampaign, user_id) {
     /* 
       any data pre-processing (trim, format, etc) belongs here
       VVVVVVVVVVVVVV
     */
 
     let action = this.knex("campaigns").insert({
-      title: newCampaign.title,
-      short_description: newCampaign.sd,
-      project_photo: newCampaign.photo,
-      video_url: newCampaign.url,
-      long_description: newCampaign.ld,
-      full_name: newCampaign.name,
+      title: newCampaign.campaignName,
+      short_description: newCampaign.shortDescription,
+      project_photo: newCampaign.imageFile,
+      video_url: newCampaign.video,
+      long_description: newCampaign.longDescription,
+      full_name: newCampaign.fullName,
       email: newCampaign.email,
-      company_name: newCampaign.company_name,
-      company_legal_form: newCampaign.company_legal_form,
-      company_reg_id: newCampaign.company_reg_id,
-      company_country: newCampaign.company_country,
-      start_date: newCampaign.start_date,
-      end_date: newCampaign.end_date,
-      soft_cap: newCampaign.soft_cap,
-      hard_cap: newCampaign.hard_cap,
-      status: newCampaign.status,
-      user_id: newCampaign.user_id,
+      company_name: newCampaign.companyName,
+      company_legal_form: newCampaign.legalForm,
+      company_reg_id: newCampaign.regId,
+      company_country: newCampaign.country,
+      start_date: newCampaign.startDate,
+      end_date: newCampaign.endDate,
+      soft_cap: newCampaign.softCap,
+      hard_cap: newCampaign.hardCap,
+      status: "pending",
+      user_id: user_id,
       eth_address: newCampaign.eth_address,
       private_key: newCampaign.private_key,
       token_id: newCampaign.token_id
