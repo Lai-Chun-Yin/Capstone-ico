@@ -4,7 +4,9 @@ import Button, { ButtonProps } from "@material-ui/core/Button";
 // import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { IRootState } from "../reducers/index";
 // import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import SearchBox from "./searchBox";
 // import UserInfoPopup from "./userInfoPopup";
@@ -121,32 +123,49 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
           <SearchBox
             styleName="d-none d-lg-block"
             placeholder=""
-            // onChange={this.updateSearchText.bind(this)}
-            // value={this.state.searchText}
+          // onChange={this.updateSearchText.bind(this)}
+          // value={this.state.searchText}
           />
 
           <ul className="header-notifications list-inline ml-auto navbar p-0">
-            <li>
-              <LinkButton
-                size="small"
-                className="text-white d-none d-sm-block"
-                component={Link}
-                to="/login"
-              >
-                login
-              </LinkButton>
-            </li>
+            {!this.props.isAuthenticated === true && (
+              <React.Fragment>
+                <li>
+                  <LinkButton
+                    size="small"
+                    className="text-white d-none d-sm-block"
+                    component={Link}
+                    to="/login"
+                  >
+                    login
+                  </LinkButton>
+                </li>
 
-            <li>
-              <LinkButton
-                size="small"
-                className="text-white d-none d-sm-block"
-                component={Link}
-                to="/register"
-              >
-                register
-              </LinkButton>
-            </li>
+                <li>
+                  <LinkButton
+                    size="small"
+                    className="text-white d-none d-sm-block"
+                    component={Link}
+                    to="/register"
+                  >
+                    register
+                  </LinkButton>
+                </li>
+              </React.Fragment>
+            )}
+            {this.props.isAuthenticated === true && (
+              <li>
+                <LinkButton
+                  size="small"
+                  className="text-white d-none d-sm-block"
+                  component={Link}
+                  to="/logout"
+                >
+                  Logout
+                </LinkButton>
+              </li>
+            )}
+
             {/* <li className="d-inline-block d-lg-none list-inline-item">
               <Dropdown
                 className="quick-menu nav-searchbox"
@@ -262,4 +281,10 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
   }
 }
 
-export default Header;
+const mapStateToProps = (state: IRootState) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
+export default connect(mapStateToProps)(Header);

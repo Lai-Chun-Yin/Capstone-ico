@@ -67,7 +67,6 @@ export interface AuthLogoutAction extends Action {
 
 export const logout = (): AuthLogoutAction => {
   localStorage.removeItem("token");
-  localStorage.removeItem("userId");
   return {
     type: AUTH_LOGOUT
   };
