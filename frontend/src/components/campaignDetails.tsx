@@ -1,39 +1,70 @@
 import axios from "axios";
 import * as React from "react";
 import { connect } from 'react-redux';
+import { match } from 'react-router-dom'
 import { IRootState } from "../reducers/index"
+import Youtube from "./Youtube";
 
 interface ICampaignDetailsProps {
     campaigns: CapstoneICO.ICampaign[];
-    campaignId: number;
+    match: match<ICampaignIdPathParam>
 }
 interface ICampaignDetailsState {
-    campaign: CapstoneICO.ICampaign|null;
+    campaign: CapstoneICO.ICampaign | null;
+}
+interface ICampaignIdPathParam {
+    campaignId: number
 }
 
-class CampaignDetails extends React.Component<ICampaignDetailsProps,ICampaignDetailsState> {
+class CampaignDetails extends React.Component<ICampaignDetailsProps, ICampaignDetailsState> {
     constructor(props: ICampaignDetailsProps) {
         super(props);
-        const targetCampaign = props.campaigns.filter((campaign)=> campaign.id===props.campaignId)
+        const targetCampaign = props.campaigns.filter((campaign) => campaign.id === props.match.params.campaignId)
         this.state = {
             campaign: targetCampaign[0]
         }
     }
 
     public componentDidMount() {
-        if(!this.state.campaign){
-        const token = localStorage.getItem('token');
-        this.fetchCampaign(token);}
+        if (!this.state.campaign) {
+            const token = localStorage.getItem('token');
+            this.fetchCampaign(token);
+        }
     }
 
     public render() {
-        let projectPic:any;
-        if(this.state.campaign){ projectPic = 
-        <img src={'https://s3.ap-northeast-2.amazonaws.com/capstone-ico/' + this.state.campaign.project_photo} alt="logo" />
-         } else {
+        let projectPic: any;
+        if (this.state.campaign) {
+            projectPic = this.state.campaign.project_photo ?
+                <img src={'https://s3.ap-northeast-2.amazonaws.com/capstone-ico/' + this.state.campaign.project_photo} alt="logo" /> : null
+        } else {
             projectPic = null;
         }
-            
+        let videoPlayer: any;
+        if (this.state.campaign) {
+            videoPlayer = this.state.campaign.video_url ?
+                <Youtube videoId={this.state.campaign.video_url} /> : null
+        } else { videoPlayer = null; }
+
+        let campaignContent: any;
+        if (this.state.campaign) {
+            campaignContent = (
+                <React.Fragment>
+                    <header>
+                        <h2>{this.state.campaign.title}</h2>
+                    </header>
+                    <section>
+                        {videoPlayer}
+                        {projectPic}
+
+                        <h4>{this.state.campaign.short_description}</h4>
+                        <p>{this.state.campaign.long_description}</p>
+                        {this.state.campaign}
+                    </section>
+                </React.Fragment>
+            )
+        }
+
         return (
             <React.Fragment>
                 <div className="container">
@@ -41,10 +72,10 @@ class CampaignDetails extends React.Component<ICampaignDetailsProps,ICampaignDet
                         <div className="col-12" />
                     </div>
                 </div>
-                <div className="container-fluid">
+                <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            {projectPic}
+                            {campaignContent}
                         </div>
                     </div>
 
@@ -53,9 +84,9 @@ class CampaignDetails extends React.Component<ICampaignDetailsProps,ICampaignDet
         );
     }
 
-    private async fetchCampaign(token:string|null){
+    private async fetchCampaign(token: string | null) {
         try {
-            const result = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/campaign/${this.props.campaignId}`,
+            const result = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/campaign/${this.props.match.params.campaignId}`,
                 { headers: { Authorization: `Bearer ${token}` } });
             this.setState({
                 campaign: result.data[0]

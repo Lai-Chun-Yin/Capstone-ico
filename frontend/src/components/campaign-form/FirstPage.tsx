@@ -22,35 +22,22 @@ const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
       <Field
         name="shortDescription"
         component={textAreaField}
-        label="Last Name"
+        label="Shortly describe your project in one sentence"
         validate={[validation.required,validation.maxChar100]}
       />
       <Field
         name="startDate"
         component={datePickerField}
         label="Start Date"
-        validate={validation.campaignDates.validateStartDate}
+        validate={[validation.required,validation.campaignDates.validateStartDate]}
       />
       <Field
         name="endDate"
         component={datePickerField}
         label="End Date"
-        validate={validation.campaignDates.validateEndDate}
+        validate={[validation.required,validation.campaignDates.validateEndDate]}
       />
-      <Field
-        name="softCap"
-        type="number"
-        component={renderField}
-        label="Soft Cap"
-        validate={validation.required}
-      />
-      <Field
-        name="hardCap"
-        type="number"
-        component={renderField}
-        label="Hard Cap"
-        validate={validation.required}
-      />
+      
       <div>
         <button type="submit" className="next">
           Next

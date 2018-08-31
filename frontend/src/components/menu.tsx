@@ -26,6 +26,11 @@ class Menu extends React.Component {
             </NavLink>
           </li>
           <li className="nav-item">
+              <NavLink to="/campaign/create/basic">
+                <span>Create Campaign</span>
+              </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink to="/news">
               <span>News</span>
             </NavLink>

@@ -38,19 +38,70 @@ export const campaignDates:any = {
         if(campaignDates.startDate&&campaignDates.endDate){
             return campaignDates.validateDates()
         }else {
-            return "Campaign start and end dates are required";
-        }
+            return undefined;        }
     },
     validateEndDate: (dateStr:string)=>{
         campaignDates.setEndDate(dateStr);
         if(campaignDates.startDate&&campaignDates.endDate){
             return campaignDates.validateDates()
         }else {
-            return "Campaign start and end dates are required";
+            return undefined;
         }
     }
 }
 export const positiveNum = (value:number)=>{
     if(value>0){return undefined;}
     else{return "Must be a positive number"}
+}
+export const tokenQuantity:any={
+    softCap:null,
+    hardCap:null,
+    totalSupply:null,
+    setSoftCap:(value:number)=>{
+        tokenQuantity.softCap = value;
+    },
+    setHardCap:(value:number)=>{
+        tokenQuantity.hardCap = value;
+    },
+    setTotalSupply:(value:number)=>{
+        tokenQuantity.totalSupply = value;
+    },
+    validateCap:()=>{
+        if(tokenQuantity.softCap<=tokenQuantity.hardCap){
+            return undefined;
+        }else{
+            return "Quantities should follow this rule: Soft Cap <= Hard Cap"
+        }
+    },
+    validateSupply:()=>{
+        if(tokenQuantity.hardCap<=tokenQuantity.totalSupply){
+            return undefined;
+        }else{
+            return "Quantities should follow this rule: Hard Cap <= Total Supply"
+        }
+    },
+    validateSoftCap:(value:number)=>{
+        tokenQuantity.setSoftCap(value);
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap){
+            return tokenQuantity.validateCap();
+        }else{
+            return undefined;
+        }
+    },
+    validateHardCap:(value:number)=>{
+        tokenQuantity.setHardCap(value);
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap){
+            return tokenQuantity.validateCap();
+        }else{
+            return undefined;
+        }
+    },
+    validateTotalSupply:(value:number)=>{
+        tokenQuantity.setTotalSupply(value);
+        if(tokenQuantity.hardCap&&tokenQuantity.totalSupply){
+            return tokenQuantity.validateSupply();
+        }else{
+            return undefined;
+        }
+    }
 }

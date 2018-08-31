@@ -1,4 +1,5 @@
 import * as React from "react";
+// import { connect } from 'react-redux';
 import TopNav from "./components/topNav";
 // import NavBar from "./components/navbar";
 import Routes from "./routes";
@@ -9,6 +10,7 @@ const isMobile = require("react-device-detect").isMobile;
 import Header from "./components/header";
 
 class App extends React.Component {
+
   public render() {
     if (isIOS && isMobile) {
       document.body.classList.add("ios-mobile-view-height");
