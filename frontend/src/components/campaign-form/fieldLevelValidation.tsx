@@ -38,19 +38,55 @@ export const campaignDates:any = {
         if(campaignDates.startDate&&campaignDates.endDate){
             return campaignDates.validateDates()
         }else {
-            return "Campaign start and end dates are required";
-        }
+            return undefined;        }
     },
     validateEndDate: (dateStr:string)=>{
         campaignDates.setEndDate(dateStr);
         if(campaignDates.startDate&&campaignDates.endDate){
             return campaignDates.validateDates()
         }else {
-            return "Campaign start and end dates are required";
+            return undefined;
         }
     }
 }
 export const positiveNum = (value:number)=>{
     if(value>0){return undefined;}
     else{return "Must be a positive number"}
+}
+export const tokenQuantity:any={
+    softCap:null,
+    hardCap:null,
+    totalSupply:null,
+    validateQuantity:()=>{
+        if(tokenQuantity.softCap<=tokenQuantity.hardCap &&
+        tokenQuantity.hardCap<=tokenQuantity.totalSupply){
+            return undefined;
+        }else{
+            return "Quantities should follow this rule: Soft Cap <= Hard Cap <= Total Supply"
+        }
+    },
+    validateSoftCap:(value:number)=>{
+        tokenQuantity.softCap = value;
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap&&tokenQuantity.totalSupply){
+            return tokenQuantity.validateQuantity();
+        }else{
+            return undefined;
+        }
+    },
+    validateHardCap:(value:number)=>{
+        tokenQuantity.hardCap = value;
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap&&tokenQuantity.totalSupply){
+            return tokenQuantity.validateQuantity();
+        }else{
+            return undefined;
+        }
+    },
+    validateTotalSupply:(value:number)=>{
+        tokenQuantity.totalSupply = value;
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap&&tokenQuantity.totalSupply){
+            return tokenQuantity.validateQuantity();
+        }else{
+            return undefined;
+        }
+    }
 }
