@@ -25,7 +25,7 @@ interface ITestApiProps {
 }
 
 class PureTestApi extends React.Component<ITestApiProps> {
-  public componentWillMount() {
+  public componentDidMount() {
     this.props.reloadCampaign();
     this.props.reloadComment();
     this.props.reloadToken();
