@@ -31,7 +31,7 @@ class Menu extends React.Component {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/about-us">
+            <NavLink to="/aboutus">
               <span>About us</span>
             </NavLink>
           </li>

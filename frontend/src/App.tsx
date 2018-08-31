@@ -8,14 +8,6 @@ const isIOS = require("react-device-detect").isIOS;
 const isMobile = require("react-device-detect").isMobile;
 import Header from "./components/header";
 
-// export interface IAppProps {
-
-// }
-
-// export interface IAppState {
-
-// }
-
 class App extends React.Component {
   public render() {
     if (isIOS && isMobile) {
