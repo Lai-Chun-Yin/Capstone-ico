@@ -1,7 +1,6 @@
 import * as React from "react";
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import TopNav from "./components/topNav";
-import { authCheckState } from './reducers/auth/actions';
 // import NavBar from "./components/navbar";
 import Routes from "./routes";
 // tslint:disable-next-line:no-var-requires
@@ -10,19 +9,12 @@ const isIOS = require("react-device-detect").isIOS;
 const isMobile = require("react-device-detect").isMobile;
 import Header from "./components/header";
 
-interface IAppProps {
-  onTryAutoSignup: () => void
-}
 
 // export interface IAppState {
 
 // }
 
-class App extends React.Component<IAppProps> {
-
-  public componentDidMount() {
-    this.props.onTryAutoSignup();
-  }
+class App extends React.Component {
 
   public render() {
     if (isIOS && isMobile) {
@@ -42,10 +34,4 @@ class App extends React.Component<IAppProps> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-      onTryAutoSignup: () => dispatch(authCheckState())
-  };
-};
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

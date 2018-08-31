@@ -57,34 +57,49 @@ export const tokenQuantity:any={
     softCap:null,
     hardCap:null,
     totalSupply:null,
-    validateQuantity:()=>{
-        if(tokenQuantity.softCap<=tokenQuantity.hardCap &&
-        tokenQuantity.hardCap<=tokenQuantity.totalSupply){
+    setSoftCap:(value:number)=>{
+        tokenQuantity.softCap = value;
+    },
+    setHardCap:(value:number)=>{
+        tokenQuantity.hardCap = value;
+    },
+    setTotalSupply:(value:number)=>{
+        tokenQuantity.totalSupply = value;
+    },
+    validateCap:()=>{
+        if(tokenQuantity.softCap<=tokenQuantity.hardCap){
             return undefined;
         }else{
-            return "Quantities should follow this rule: Soft Cap <= Hard Cap <= Total Supply"
+            return "Quantities should follow this rule: Soft Cap <= Hard Cap"
+        }
+    },
+    validateSupply:()=>{
+        if(tokenQuantity.hardCap<=tokenQuantity.totalSupply){
+            return undefined;
+        }else{
+            return "Quantities should follow this rule: Hard Cap <= Total Supply"
         }
     },
     validateSoftCap:(value:number)=>{
-        tokenQuantity.softCap = value;
-        if(tokenQuantity.softCap&&tokenQuantity.hardCap&&tokenQuantity.totalSupply){
-            return tokenQuantity.validateQuantity();
+        tokenQuantity.setSoftCap(value);
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap){
+            return tokenQuantity.validateCap();
         }else{
             return undefined;
         }
     },
     validateHardCap:(value:number)=>{
-        tokenQuantity.hardCap = value;
-        if(tokenQuantity.softCap&&tokenQuantity.hardCap&&tokenQuantity.totalSupply){
-            return tokenQuantity.validateQuantity();
+        tokenQuantity.setHardCap(value);
+        if(tokenQuantity.softCap&&tokenQuantity.hardCap){
+            return tokenQuantity.validateCap();
         }else{
             return undefined;
         }
     },
     validateTotalSupply:(value:number)=>{
-        tokenQuantity.totalSupply = value;
-        if(tokenQuantity.softCap&&tokenQuantity.hardCap&&tokenQuantity.totalSupply){
-            return tokenQuantity.validateQuantity();
+        tokenQuantity.setTotalSupply(value);
+        if(tokenQuantity.hardCap&&tokenQuantity.totalSupply){
+            return tokenQuantity.validateSupply();
         }else{
             return undefined;
         }

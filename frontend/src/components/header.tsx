@@ -1,11 +1,12 @@
 import AppBar from "@material-ui/core/AppBar";
-// import Avatar from "@material-ui/core/Avatar";
 import Button, { ButtonProps } from "@material-ui/core/Button";
 // import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+// import Avatar from "@material-ui/core/Avatar";
+import { authCheckState } from '../reducers/auth/actions';
 import { IRootState } from "../reducers/index";
 // import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import SearchBox from "./searchBox";
@@ -13,6 +14,7 @@ import SearchBox from "./searchBox";
 
 interface IHeaderProps {
   [key: string]: any;
+  onTryAutoSignup: () => void
 }
 
 interface IHeaderstate {
@@ -39,6 +41,11 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
       appNotification: false
     };
   }
+  
+  public componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
+
   public onAppNotificationSelect = () => {
     this.setState({
       appNotification: !this.state.appNotification
@@ -287,4 +294,10 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+      onTryAutoSignup: () => dispatch(authCheckState())
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header);

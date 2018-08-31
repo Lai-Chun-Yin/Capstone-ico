@@ -71,8 +71,11 @@ const mapDispatchToProps = (dispatch: any) => {
       campaign.softCap = +values.softCap;
       campaign.hardCap = +values.hardCap;
       if(imageFile){campaign.imageFile = imageFile}
-      const videoMatch1 = values.video.match(/^https:\/\/youtu\.be\/([\w]+)/);
-      const videoMatch2 = values.video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([\w]+)/);
+      let videoMatch1 = null;
+      let videoMatch2 = null;
+      if(values.video){
+      videoMatch1 = values.video.match(/^https:\/\/youtu\.be\/([\w]+)/);
+      videoMatch2 = values.video.match(/^https:\/\/www\.youtube\.com\/watch\?v=([\w]+)/); }
       if (videoMatch1) { campaign.video = videoMatch1[1] }
       else if (videoMatch2) { campaign.video = videoMatch2[1] }
       dispatch(campaignActions.uploadCampaignThunk(campaign));
