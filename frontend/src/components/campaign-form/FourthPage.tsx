@@ -16,11 +16,25 @@ const FourthPage: React.ComponentType<
     <form onSubmit={handleSubmit}>
       <h2>4 of 4: token</h2>
       <Field
+        name="softCap"
+        type="number"
+        component={renderField}
+        label="Soft Cap"
+        validate={[validation.required,validation.tokenQuantity.validateSoftCap]}
+      />
+      <Field
+        name="hardCap"
+        type="number"
+        component={renderField}
+        label="Hard Cap"
+        validate={[validation.required,validation.tokenQuantity.validateHardCap]}
+      />
+      <Field
         name="totalSupply"
         type="number"
         component={renderField}
         label="Total Supply"
-        validate={validation.required}
+        validate={[validation.required,validation.tokenQuantity.validateTotalSupply]}
       />
       <Field
         name="tokenName"
