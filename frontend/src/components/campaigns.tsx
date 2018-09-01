@@ -37,7 +37,7 @@ class PureCampaigns extends React.Component<ICampaignProps> {
     return (
       <React.Fragment>
         <h2>Active Campaigns</h2>
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
             {campaignCards}
           </div>
