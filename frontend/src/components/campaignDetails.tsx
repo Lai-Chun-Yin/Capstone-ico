@@ -19,7 +19,7 @@ interface ICampaignIdPathParam {
 class CampaignDetails extends React.Component<ICampaignDetailsProps, ICampaignDetailsState> {
     constructor(props: ICampaignDetailsProps) {
         super(props);
-        const targetCampaign = props.campaigns.filter((campaign) => campaign.id === props.match.params.campaignId)
+        const targetCampaign = props.campaigns.filter((campaign) => campaign.id === (+props.match.params.campaignId))
         this.state = {
             campaign: targetCampaign[0]
         }
@@ -59,7 +59,6 @@ class CampaignDetails extends React.Component<ICampaignDetailsProps, ICampaignDe
 
                         <h4>{this.state.campaign.short_description}</h4>
                         <p>{this.state.campaign.long_description}</p>
-                        {this.state.campaign}
                     </section>
                 </React.Fragment>
             )
