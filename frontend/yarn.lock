@@ -161,6 +161,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-owl-carousel@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@types/react-owl-carousel/-/react-owl-carousel-2.2.1.tgz#d7664c58b4fc290a4d82b6f53efb38b93f182f39"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^6.0.6":
   version "6.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-6.0.6.tgz#87f1d0a6ea901b93fcaf95fa57641ff64079d277"
@@ -4643,6 +4649,10 @@ joi@^13.6.0:
     isemail "3.x.x"
     topo "3.x.x"
 
+jquery@>=1.8.3:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
 js-base64@^2.1.9:
   version "2.4.8"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.8.tgz#57a9b130888f956834aa40c5b165ba59c758f033"
@@ -5782,9 +5792,11 @@ osenv@^0.1.4:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
 
-p-cancelable@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/p-cancelable/-/p-cancelable-0.3.0.tgz#b9e123800bcebb7ac13a479be195b507b98d30fa"
+owl.carousel@~2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/owl.carousel/-/owl.carousel-2.2.0.tgz#f3598d01e60757bc107b2b3c61231b1140cf360c"
+  dependencies:
+    jquery ">=1.8.3"
 
 p-finally@^1.0.0:
   version "1.0.0"
@@ -6605,6 +6617,13 @@ react-jss@^8.1.0:
 react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+
+react-owl-carousel@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-owl-carousel/-/react-owl-carousel-2.2.0.tgz#de2bf1b5296c0cf873a4c5c1a176c2b3d1edd289"
+  dependencies:
+    owl.carousel "~2.2.0"
+    prop-types "^15.5.8"
 
 react-popper@^0.10.4:
   version "0.10.4"

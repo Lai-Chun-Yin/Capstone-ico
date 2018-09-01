@@ -8597,7 +8597,7 @@ h3 {
   }
 }
 /*Different size images set in Equal block height and width*/
-.grid-thumb-equal {
+.brand-logo, .grid-thumb-equal {
   position: relative;
   padding-bottom: 68%;
   height: 0;
@@ -8605,7 +8605,7 @@ h3 {
   overflow: hidden;
 }
 
-.grid-thumb-cover {
+.brand-logo .brand-logo-inner, .grid-thumb-cover {
   display: block;
   position: absolute;
   width: 100%;
@@ -17310,6 +17310,57 @@ label {
 .form-group-dropzone .form-control {
   max-width: 200px;
   margin: 0 auto;
+}
+
+/* Slider
+   ========================================================================== */
+.brand-logo {
+  border: 1px solid #dee2e6;
+  background-color: #fff;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  padding-bottom: 75%;
+}
+.brand-logo .brand-logo-inner {
+  text-align: center;
+}
+.brand-logo .brand-logo-inner:before {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+.brand-logo .brand-logo-inner img {
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  width: auto !important;
+}
+.brand-logo:hover {
+  -webkit-box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+  -o-box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.4s ease-in-out 0.1s;
+  -o-transition: all 0.4s ease-in-out 0.1s;
+  transition: all 0.4s ease-in-out 0.1s;
+  background-color: #f2f2f2;
+}
+@media screen and (max-width: 575px) {
+  .brand-logo {
+    margin-bottom: 15px;
+  }
+}
+
+.owl-app-frame.owl-carousel .owl-item img {
+  display: inline-block;
+  width: auto;
+}
+
+.carousel-item img {
+  max-width: 100%;
 }
 
 /* Color Theme

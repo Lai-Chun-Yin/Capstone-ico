@@ -78,7 +78,6 @@
         15. Theme Dark Deep Purple Styles
         16. Theme Dark Green Styles
   =============================================================*/
-
 //Custom Variables
 @import "global/_global-dir";
 //Custom Files
@@ -86,6 +85,6 @@
 @import "layout/_layout-dir";
 @import "ui/_ui-dir";
 @import "pages/_pages-dir";
-// @import "slider/owl-carousel";
+@import "slider/owl-carousel";
 // @import "module/_module-dir";
 @import "colorTheme/_color-theme-dir";

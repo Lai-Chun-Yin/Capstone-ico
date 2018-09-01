@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import AboutUs from "./components/aboutUs/aboutUs";
 import CampaignForm from "./components/campaign-form/CampaignForm";
 import CampaignDetails from "./components/campaignDetails";
 import Campaigns from "./components/campaigns";
@@ -25,6 +26,7 @@ const Routes = () => {
             <Route path="/campaign" component={Campaigns} />
             <Route path="/news" component={News} />
             <Route path="/faq" component={FAQ} />
+            <Route path="/aboutus" component={AboutUs} />
             <Route path="/register" component={SignupForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
