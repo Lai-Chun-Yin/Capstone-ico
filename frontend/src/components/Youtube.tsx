@@ -9,8 +9,9 @@ class Youtube extends React.Component<IYoutubeProps,{}>{
 
     public render(){
         return (
-            <div className="video-container">
-            <iframe width="560" height="315" src={"https://www.youtube.com/embed/"+this.props.videoId}
+            <div className="embed-responsive embed-responsive-16by9">
+            <iframe width="560" height="315" className="embed-responsive-item"
+            src={"https://www.youtube.com/embed/"+this.props.videoId}
             frameBorder="0" allowFullScreen></iframe>
             </div>
         )

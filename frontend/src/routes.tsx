@@ -2,6 +2,7 @@ import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
 import CampaignForm from "./components/campaign-form/CampaignForm";
+import CampaignDetails from "./components/campaignDetails";
 import Campaigns from "./components/campaigns";
 import FAQ from "./components/faq";
 import Footer from "./components/footer";
@@ -23,6 +24,7 @@ const Routes = () => {
         <div className="app-wrapper">
           <Switch>
             <Route path="/campaign/create/basic" component={CampaignForm} />
+            <Route path="/campaign/details/:campaignId" component={CampaignDetails}/>
             <Route path="/campaign" component={Campaigns} />
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/userSetting" component={UserSetting} />
