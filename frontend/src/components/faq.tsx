@@ -3,7 +3,7 @@ import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import * as React from "react";
-import ContainerHeader from "./containerHeader";
+import ContainerHeader from "./common/containerHeader";
 import ProfileCard from "./profileCard/index";
 
 export interface IFaqProps {

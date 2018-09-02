@@ -11,10 +11,6 @@ HTTPS=true
 Backend .env content:
 
 JWT_SECRET={ your jwt secret key}
-
-
-Database .env content: 
-
 DB_NAME={database_name}
 DB_USERNAME={database_username}
 DB_PASSWORD={database_pw}

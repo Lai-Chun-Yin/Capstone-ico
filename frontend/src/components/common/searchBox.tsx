@@ -1,8 +1,13 @@
 import * as React from "react";
 
-const SearchBox = ({ placeholder, onChange, value }: any) => {
+const SearchBox = ({
+  styleName = "",
+  placeholder,
+  onChange,
+  value = ""
+}: any) => {
   return (
-    <div className="search-bar right-side-icon bg-transparent d-none d-lg-block">
+    <div className={`search-bar right-side-icon bg-transparent ${styleName}`}>
       <div className="form-group">
         <input
           className="form-control border-0"

@@ -12,6 +12,8 @@ import News from "./components/news";
 import NotFound from "./components/notFound";
 import SignupForm from "./components/signupForm";
 import { TestApi } from "./components/testApi_ck";
+import UserProfile from "./components/userInfoPopUp/userProfile";
+import UserSetting from "./components/userInfoPopUp/userSetting";
 // import TestWeb3 from "./components/testWeb3";
 
 const Routes = () => {
@@ -22,6 +24,8 @@ const Routes = () => {
           <Switch>
             <Route path="/campaign/create/basic" component={CampaignForm} />
             <Route path="/campaign" component={Campaigns} />
+            <Route path="/userProfile" component={UserProfile} />
+            <Route path="/userSetting" component={UserSetting} />
             <Route path="/news" component={News} />
             <Route path="/faq" component={FAQ} />
             <Route path="/aboutus" component={AboutUs} />

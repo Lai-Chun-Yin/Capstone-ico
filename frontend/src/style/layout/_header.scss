@@ -17,8 +17,10 @@
     @include transition($transition-base);
     background-color: lighten($app-primary, 5%);
     color: $white;
-    & + .search-icon {
+
+    &+.search-icon {
       top: 0;
+
       & i {
         color: rgba($white, 0.8);
       }
@@ -27,7 +29,8 @@
     &:focus {
       background-color: $white;
       color: $body-color;
-      + .search-icon {
+
+      +.search-icon {
         & i {
           color: rgba($body-color, 0.8);
         }
@@ -113,7 +116,8 @@
       @include transition($transition-base);
       background-color: $white;
       color: $body-color;
-      & + .search-icon {
+
+      &+.search-icon {
         & i {
           color: rgba($body-color, 0.8);
         }
@@ -122,7 +126,8 @@
       &:focus {
         background-color: transparent;
         color: $body-color;
-        + .search-icon {
+
+        +.search-icon {
           & i {
             color: rgba($body-color, 0.8);
           }
@@ -319,5 +324,12 @@
     & .user-avatar {
       margin-right: 0;
     }
+  }
+}
+
+.nav-450-p-0 {
+  @media screen and (max-width: 450px) {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
 }

@@ -1,20 +1,28 @@
 import AppBar from "@material-ui/core/AppBar";
+import Avatar from "@material-ui/core/Avatar";
 import Button, { ButtonProps } from "@material-ui/core/Button";
-// import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-// import Avatar from "@material-ui/core/Avatar";
-import { authCheckState } from '../reducers/auth/actions';
+import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
+import { authCheckState } from "../reducers/auth/actions";
 import { IRootState } from "../reducers/index";
-// import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
-import SearchBox from "./searchBox";
-// import UserInfoPopup from "./userInfoPopup";
+import { toggleCollapsedNav } from "../reducers/sideNav/action";
+import SearchBox from "./common/searchBox";
+import UserInfoPopup from "./userInfoPopUp/userInfoPopup";
 
 interface IHeaderProps {
-  [key: string]: any;
-  onTryAutoSignup: () => void
+  isAuthenticated: boolean;
+  onTryAutoSignup: () => void;
+  toggleSideNav: (val: boolean) => void;
+  user: {
+    [key: string]: any;
+  };
+  sideNav: {
+    navCollapsed: boolean;
+  };
 }
 
 interface IHeaderstate {
@@ -41,72 +49,12 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
       appNotification: false
     };
   }
-  
+
   public componentDidMount() {
     this.props.onTryAutoSignup();
   }
 
-  public onAppNotificationSelect = () => {
-    this.setState({
-      appNotification: !this.state.appNotification
-    });
-  };
-  public onMailNotificationSelect = () => {
-    this.setState({
-      mailNotification: !this.state.mailNotification
-    });
-  };
-  public onLangSwitcherSelect = (event: any) => {
-    this.setState({
-      langSwitcher: !this.state.langSwitcher,
-      anchorEl: event.currentTarget
-    });
-  };
-  public onSearchBoxSelect = () => {
-    this.setState({
-      searchBox: !this.state.searchBox
-    });
-  };
-  public onUserInfoSelect = () => {
-    this.setState({
-      userInfo: !this.state.userInfo
-    });
-  };
-  public handleRequestClose = () => {
-    this.setState({
-      langSwitcher: false,
-      userInfo: false,
-      mailNotification: false,
-      appNotification: false,
-      searchBox: false
-    });
-  };
-
-  public onToggleCollapsedNav = (e: any) => {
-    const val = !this.props.navCollapsed;
-    this.props.toggleCollapsedNav(val);
-  };
-
-  public updateSearchText(evt: any) {
-    this.setState({
-      searchText: evt.target.value
-    });
-  }
-
   public render() {
-    // const {
-    //   drawerType,
-    //   locale,
-    //   navigationStyle,
-    //   horizontalNavPosition
-    // } = this.props;
-
-    // const drawerStyle = drawerType.includes(FIXED_DRAWER)
-    //   ? "d-block d-xl-none"
-    //   : drawerType.includes(COLLAPSED_DRAWER)
-    //     ? "d-block"
-    //     : "d-none";
-
     return (
       <AppBar className="app-main-header app-main-header-top">
         <Toolbar className="app-toolbar" disableGutters={false}>
@@ -119,7 +67,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
             </span>
           </div>
 
-          <Link className="app-logo mr-2 d-none d-sm-block" to="/">
+          <Link className="app-logo mr-2" to="/">
             <img
               src="http://via.placeholder.com/177x65"
               alt="app-logo"
@@ -130,17 +78,46 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
           <SearchBox
             styleName="d-none d-lg-block"
             placeholder=""
-          // onChange={this.updateSearchText.bind(this)}
-          // value={this.state.searchText}
+            // tslint:disable-next-line:jsx-no-bind
+            onChange={this.updateSearchText.bind(this)}
+            value={this.state.searchText}
           />
 
           <ul className="header-notifications list-inline ml-auto navbar p-0">
+            <li className="d-inline-block d-lg-none list-inline-item mr-0">
+              <Dropdown
+                className="quick-menu nav-searchbox"
+                isOpen={this.state.searchBox}
+                toggle={this.onSearchBoxSelect}
+              >
+                <DropdownToggle
+                  className="d-inline-block"
+                  tag="span"
+                  data-toggle="dropdown"
+                >
+                  <IconButton className="icon-btn size-30">
+                    <i className="zmdi zmdi-search zmdi-hc-fw" />
+                  </IconButton>
+                </DropdownToggle>
+
+                <DropdownMenu right={true} className="p-0">
+                  <SearchBox
+                    styleName="search-dropdown"
+                    placeholder=""
+                    // tslint:disable-next-line:jsx-no-bind
+                    onChange={this.updateSearchText.bind(this)}
+                    value={this.state.searchText}
+                  />
+                </DropdownMenu>
+              </Dropdown>
+            </li>
+
             {!this.props.isAuthenticated === true && (
               <React.Fragment>
-                <li>
+                <li className="nav-450-p-0">
                   <LinkButton
                     size="small"
-                    className="text-white d-none d-sm-block"
+                    className="text-white"
                     component={Link}
                     to="/login"
                   >
@@ -148,10 +125,10 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                   </LinkButton>
                 </li>
 
-                <li>
+                <li className="nav-450-p-0">
                   <LinkButton
                     size="small"
-                    className="text-white d-none d-sm-block"
+                    className="text-white"
                     component={Link}
                     to="/register"
                   >
@@ -160,144 +137,93 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                 </li>
               </React.Fragment>
             )}
+
             {this.props.isAuthenticated === true && (
-              <li>
-                <LinkButton
-                  size="small"
-                  className="text-white d-none d-sm-block"
-                  component={Link}
-                  to="/logout"
-                >
-                  Logout
-                </LinkButton>
-              </li>
+              <React.Fragment>
+                <li>
+                  <LinkButton
+                    size="small"
+                    className="text-white text-lowercase d-none d-md-block"
+                    component={Link}
+                    to="/campaign/create/basic"
+                  >
+                    Create Campaign
+                  </LinkButton>
+                </li>
+
+                <li className="list-inline-item user-nav">
+                  <Dropdown
+                    className="quick-menu"
+                    isOpen={this.state.userInfo}
+                    // tslint:disable-next-line:jsx-no-bind
+                    toggle={this.onUserInfoSelect.bind(this)}
+                  >
+                    <DropdownToggle
+                      className="d-inline-block"
+                      tag="span"
+                      data-toggle="dropdown"
+                    >
+                      <IconButton className="icon-btn size-30">
+                        <Avatar
+                          alt="..."
+                          src="http://via.placeholder.com/150x150"
+                          className="size-30"
+                        />
+                      </IconButton>
+                    </DropdownToggle>
+
+                    <DropdownMenu right={true}>
+                      <UserInfoPopup user={this.props.user} />
+                    </DropdownMenu>
+                  </Dropdown>
+                </li>
+              </React.Fragment>
             )}
-
-            {/* <li className="d-inline-block d-lg-none list-inline-item">
-              <Dropdown
-                className="quick-menu nav-searchbox"
-                // isOpen={this.state.searchBox}
-                // toggle={this.onSearchBoxSelect.bind(this)}
-              > */}
-            {/* <DropdownToggle
-                  className="d-inline-block"
-                  tag="span"
-                  data-toggle="dropdown"
-                >
-                  <IconButton className="icon-btn size-30">
-                    <i className="zmdi zmdi-search zmdi-hc-fw" />
-                  </IconButton>
-                </DropdownToggle> */}
-
-            {/* <DropdownMenu right={true} className="p-0">
-                  <SearchBox
-                    styleName="search-dropdown"
-                    placeholder=""
-                    // onChange={this.updateSearchText.bind(this)}
-                    // value={this.state.searchText}
-                  />
-                </DropdownMenu>
-              </Dropdown>
-            </li> */}
-
-            {/* <li className="list-inline-item">
-              <Dropdown
-                className="quick-menu"
-                // isOpen={this.state.langSwitcher}
-                // toggle={this.onLangSwitcherSelect.bind(this)}
-              > */}
-            {/* <DropdownToggle
-                  className="d-inline-block"
-                  tag="span"
-                  data-toggle="dropdown"
-                >
-                  <div className="d-flex align-items-center pointer pt-1"/>
-                </DropdownToggle> 
-
-                <DropdownMenu right={true} className="w-50"/>
-              </Dropdown>
-            </li>*/}
-            {/* <li className="list-inline-item app-tour">
-              <Dropdown
-                className="quick-menu"
-                // isOpen={this.state.appNotification}
-                // toggle={this.onAppNotificationSelect.bind(this)}
-              >
-                <DropdownToggle
-                  className="d-inline-block"
-                  tag="span"
-                  data-toggle="dropdown"
-                >
-                  <IconButton className="icon-btn size-20 font-size-20">
-                    <i className="zmdi zmdi-notifications-active icon-alert animated infinite wobble" />
-                  </IconButton>
-                </DropdownToggle>
-
-                <DropdownMenu right={true}/>
-              </Dropdown>
-            </li> 
-            <li className="list-inline-item mail-tour">
-              <Dropdown
-                className="quick-menu"
-                // isOpen={this.state.mailNotification}
-                // toggle={this.onMailNotificationSelect.bind(this)}
-              >
-                <DropdownToggle
-                  className="d-inline-block"
-                  tag="span"
-                  data-toggle="dropdown"
-                >
-                  <IconButton className="icon-btn size-20 font-size-20">
-                    <i className="zmdi zmdi-comment-alt-text icon-alert zmdi-hc-fw" />
-                  </IconButton>
-                </DropdownToggle>
-
-                <DropdownMenu right={true}/>
-              </Dropdown>
-            </li>
-
-            <li className="list-inline-item user-nav">
-              <Dropdown
-                className="quick-menu"
-                // isOpen={this.state.userInfo}
-                // toggle={this.onUserInfoSelect.bind(this)}
-              >
-                <DropdownToggle
-                  className="d-inline-block"
-                  tag="span"
-                  data-toggle="dropdown"
-                >
-                  <IconButton className="icon-btn size-30">
-                    <Avatar
-                      alt="..."
-                      src="http://via.placeholder.com/150x150"
-                      className="size-30"
-                    />
-                  </IconButton>
-                </DropdownToggle>
-
-                <DropdownMenu right={true}>
-                  <UserInfoPopup />
-                </DropdownMenu>
-              </Dropdown>
-            </li>*/}
           </ul>
         </Toolbar>
       </AppBar>
     );
+  }
+
+  private onSearchBoxSelect = () => {
+    this.setState({
+      searchBox: !this.state.searchBox
+    });
+  };
+  private onUserInfoSelect = () => {
+    this.setState({
+      userInfo: !this.state.userInfo
+    });
+  };
+
+  private onToggleCollapsedNav = (e: any) => {
+    const val = !this.props.sideNav.navCollapsed;
+    this.props.toggleSideNav(val);
+  };
+
+  private updateSearchText(evt: any) {
+    this.setState({
+      searchText: evt.target.value
+    });
   }
 }
 
 const mapStateToProps = (state: IRootState) => {
   return {
     isAuthenticated: state.auth.token !== null,
+    user: state.auth.user,
+    sideNav: state.sideNav
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-      onTryAutoSignup: () => dispatch(authCheckState())
+    onTryAutoSignup: () => dispatch(authCheckState()),
+    toggleSideNav: (val: boolean) => dispatch(toggleCollapsedNav(val))
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

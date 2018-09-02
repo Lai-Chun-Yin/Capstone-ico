@@ -1,6 +1,6 @@
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
-import ContainerHeader from "../containerHeader";
+import ContainerHeader from "../common/containerHeader";
 import Client from "./componets/client";
 import Service from "./componets/service";
 import Team from "./componets/team";
