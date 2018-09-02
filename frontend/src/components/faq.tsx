@@ -26,7 +26,7 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
     const { expanded } = this.state;
     return (
       <div className=" animated slideInUpTiny animation-duration-3">
-        <ContainerHeader title="FAQ" match={this.props.match} />
+        <ContainerHeader title="FAQ" />
         <div className="row">
           <div className="col-md-8 col-sm-7 col-12">
             <ExpansionPanel

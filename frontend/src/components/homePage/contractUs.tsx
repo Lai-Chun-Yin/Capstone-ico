@@ -8,7 +8,7 @@ export interface IContactUsProps {
 const ContactUs: React.SFC<IContactUsProps> = (props: any) => {
   return (
     <div className="animated slideInUpTiny animation-duration-3">
-      <ContainerHeader title="Contact Us" match={props.match} />
+      <ContainerHeader title="Contact Us" />
       <div className="row">
         <div className="col-lg-9 col-md-8 col-sm-7 col-12">
           <form action="" className="contact-form jr-card">

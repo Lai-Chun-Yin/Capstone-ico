@@ -147,7 +147,7 @@ const AboutUs = ({ match }: any) => {
 
   return (
     <div className="animated slideInUpTiny animation-duration-3">
-      <ContainerHeader match={match} title="About Us" />
+      <ContainerHeader title="About Us" />
       <section>
         <OwlCarousel className="owl-theme mb-4" items={1} margin={20}>
           <Service service={services[0]} />
