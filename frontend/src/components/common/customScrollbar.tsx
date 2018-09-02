@@ -7,7 +7,7 @@ export interface ICustomScrollbarsProps {
   [key: string]: any;
 }
 
-const CustomScrollbars: React.SFC<ICustomScrollbarsProps> = (props: any) => {
+const CustomScrollbar: React.SFC<ICustomScrollbarsProps> = (props: any) => {
   return (
     <Scrollbars
       {...props}
@@ -24,4 +24,4 @@ const CustomScrollbars: React.SFC<ICustomScrollbarsProps> = (props: any) => {
   );
 };
 
-export default CustomScrollbars;
+export default CustomScrollbar;

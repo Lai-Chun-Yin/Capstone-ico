@@ -29,12 +29,12 @@ class SideNav extends React.Component<ISideNavProps> {
             paper: "side-nav"
           }}
         >
-          <SideNavContent />
+          <SideNavContent linkClick={this.onToggleCollapsedNav} />
         </Drawer>
       </div>
     );
   }
-  private onToggleCollapsedNav = (e: any) => {
+  private onToggleCollapsedNav = () => {
     const val = !this.props.sideNav.navCollapsed;
     this.props.toggleSideNav(val);
   };

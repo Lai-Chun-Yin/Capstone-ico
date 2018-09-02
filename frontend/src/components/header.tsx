@@ -40,13 +40,9 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
   public constructor(props: any) {
     super(props);
     this.state = {
-      anchorEl: undefined,
       searchBox: false,
       searchText: "",
-      mailNotification: false,
-      userInfo: false,
-      langSwitcher: false,
-      appNotification: false
+      userInfo: false
     };
   }
 
@@ -55,6 +51,10 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
   }
 
   public render() {
+    const { searchText, searchBox, userInfo } = this.state;
+
+    const { isAuthenticated, user } = this.props;
+
     return (
       <AppBar className="app-main-header app-main-header-top">
         <Toolbar className="app-toolbar" disableGutters={false}>
@@ -80,14 +80,14 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
             placeholder=""
             // tslint:disable-next-line:jsx-no-bind
             onChange={this.updateSearchText.bind(this)}
-            value={this.state.searchText}
+            value={searchText}
           />
 
           <ul className="header-notifications list-inline ml-auto navbar p-0">
             <li className="d-inline-block d-lg-none list-inline-item mr-0">
               <Dropdown
                 className="quick-menu nav-searchbox"
-                isOpen={this.state.searchBox}
+                isOpen={searchBox}
                 toggle={this.onSearchBoxSelect}
               >
                 <DropdownToggle
@@ -106,13 +106,13 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                     placeholder=""
                     // tslint:disable-next-line:jsx-no-bind
                     onChange={this.updateSearchText.bind(this)}
-                    value={this.state.searchText}
+                    value={searchText}
                   />
                 </DropdownMenu>
               </Dropdown>
             </li>
 
-            {!this.props.isAuthenticated === true && (
+            {!isAuthenticated === true && (
               <React.Fragment>
                 <li className="nav-450-p-0">
                   <LinkButton
@@ -138,7 +138,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
               </React.Fragment>
             )}
 
-            {this.props.isAuthenticated === true && (
+            {isAuthenticated === true && (
               <React.Fragment>
                 <li>
                   <LinkButton
@@ -154,7 +154,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                 <li className="list-inline-item user-nav">
                   <Dropdown
                     className="quick-menu"
-                    isOpen={this.state.userInfo}
+                    isOpen={userInfo}
                     // tslint:disable-next-line:jsx-no-bind
                     toggle={this.onUserInfoSelect.bind(this)}
                   >
@@ -164,16 +164,16 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                       data-toggle="dropdown"
                     >
                       <IconButton className="icon-btn size-30">
-                        <Avatar
-                          alt="..."
-                          src="http://via.placeholder.com/150x150"
-                          className="size-30"
-                        />
+                        <Avatar className="size-30 bg-secondary">
+                          <h3 className="m-0 text-white">
+                            {user.alias.split("")[0].toUpperCase()}
+                          </h3>
+                        </Avatar>
                       </IconButton>
                     </DropdownToggle>
 
                     <DropdownMenu right={true}>
-                      <UserInfoPopup user={this.props.user} />
+                      <UserInfoPopup user={user} />
                     </DropdownMenu>
                   </Dropdown>
                 </li>
