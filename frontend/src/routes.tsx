@@ -6,7 +6,7 @@ import CampaignDetails from "./components/campaignDetails";
 import Campaigns from "./components/campaigns";
 import FAQ from "./components/faq";
 import Footer from "./components/footer";
-import HomePage from "./components/homePage";
+import HomePage from "./components/homePage/homePage";
 import LoginForm from "./components/loginForm";
 import Logout from "./components/logout";
 import News from "./components/news";
@@ -24,7 +24,10 @@ const Routes = () => {
         <div className="app-wrapper">
           <Switch>
             <Route path="/campaign/create/basic" component={CampaignForm} />
-            <Route path="/campaign/details/:campaignId" component={CampaignDetails}/>
+            <Route
+              path="/campaign/details/:campaignId"
+              component={CampaignDetails}
+            />
             <Route path="/campaign" component={Campaigns} />
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/userSetting" component={UserSetting} />

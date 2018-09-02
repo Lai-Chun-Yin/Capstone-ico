@@ -1,4 +1,6 @@
 import * as React from "react";
+import CardBox from "../common/cardBox";
+import BasicCarousel from "./basicCarousel";
 import ContactUs from "./contractUs";
 
 export interface IHomePageProps {
@@ -13,8 +15,11 @@ class HomePage extends React.Component<IHomePageProps> {
   public render() {
     return (
       <div>
-        <h1>Home Page</h1>
-        <br />
+        <div className="row mb-md-4">
+          <CardBox styleName="col-lg-12">
+            <BasicCarousel />
+          </CardBox>
+        </div>
         <ContactUs match={this.props.match} />
       </div>
     );

@@ -1,5 +1,5 @@
 import * as React from "react";
-import ContainerHeader from "./common/containerHeader";
+import ContainerHeader from "../common/containerHeader";
 
 export interface IContactUsProps {
   match: any;

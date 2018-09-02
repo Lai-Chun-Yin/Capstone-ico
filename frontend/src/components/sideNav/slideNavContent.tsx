@@ -1,3 +1,4 @@
+import Divider from "@material-ui/core/Divider";
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 import CustomScrollbar from "../common/customScrollbar";
@@ -53,6 +54,8 @@ class SideNavContent extends React.Component<ISideNavContentProps> {
               <span className="nav-text">FAQs</span>
             </NavLink>
           </li>
+
+          <Divider light={true} />
 
           <li className="nav-header">create</li>
 
