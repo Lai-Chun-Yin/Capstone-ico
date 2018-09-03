@@ -6,8 +6,11 @@ import App from "./App";
 import "./index.css";
 import configureStore from "./reduxStore";
 import registerServiceWorker from "./registerServiceWorker";
+import logger from "./services/logService";
 
 const store = configureStore();
+
+logger.init();
 
 ReactDOM.render(
   <Provider store={store}>

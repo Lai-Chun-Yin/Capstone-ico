@@ -30,6 +30,7 @@
     "jwt-decode": "^2.2.0",
     "material-ui-pickers": "^1.0.0-rc.13",
     "nprogress": "^0.2.0",
+    "raven-js": "3.26.4",
     "react": "^16.4.2",
     "react-custom-scrollbars": "^4.2.1",
     "react-device-detect": "^1.5.9",

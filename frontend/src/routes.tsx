@@ -1,15 +1,15 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
-import CampaignForm from "./components/campaign-form/CampaignForm";
 import CampaignDetails from "./components/campaignDetails";
+import CampaignForm from "./components/campaignForm/CampaignForm";
 import Campaigns from "./components/campaigns";
-import FAQ from "./components/faq";
+import FAQ from "./components/faq/faq";
 import Footer from "./components/footer";
 import HomePage from "./components/homePage/homePage";
 import LoginForm from "./components/loginForm";
 import Logout from "./components/logout";
-import News from "./components/news";
+import News from "./components/news/news";
 import NotFound from "./components/notFound";
 import SignupForm from "./components/signupForm";
 import { TestApi } from "./components/testApi_ck";
