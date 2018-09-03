@@ -21,6 +21,7 @@ exports.up = function(knex, Promise) {
     table.integer('user_id').unsigned();
     table.foreign('user_id').references('users.id');
     table.string('eth_address');
+    table.string('token_address');
     table.string('private_key');
     table.integer('token_id').unsigned();
     table.timestamps(false,true);
