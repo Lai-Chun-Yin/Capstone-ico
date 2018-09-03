@@ -12,10 +12,10 @@ import Logout from "./components/logout";
 import News from "./components/news/news";
 import NotFound from "./components/notFound";
 import SignupForm from "./components/signupForm";
-import { TestApi } from "./components/testApi_ck";
+import TestWeb3 from "./components/testWeb3";
+// import { TestApi } from "./components/testApi_ck";
 import UserProfile from "./components/userInfoPopUp/userProfile";
 import UserSetting from "./components/userInfoPopUp/userSetting";
-// import TestWeb3 from "./components/testWeb3";
 
 const Routes = () => {
   return (
@@ -39,7 +39,7 @@ const Routes = () => {
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={NotFound} />
             <Route path="/" exact={true} component={HomePage} />
-            <Route path="/test" component={TestApi} />
+            <Route path="/test" component={TestWeb3} />
             <Redirect to="/not-found" />
           </Switch>
         </div>
