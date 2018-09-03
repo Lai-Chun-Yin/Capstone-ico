@@ -17,6 +17,9 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "pg": "^7.4.3",
-    "uuid": "^3.3.2"
+    "truffle-contract": "^3.0.6",
+    "truffle-hdwallet-provider": "^0.0.6",
+    "uuid": "^3.3.2",
+    "web3": "^1.0.0-beta.35"
   }
 }
