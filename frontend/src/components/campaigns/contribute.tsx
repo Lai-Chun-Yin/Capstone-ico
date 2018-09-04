@@ -22,7 +22,7 @@ interface IFormProps {
 interface IFormState {
   fromAddress: string;
   toAddress: string | null;
-  balance: string;
+  balance: string | null;
   value: string;
   receipt: object;
   campaign: CapstoneICO.ICampaign | null;
@@ -38,7 +38,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     this.state = {
       fromAddress: '',
       toAddress: '',
-      balance: '',
+      balance: null,
       value: '',
       receipt: {},
       campaign: targetCampaign[0],
@@ -47,23 +47,30 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
 
   public async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
-    const balance = await web3.eth.getBalance(accounts[0]);
+    if (accounts.length) {
+      const balance = await web3.eth.getBalance(accounts[0]);
+      this.setState({
+        balance: web3.utils.fromWei(balance, 'ether'),
+        fromAddress: accounts[0],
+      })
+    }
+
     this.setState({
-      balance: web3.utils.fromWei(balance, 'ether'),
-      fromAddress: accounts[0],
       toAddress: (this.state.campaign ? this.state.campaign.token_address : null)
     });
 
     if (!this.state.campaign) {
-      if (!this.state.campaign) {
-        const token = localStorage.getItem('token');
-        this.fetchCampaign(token);
-      }
-      console.log(this.state.campaign);
+      const token = localStorage.getItem('token');
+      await this.fetchCampaign(token);
     }
+    console.log(this.state.campaign);
   }
 
   public render() {
+    const accountBalance = (this.state.balance ?
+      <CardText>Account Balance: {this.state.balance} ether</CardText>
+      : <CardText>Please install metamask in order to contribute!</CardText>);
+
     let form;
     if (this.state.campaign) {
       form = (
@@ -73,7 +80,8 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
               <CardImg top={true} width="100%" src="" />
               <CardTitle>Contribute to {this.state.campaign.title}</CardTitle>
               <CardSubtitle>From: {this.state.fromAddress}</CardSubtitle>
-              <CardText>Account Balance: {this.state.balance} ether</CardText>
+              {/* <CardText>Account Balance: {this.state.balance} ether</CardText> */}
+              {accountBalance}
               <br />
               <CardText>To: {this.state.campaign.token_address}</CardText>
               <div>
