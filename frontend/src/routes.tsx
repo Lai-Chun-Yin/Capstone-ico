@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
-import CampaignDetails from "./components/campaignDetails";
 import CampaignForm from "./components/campaignForm/CampaignForm";
 import WYSISWYG from "./components/campaignForm/editor";
 import Campaigns from "./components/campaigns";
+import CampaignDetails from "./components/campaigns/campaignDetails";
+import ContributeForm from "./components/campaigns/contribute";
 import FAQ from "./components/faq/faq";
 import Footer from "./components/footer";
 import HomePage from "./components/homePage/homePage";
@@ -25,16 +26,22 @@ const Routes = () => {
         <div className="app-wrapper">
           <Switch>
             <Route path="/campaign/create/basic" component={CampaignForm} />
+            <Route path="/tested" component={WYSISWYG} />
             <Route
               path="/campaign/details/:campaignId"
+              exact={true}
               component={CampaignDetails}
             />
-            <Route path="/tested" component={WYSISWYG} />
+            <Route
+              path="/campaign/details/:campaignId/contribute"
+              component={ContributeForm}
+            />
             <Route path="/campaign" component={Campaigns} />
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/userSetting" component={UserSetting} />
             <Route path="/news" component={News} />
             <Route path="/faq" component={FAQ} />
+
             <Route path="/aboutus" component={AboutUs} />
             <Route path="/register" component={SignupForm} />
             <Route path="/login" component={LoginForm} />

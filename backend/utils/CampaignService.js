@@ -1,4 +1,8 @@
 const moment = require("moment");
+const Provider = require('../provider');
+
+const Web3 = require("web3");
+const web3 = new Web3(Provider);
 
 module.exports = class CampaignService {
   constructor(knex) {
@@ -47,11 +51,13 @@ module.exports = class CampaignService {
     }
   }
 
-  postCampaign(newCampaign, user_id) {
-    /* 
-      any data pre-processing (trim, format, etc) belongs here
-      VVVVVVVVVVVVVV
-    */
+  async postCampaign(newCampaign, user_id) {
+    // create new Eth account from HDwallet
+    const newAccount = await web3.eth.accounts.create();
+    const keystore = newAccount.encrypt('passcode');  // encrypt ---> generate keystore
+    const keystoreString = JSON.stringify(keystore);
+    // console.log(newAccount);
+    // console.log(keystore);
 
     let action = this.knex("campaigns").insert({
       title: newCampaign.campaignName,
@@ -69,13 +75,18 @@ module.exports = class CampaignService {
       end_date: newCampaign.endDate,
       soft_cap: newCampaign.softCap,
       hard_cap: newCampaign.hardCap,
+      total_supply: newCampaign.totalSupply,
+      token_name: newCampaign.tokenName,
+      decimal_places: newCampaign.decimalPlaces,
+      token_symbol: newCampaign.tokenSymbol,
+      conversion_ratio: newCampaign.conversionRatio,
       status: "pending",
       user_id: user_id,
       eth_address: newCampaign.eth_address,
-      private_key: newCampaign.private_key,
+      token_address: newAccount.address,  // address generated above
+      keystore: keystoreString,   // keystore encrypted from private key from above
       token_id: newCampaign.token_id
     });
-
     return action;
   }
 
@@ -105,7 +116,8 @@ module.exports = class CampaignService {
         hard_cap: campaign.hard_cap,
         status: campaign.status,
         user_id: campaign.user_id,
-        eth_address: campaign.eth_address,
+        eth_address: newCampaign.eth_address,
+        token_address: newCampaign.token_address,
         private_key: campaign.private_key,
         token_id: campaign.token_id
       });

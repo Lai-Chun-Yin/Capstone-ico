@@ -16,13 +16,17 @@ exports.up = function(knex, Promise) {
     table.timestamp('end_date');
     table.decimal('soft_cap');
     table.decimal('hard_cap');
+    table.integer('total_supply');
+    table.string('token_name');
+    table.integer('decimal_places');
+    table.string('token_symbol');
     table.decimal('conversion_ratio');
     table.string('status');
     table.integer('user_id').unsigned();
     table.foreign('user_id').references('users.id');
     table.string('eth_address');
     table.string('token_address');
-    table.string('private_key');
+    table.text('keystore');
     table.integer('token_id').unsigned();
     table.timestamps(false,true);
   })
