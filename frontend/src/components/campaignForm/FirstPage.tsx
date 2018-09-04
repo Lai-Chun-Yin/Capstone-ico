@@ -1,7 +1,10 @@
 import Button from "@material-ui/core/Button";
 import * as React from "react";
-import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import { InjectedFormProps, reduxForm } from "redux-form";
+// tslint:disable-next-line:no-var-requires
+const Field = require("redux-form").Field;
 import renderDatePicker from "./datePickerField";
+// import TheField from "./editor2";
 import * as validation from "./fieldLevelValidation";
 import RenderTextField from "./textField";
 

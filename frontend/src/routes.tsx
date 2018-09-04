@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
 import CampaignDetails from "./components/campaignDetails";
 import CampaignForm from "./components/campaignForm/CampaignForm";
+import WYSISWYG from "./components/campaignForm/editor";
 import Campaigns from "./components/campaigns";
 import FAQ from "./components/faq/faq";
 import Footer from "./components/footer";
@@ -28,6 +29,7 @@ const Routes = () => {
               path="/campaign/details/:campaignId"
               component={CampaignDetails}
             />
+            <Route path="/tested" component={WYSISWYG} />
             <Route path="/campaign" component={Campaigns} />
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/userSetting" component={UserSetting} />
