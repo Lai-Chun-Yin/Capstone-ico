@@ -1,6 +1,7 @@
-import Web3 from 'web3';
+// tslint:disable-next-line:no-var-requires
+const Web3 = require('web3');
 
-let web3:Web3;
+let web3:any;
 
 if (typeof window !== "undefined" && typeof (window as any).web3 !== "undefined") {
   // we are in the browser and metamask is running.
