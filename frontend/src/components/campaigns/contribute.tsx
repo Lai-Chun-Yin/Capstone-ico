@@ -1,4 +1,10 @@
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from "axios";
+import * as History from "history";
 import * as React from "react";
 import { connect } from 'react-redux';
 import { match } from 'react-router-dom';
@@ -18,6 +24,7 @@ import { IRootState } from "../../reducers";
 interface IFormProps {
   campaigns: CapstoneICO.ICampaign[];
   match: match<ICampaignIdPathParam>;
+  history: History.History;
 }
 interface IFormState {
   fromAddress: string;
@@ -26,6 +33,8 @@ interface IFormState {
   value: string;
   receipt: object;
   campaign: CapstoneICO.ICampaign | null;
+  // below is for prevent breaking mechanism
+  dialogOpen: boolean;
 }
 interface ICampaignIdPathParam {
   campaignId: number
@@ -42,6 +51,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
       value: '',
       receipt: {},
       campaign: targetCampaign[0],
+      dialogOpen: false
     };
   }
 
@@ -53,6 +63,8 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
         balance: web3.utils.fromWei(balance, 'ether'),
         fromAddress: accounts[0],
       })
+    } else if(accounts.length===0){
+      this.onNoAddress(); return; 
     }
 
     this.setState({
@@ -73,6 +85,11 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
 
     let form;
     if (this.state.campaign) {
+      let equivalentTokenMessage = null;
+      if (this.state.value) {
+        equivalentTokenMessage =
+          <CardText>You are investing {this.state.value} Ether in exchange for {(+this.state.campaign.conversion_ratio) * (+this.state.value)} Tokens of supported campaign.</CardText>
+      }
       form = (
         <Row>
           <Col sm="6">
@@ -90,6 +107,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
                   <Input placeholder="" value={this.state.value} onChange={this.handleValueChg} />
                   <InputGroupAddon addonType="append">ether</InputGroupAddon>
                 </InputGroup>
+                {equivalentTokenMessage}
                 <Button onClick={this.handleSendEther}>Send Ether</Button>
               </div>
             </Card>
@@ -113,6 +131,20 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     return (
       <React.Fragment>
         <div>{form}</div>
+
+        <Dialog open={this.state.dialogOpen} onClose={this.handlePageClose}>
+          <DialogTitle>Subscribe</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Cannot find any addresses. Please make sure Metamask is loaded.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handlePageClose} color="primary">
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </React.Fragment>
     );
   }
@@ -149,6 +181,15 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  private onNoAddress = () => {
+    this.setState({
+      dialogOpen: true
+    })
+  }
+  private handlePageClose = () => {
+    this.props.history.goBack();
   }
 }
 
