@@ -20,6 +20,7 @@ declare namespace CapstoneICO {
     status: string;
     user_id: number;
     eth_address: string;
+    token_address: string;
     private_key: string;
     token_id: number;
     created_at: Date;

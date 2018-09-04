@@ -2,8 +2,8 @@ import * as History from "history";
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import { IRootState } from '../reducers';
-import { loadCampaignsThunk } from '../reducers/campaigns/actions';
+import { IRootState } from '../../reducers';
+import { loadCampaignsThunk } from '../../reducers/campaigns/actions';
 
 interface ICampaignProps {
   campaigns: CapstoneICO.ICampaign[];

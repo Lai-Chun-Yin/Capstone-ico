@@ -1,9 +1,9 @@
 import axios from "axios";
 import * as React from "react";
 import { connect } from 'react-redux';
-import { match } from 'react-router-dom'
-import { IRootState } from "../reducers/index"
-import Youtube from "./Youtube";
+import { Link, match } from 'react-router-dom';
+import { IRootState } from "../../reducers";
+import Youtube from "../Youtube";
 
 interface ICampaignDetailsProps {
     campaigns: CapstoneICO.ICampaign[];
@@ -34,7 +34,7 @@ class CampaignDetails extends React.Component<ICampaignDetailsProps, ICampaignDe
     }
 
     public onSupportHandler(event:any){
-        event.preventDefault();
+        // event.preventDefault();
     }
 
     public render() {
@@ -61,7 +61,9 @@ class CampaignDetails extends React.Component<ICampaignDetailsProps, ICampaignDe
                     <div className="page-header">
                         <h2 className="display-4">{this.state.campaign.title}</h2>
                     </div>
-                    <button type="button" className="btn btn-primary" onClick={this.onSupportHandler}>Support Campaign</button>
+                    <Link to={`/campaign/details/${this.state.campaign.id}/contribute`} >
+                      <button type="button" className="btn btn-primary" onClick={this.onSupportHandler}>Support Campaign</button>
+                    </Link>
                 </React.Fragment>
             )
             campaignContent = (
