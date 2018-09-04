@@ -1,25 +1,28 @@
-const mnemonic = "express clean uncover tumble strike account crush paddle whale cushion film pioneer";
-
-const HDWalletProvider = require("truffle-hdwallet-provider");
-const provider = new HDWalletProvider(mnemonic, 'https://rinkeby.infura.io/e090ab77bbe446e597ee121b9e4e2cc0');
+const Provider = require('../provider');
 
 const Web3 = require("web3");
-const web3 = new Web3(provider);
+const web3 = new Web3(Provider);
 
 const contract = require('truffle-contract');
 let TokenContract = require('./build/Token.json');
 
 let loadToken = contract(TokenContract);
-loadToken.setProvider(provider);
+loadToken.setProvider(Provider);
 
 (async () => {
-  const accounts = await web3.eth.getAccounts();
-  console.log('Account 1:', accounts[0]);
-  console.log('Account 2:', accounts[1]);
+  const newAccount1 = await web3.eth.accounts.create();
+  let keystore1 = newAccount1.encrypt('passcode');  // encrypt ---> generate keystore
+  console.log('Account 1:', newAccount1);
+  console.log('Keystore 1:', keystore1);
+  let pk = web3.eth.accounts.decrypt(keystore1, 'passcode');
+  console.log('Decrypted keystore --> private key:', pk)
+  
+  const newAccount2 = await web3.eth.accounts.create();
+  console.log('Account 2:', newAccount2);
 
   // set contract owner address
   // must use lowercase or will get "private key should be a Buffer" error
-  loadToken.defaults({from: accounts[0].toLowerCase()}); 
+  loadToken.defaults({from: newAccount1.address.toLowerCase()});
 
   // load an existing contract on the network
   let deployed = await loadToken.at('0xcd83F32f547a8Ed75D00bFFf17bBDFd64FAb0Bd8');
@@ -27,7 +30,7 @@ loadToken.setProvider(provider);
   let owner = await deployed.owner();
   console.log('Contract owner:', owner);
 
-  let balance = await deployed.balanceOf(accounts[0]);
+  let balance = await deployed.balanceOf(newAccount2.address);
   console.log('Balance of genesis address: ', balance);
 
   // let newContractAddress = await deployed.this();

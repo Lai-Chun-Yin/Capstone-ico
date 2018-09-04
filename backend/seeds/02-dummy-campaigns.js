@@ -13,7 +13,10 @@ exports.seed = function(knex, Promise) {
       end_date: "2019-02-15 00:00:00+08",
       soft_cap: 50.5,
       hard_cap: 200.8,
+      total_supply: 1000000,
       status: "pending",
+      eth_address: '0x3c532eb375ee100af8ebcc7dfc952e012f3edde1',
+      token_address: '0x94a633cbce71881ea83367031b2354596e725e44',
       user_id: 1,
       token_id: 1
     },
@@ -27,8 +30,9 @@ exports.seed = function(knex, Promise) {
       company_name: "Some Scammy Company",
       start_date: "2020-01-16 00:00:00+08",
       end_date: "2020-02-15 00:00:00+08",
-      soft_cap: 100.5,
-      hard_cap: 250.8,
+      soft_cap: 50.5,
+      hard_cap: 200.8,
+      total_supply: 2000000,
       status: "pending",
       user_id: 2,
       token_id: 1
