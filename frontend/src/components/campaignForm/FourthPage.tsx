@@ -1,7 +1,8 @@
+import { Button } from "@material-ui/core";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import * as validation from "./fieldLevelValidation";
-import renderField from "./renderField";
+import renderField from "./textField";
 
 export interface IFourthPageProps {
   previousPage: any;
@@ -13,34 +14,47 @@ const FourthPage: React.ComponentType<
   const { handleSubmit, pristine, previousPage, submitting } = props;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>4 of 4: token</h2>
+    <form onSubmit={handleSubmit} className="row">
+      <h1 className="entry-heading mb-4 col-12">4 of 4: token details</h1>
       <Field
         name="softCap"
         type="number"
         component={renderField}
         label="Soft Cap"
-        validate={[validation.required,validation.tokenQuantity.validateSoftCap]}
+        placeholder="Soft Cap: eg 10"
+        validate={[
+          validation.required,
+          validation.tokenQuantity.validateSoftCap
+        ]}
       />
       <Field
         name="hardCap"
         type="number"
         component={renderField}
         label="Hard Cap"
-        validate={[validation.required,validation.tokenQuantity.validateHardCap]}
+        placeholder="Hard Cap: eg 10"
+        validate={[
+          validation.required,
+          validation.tokenQuantity.validateHardCap
+        ]}
       />
       <Field
         name="totalSupply"
         type="number"
         component={renderField}
         label="Total Supply"
-        validate={[validation.required,validation.tokenQuantity.validateTotalSupply]}
+        placeholder="Total Supply: eg 10000"
+        validate={[
+          validation.required,
+          validation.tokenQuantity.validateTotalSupply
+        ]}
       />
       <Field
         name="tokenName"
         type="text"
         component={renderField}
         label="Token Name"
+        placeholder="Token Name: eg Max Coin"
         validate={validation.required}
       />
       <Field
@@ -48,6 +62,7 @@ const FourthPage: React.ComponentType<
         type="number"
         component={renderField}
         label="Decimal Places"
+        placeholder="Decimal Places: eg 5"
         validate={validation.required}
       />
       <Field
@@ -55,6 +70,7 @@ const FourthPage: React.ComponentType<
         type="text"
         component={renderField}
         label="Token Symbol"
+        placeholder="Decimal Places: eg MXC"
         validate={validation.required}
       />
       <Field
@@ -62,16 +78,31 @@ const FourthPage: React.ComponentType<
         type="number"
         component={renderField}
         label="How many tokens can be exchanged for 1 ETH"
-        validate={[validation.required,validation.positiveNum]}
+        placeholder="Decimal Places: eg 10"
+        validate={[validation.required, validation.positiveNum]}
       />
-      
+
       <div>
-        <button type="button" className="previous" onClick={previousPage}>
-          Previous
-        </button>
-        <button type="submit" disabled={pristine || submitting}>
-          Submit
-        </button>
+        <Button
+          className="ml-2 jr-btn"
+          variant="raised"
+          color="primary"
+          onClick={previousPage}
+        >
+          <span>Previous</span>
+          <i className="zmdi zmdi-arrow-left zmdi-hc-fw" />
+        </Button>
+
+        <Button
+          type="submit"
+          className="ml-2 jr-btn"
+          variant="raised"
+          color="primary"
+          disabled={pristine || submitting}
+        >
+          <i className="zmdi zmdi-arrow-right zmdi-hc-fw" />
+          <span>Submit</span>
+        </Button>
       </div>
     </form>
   );

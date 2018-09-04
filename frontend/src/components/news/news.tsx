@@ -1,3 +1,5 @@
+import * as Nprogress from "nprogress";
+import "nprogress/nprogress.css";
 import * as React from "react";
 import { getNews } from "../../services/newsService";
 import ContainerHeader from "../common/containerHeader";
@@ -27,10 +29,14 @@ class News extends React.Component<any, INewsState> {
   }
 
   public async componentDidMount() {
+    Nprogress.start();
+
     const { data } = await getNews();
     const news = data.articles;
 
     this.setState({ news });
+
+    Nprogress.done();
   }
 
   public render() {
@@ -45,7 +51,7 @@ class News extends React.Component<any, INewsState> {
             news.map((element: any) => {
               return (
                 <div
-                  className="col-md-4 col-sm-6 col-12"
+                  className="col-md-4 col-sm-6 col-12 mb-4"
                   key={news.indexOf(element)}
                 >
                   <ImageBottomCard

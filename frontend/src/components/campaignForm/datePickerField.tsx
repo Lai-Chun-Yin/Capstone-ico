@@ -3,25 +3,24 @@ import { ComponentType } from "react";
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from "redux-form";
 
 export interface IdatePickerProps {
-    input: WrappedFieldInputProps;
-    meta: WrappedFieldMetaProps;
-    label: any;
+  input: WrappedFieldInputProps;
+  meta: WrappedFieldMetaProps;
+  label: any;
 }
 
-const IrenderDatePicker: ComponentType<IdatePickerProps> = ({
-    input,
-    label,
-    meta: { touched, error }
+const renderDatePicker: ComponentType<IdatePickerProps> = ({
+  input,
+  label,
+  meta: { touched, error }
 }) => {
-    return (
-            <div>
-                <label>{label}</label>
-                <input type="date"
-                    {...input}/>
-                {touched && error && <span>{error}</span>}
-            </div>
-
-    );
+  return (
+    <div className="col-12 mb-3">
+      <label className="col-12">{label}</label>
+      <input type="date" {...input} />
+      {touched &&
+        error && <span className="m-1 text-danger">{"*" + error}</span>}
+    </div>
+  );
 };
 
-export default IrenderDatePicker;
+export default renderDatePicker;

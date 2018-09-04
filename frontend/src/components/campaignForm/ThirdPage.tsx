@@ -1,8 +1,10 @@
+// import validate from "./validate";
+
+import { Button } from "@material-ui/core";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
 import * as validation from "./fieldLevelValidation";
-import renderField from "./renderField";
-// import validate from "./validate";
+import RenderTextField from "./textField";
 
 export interface IThirdPageProps {
   previousPage: any;
@@ -14,60 +16,77 @@ const ThirdPage: React.ComponentType<
   const { handleSubmit, previousPage } = props;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>3 of 4: profile and legal entity</h2>
-      <h3>Now, a little bit about you</h3>
+    <form onSubmit={handleSubmit} className="row">
+      <h1 className="entry-heading mb-3 col-12">
+        3 of 4: profile and legal entity
+      </h1>
+      <h2 className="entry-heading mb-3 col-12">Now, a little bit about you</h2>
       <Field
         name="fullName"
         type="text"
-        component={renderField}
+        component={RenderTextField}
         label="Full Name"
         validate={validation.required}
       />
       <Field
         name="email"
         type="email"
-        component={renderField}
+        component={RenderTextField}
         label="Email"
-        validate={[validation.required,validation.email]}
+        validate={[validation.required, validation.email]}
       />
-      <h3>and your company</h3>
+
+      <h2 className="entry-heading mt-5 mb-3 col-12">And your company</h2>
       <Field
         name="companyName"
         type="text"
-        component={renderField}
+        component={RenderTextField}
         label="Company Name"
         validate={validation.required}
       />
       <Field
         name="legalForm"
         type="text"
-        component={renderField}
+        component={RenderTextField}
         label="Legel Form"
         validate={validation.required}
       />
       <Field
         name="regId"
         type="text"
-        component={renderField}
+        component={RenderTextField}
         label="Entity Reg. ID"
         validate={validation.required}
       />
       <Field
         name="country"
         type="text"
-        component={renderField}
+        component={RenderTextField}
         label="Country"
+        helper="The User will not forge, or otherwise manipulate any personal or non-personal information and will provide it in the form and format requested by the {} and in accordance with the applicable law."
         validate={validation.required}
       />
-      
+
       <div>
-        <button type="button" className="previous" onClick={previousPage}>
-          Previous
-        </button>
-        <button type="submit" className="next">
-          Next
-        </button>
+        <Button
+          className="ml-2 jr-btn"
+          variant="raised"
+          color="primary"
+          onClick={previousPage}
+        >
+          <span>Previous</span>
+          <i className="zmdi zmdi-arrow-left zmdi-hc-fw" />
+        </Button>
+
+        <Button
+          type="submit"
+          className="ml-2 jr-btn"
+          variant="raised"
+          color="primary"
+        >
+          <i className="zmdi zmdi-arrow-right zmdi-hc-fw" />
+          <span>Next</span>
+        </Button>
       </div>
     </form>
   );

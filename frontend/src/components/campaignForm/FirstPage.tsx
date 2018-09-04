@@ -1,47 +1,64 @@
+import Button from "@material-ui/core/Button";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
-import datePickerField from "./datePickerField";
+import renderDatePicker from "./datePickerField";
 import * as validation from "./fieldLevelValidation";
-import renderField from "./renderField";
-import textAreaField from "./textAreaField";
-// import validate from "./validate";
+import RenderTextField from "./textField";
+
+// // import validate from "./validate";
 
 const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
   const { handleSubmit } = props;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>1 of 4: basic information</h2>
+    <form onSubmit={handleSubmit} className="row">
+      <h1 className="entry-heading mb-4 col-12">1 of 4: basic information</h1>
+
       <Field
         name="campaignName"
-        type="text"
-        component={renderField}
+        component={RenderTextField}
         label="Campaign Name"
         validate={validation.required}
+        helper="Choose something simple, specific, and memorable. Don’t use words like ‘help’, ‘support’, or ‘fund’."
       />
+
       <Field
         name="shortDescription"
-        component={textAreaField}
-        label="Shortly describe your project in one sentence"
-        validate={[validation.required,validation.maxChar100]}
+        component={RenderTextField}
+        label="Short description"
+        validate={[validation.required, validation.maxChar100]}
+        helper="Your elevator pitch. Describe your project in a few well-phrased sentences, so people can easily understand what it’s all about."
       />
+
       <Field
         name="startDate"
-        component={datePickerField}
+        component={renderDatePicker}
         label="Start Date"
-        validate={[validation.required,validation.campaignDates.validateStartDate]}
+        validate={[
+          validation.required,
+          validation.campaignDates.validateStartDate
+        ]}
       />
       <Field
         name="endDate"
-        component={datePickerField}
+        component={renderDatePicker}
         label="End Date"
-        validate={[validation.required,validation.campaignDates.validateEndDate]}
+        validate={[
+          validation.required,
+          validation.campaignDates.validateEndDate
+        ]}
       />
-      
+
       <div>
-        <button type="submit" className="next">
-          Next
-        </button>
+        <Button
+          type="submit"
+          className="ml-2 jr-btn"
+          variant="raised"
+          color="primary"
+        >
+          <i className="zmdi zmdi-arrow-right zmdi-hc-fw" />
+          <span>Next</span>
+        </Button>
       </div>
     </form>
   );
