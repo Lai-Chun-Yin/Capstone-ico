@@ -56,7 +56,7 @@ class BasicCarousel extends React.Component<any, IBasicCarouselState> {
           onExiting={this.onExiting}
           onExited={this.onExited}
         >
-          <img src={item.src} alt={item.altText} />
+          <img src={item.src} alt={item.altText} className="img-fluid" />
         </CarouselItem>
       );
     });

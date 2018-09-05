@@ -15,7 +15,9 @@ const FourthPage: React.ComponentType<
 
   return (
     <form onSubmit={handleSubmit} className="row">
-      <h1 className="entry-heading mb-4 col-12">4 of 4: token details</h1>
+      <h1 className="entry-heading mb-4 col-12 text-center">
+        4 of 4: token details
+      </h1>
       <Field
         name="softCap"
         type="number"

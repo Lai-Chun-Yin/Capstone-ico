@@ -17,7 +17,7 @@ const ThirdPage: React.ComponentType<
 
   return (
     <form onSubmit={handleSubmit} className="row">
-      <h1 className="entry-heading mb-3 col-12">
+      <h1 className="entry-heading mb-3 col-12 text-center">
         3 of 4: profile and legal entity
       </h1>
       <h2 className="entry-heading mb-3 col-12">Now, a little bit about you</h2>
@@ -36,7 +36,9 @@ const ThirdPage: React.ComponentType<
         validate={[validation.required, validation.email]}
       />
 
-      <h2 className="entry-heading mt-5 mb-3 col-12">And your company</h2>
+      <h2 className="entry-heading mt-5 mb-3 col-12 text-center">
+        And your company
+      </h2>
       <Field
         name="companyName"
         type="text"

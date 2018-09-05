@@ -24,7 +24,7 @@ class PureCampaigns extends React.Component<ICampaignProps> {
     const { campaigns } = this.props;
 
     return (
-      <React.Fragment>
+      <div className="animated slideInUpTiny animation-duration-3">
         <ContainerHeader title="All Active Campaigns" />
 
         <div className="card shadow border-0 bg-white p-2">
@@ -44,7 +44,7 @@ class PureCampaigns extends React.Component<ICampaignProps> {
           </form>
         </div>
 
-        <div className="animated slideInUpTiny animation-duration-3">
+        <div>
           <List>
             {campaigns.map((e: CapstoneICO.ICampaign) => (
               <CampaignListItem
@@ -61,7 +61,7 @@ class PureCampaigns extends React.Component<ICampaignProps> {
             ))}
           </List>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

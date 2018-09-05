@@ -13,11 +13,12 @@ const ProfileCard = () => {
         </div>
       </div>
       <div className="pi-content">
-        <h4>Robert Johnson</h4>
+        <h4>AA AA</h4>
         <p>Designer</p>
         <p className="card-text">
-          Hello everyone, I am Maryam. My designs are used in several big
-          companies in United State and other countries.
+          Hello everyone, I am yooyoy. Lorem ipsum is the filler text most
+          people are familiar with, and if you’ve spent any time at all poking
+          around the internet you’ve surely seen the words lorem ipsum before.
         </p>
       </div>
       <div className="pi-footer">

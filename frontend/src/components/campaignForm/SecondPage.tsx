@@ -23,7 +23,7 @@ const SecondPage: React.ComponentType<
 
   return (
     <form onSubmit={handleSubmit} className="row">
-      <h1 className="entry-heading mb-4 col-12">2 of 4: story</h1>
+      <h1 className="entry-heading mb-4 col-12 text-center">2 of 4: story</h1>
 
       <input onChange={props.onFileChange} type="file" accept="image/*" />
       <Field

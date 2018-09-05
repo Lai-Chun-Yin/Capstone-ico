@@ -43,16 +43,16 @@ class News extends React.Component<any, INewsState> {
     const { news } = this.state;
 
     return (
-      <React.Fragment>
+      <div>
         <ContainerHeader title="Latest news" />
 
         <div className="row mb-md-4">
           {news.length > 0 &&
-            news.map((element: any) => {
+            news.map((element: any, i: number) => {
               return (
                 <div
-                  className="col-md-4 col-sm-6 col-12 mb-4"
-                  key={news.indexOf(element)}
+                  className="col-md-4 col-sm-6 col-12 mb-4 animated slideInUpTiny animation-duration-3"
+                  key={i}
                 >
                   <ImageBottomCard
                     title={element.title}
@@ -66,7 +66,7 @@ class News extends React.Component<any, INewsState> {
               );
             })}
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -15,7 +15,7 @@ export interface IHomePageProps {
 class HomePage extends React.Component<IHomePageProps> {
   public render() {
     return (
-      <React.Fragment>
+      <div className="animated slideInUpTiny animation-duration-3">
         <div className="row mb-md-4">
           <CardBox styleName="col-lg-12" cardStyle="p-0">
             <BasicCarousel />
@@ -23,7 +23,7 @@ class HomePage extends React.Component<IHomePageProps> {
         </div>
         <CampaignList />
         <ContactUs match={this.props.match} />
-      </React.Fragment>
+      </div>
     );
   }
 }

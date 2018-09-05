@@ -1,6 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import * as campaignActions from "../../reducers/campaigns/actions";
+import { IRootState } from "../../reducers/index";
 import CardBox from "../common/cardBox";
 import ContainerHeader from "../common/containerHeader";
 import FirstPage from "./FirstPage";
@@ -30,6 +32,8 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
 
     return (
       <React.Fragment>
+        {!this.props.isAuthenticated && <Redirect to="/login" />}
+
         <ContainerHeader title="Create Campaign" />
         <div className="row">
           <CardBox styleName="col-lg-12" headerOutside={true}>
@@ -106,7 +110,13 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
+const mapStateToProps = (state: IRootState) => {
+  return {
+    isAuthenticated: state.auth.token !== null
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(CampaignForm);
