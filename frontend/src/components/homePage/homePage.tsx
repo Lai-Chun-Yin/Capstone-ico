@@ -1,8 +1,8 @@
 import * as React from "react";
 import CardBox from "../common/cardBox";
 import BasicCarousel from "./basicCarousel";
-import CampaignList from "./campaignList";
 import ContactUs from "./contractUs";
+import CampaignList from "./homeCamList";
 
 export interface IHomePageProps {
   match: any;

@@ -3,7 +3,7 @@ import "nprogress/nprogress.css";
 import * as React from "react";
 import { getNews } from "../../services/newsService";
 import ContainerHeader from "../common/containerHeader";
-import ImageBottomCard from "./imageBottomCard";
+import ImageBottomCard from "./newsList";
 
 interface Iarticle {
   author: string | null;

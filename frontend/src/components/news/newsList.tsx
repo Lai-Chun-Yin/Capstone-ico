@@ -1,4 +1,5 @@
 import * as React from "react";
+import getDateTimeHK from "../../services/timeService";
 
 import { Card, CardBody, CardImg, CardSubtitle, CardText } from "reactstrap";
 
@@ -10,20 +11,7 @@ const ImageBottomCard = ({
   description,
   date
 }: any) => {
-  const dateObj = new Date(date);
-  const dateString =
-    dateObj.getUTCFullYear() +
-    "/" +
-    ("0" + (dateObj.getUTCMonth() + 1)).slice(-2) +
-    "/" +
-    ("0" + dateObj.getUTCDate()).slice(-2) +
-    " " +
-    ("0" + dateObj.getUTCHours() + 8).slice(-2) +
-    ":" +
-    ("0" + dateObj.getUTCMinutes()).slice(-2) +
-    ":" +
-    ("0" + dateObj.getUTCSeconds()).slice(-2) +
-    " GMT+8";
+  const dateString = getDateTimeHK(date);
 
   return (
     <Card className="shadow border-0">

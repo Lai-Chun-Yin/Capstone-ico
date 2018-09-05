@@ -1,6 +1,5 @@
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
-import Button, { ButtonProps } from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
@@ -10,6 +9,7 @@ import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import { authCheckState } from "../reducers/auth/actions";
 import { IRootState } from "../reducers/index";
 import { toggleCollapsedNav } from "../reducers/sideNav/action";
+import LinkButton from "./common/linkButton";
 import SearchBox from "./common/searchBox";
 import UserInfoPopup from "./userInfoPopUp/userInfoPopup";
 
@@ -28,13 +28,6 @@ interface IHeaderProps {
 interface IHeaderstate {
   [key: string]: any;
 }
-
-interface ILinkButtonProps extends ButtonProps {
-  to?: string;
-}
-
-// create a new LinkButton component for connect react router dom and material ui button
-const LinkButton: React.ReactType<ILinkButtonProps> = Button;
 
 class Header extends React.Component<IHeaderProps, IHeaderstate> {
   public constructor(props: any) {

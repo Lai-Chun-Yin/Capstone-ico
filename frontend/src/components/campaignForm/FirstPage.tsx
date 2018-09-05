@@ -3,10 +3,10 @@ import * as React from "react";
 import { InjectedFormProps, reduxForm } from "redux-form";
 // tslint:disable-next-line:no-var-requires
 const Field = require("redux-form").Field;
+import RenderTextField from "../common/textField";
 import renderDatePicker from "./datePickerField";
 // import TheField from "./editor2";
 import * as validation from "./fieldLevelValidation";
-import RenderTextField from "./textField";
 
 // // import validate from "./validate";
 

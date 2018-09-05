@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import renderField from "../common/textField";
 import * as validation from "./fieldLevelValidation";
-import renderField from "./textField";
 
 export interface IFourthPageProps {
   previousPage: any;

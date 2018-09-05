@@ -3,8 +3,8 @@
 import { Button } from "@material-ui/core";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
+import RenderTextField from "../common/textField";
 import * as validation from "./fieldLevelValidation";
-import RenderTextField from "./textField";
 
 export interface IThirdPageProps {
   previousPage: any;

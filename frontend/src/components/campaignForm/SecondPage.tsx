@@ -1,10 +1,10 @@
 import Button from "@material-ui/core/Button";
 import * as React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
-import * as validation from "./fieldLevelValidation";
 // import textAreaField from "./textAreaField";
 // import FileInput from "./imageUploadField";
-import RenderTextField from "./textField";
+import RenderTextField from "../common/textField";
+import * as validation from "./fieldLevelValidation";
 
 // import validate from "./validate";
 
