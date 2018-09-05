@@ -56,6 +56,7 @@ class PureCampaigns extends React.Component<ICampaignProps> {
                 endD={e.end_date}
                 soft={e.soft_cap}
                 id={e.id}
+                image={e.project_photo}
               />
             ))}
           </List>

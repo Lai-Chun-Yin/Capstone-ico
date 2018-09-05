@@ -11,7 +11,8 @@ const CampaignListItem = ({
   endD,
   id,
   soft,
-  startD
+  startD,
+  image
 }: any) => {
   const startDstring = getDateTimeHK(startD, "d");
   const endDstring = getDateTimeHK(endD, "d");
@@ -25,7 +26,7 @@ const CampaignListItem = ({
                 <a className="grid-thumb-cover" href="javascript:void(0)">
                   <img
                     className="img-fluid"
-                    src="http://via.placeholder.com/500x330"
+                    src={"https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" + image}
                     alt="..."
                   />
                 </a>
