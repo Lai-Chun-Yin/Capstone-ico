@@ -4,7 +4,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 // import { Link } from "react-router-dom";
 import { IRootState } from "../../reducers";
-import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
+import { loadCampaignsThunk,searchCampaignsThunk } from "../../reducers/campaigns/actions";
 import ContainerHeader from "../common/containerHeader";
 import CampaignListItem from "./campaignItem";
 // import productData from "./productData";
@@ -13,11 +13,18 @@ interface ICampaignProps {
   campaigns: CapstoneICO.ICampaign[];
   reloadCampaign: () => void;
   history: History.History;
+  searchCampaign: (keyword:string) => void;
+}
+interface ICampaignState {
+  searchKeyword: string;
 }
 
-class PureCampaigns extends React.Component<ICampaignProps> {
+class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
   public componentDidMount() {
     this.props.reloadCampaign();
+    this.state = {
+      searchKeyword: ""
+    }
   }
 
   public render() {
@@ -35,8 +42,9 @@ class PureCampaigns extends React.Component<ICampaignProps> {
                   type="search"
                   className="form-control form-control-lg border-0"
                   placeholder="Search..."
+                  onChange={this.onKeywordChange}
                 />
-                <button className="search-icon">
+                <button className="search-icon" onClick={this.onSearch}>
                   <i className="zmdi zmdi-search zmdi-hc-lg" />
                 </button>
               </div>
@@ -64,6 +72,17 @@ class PureCampaigns extends React.Component<ICampaignProps> {
       </div>
     );
   }
+
+  private onKeywordChange = (e:any) => {
+    this.setState({
+      searchKeyword: e.target.value
+    })
+  }
+
+  private onSearch = (e:any) =>{
+    e.preventDefault();
+    this.props.searchCampaign(this.state.searchKeyword);
+  }
 }
 
 const Campaigns = connect(
@@ -72,7 +91,8 @@ const Campaigns = connect(
     user: state.auth.user
   }),
   (dispatch: any) => ({
-    reloadCampaign: () => dispatch(loadCampaignsThunk())
+    reloadCampaign: () => dispatch(loadCampaignsThunk()),
+    searchCampaign: (keyword:string) => dispatch(searchCampaignsThunk(keyword))
   })
 )(PureCampaigns);
 

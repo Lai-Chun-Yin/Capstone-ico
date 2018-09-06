@@ -66,6 +66,19 @@ export function loadCampaignsThunk() {
   };
 }
 
+export function searchCampaignsThunk(keywordArg:string) {
+  return (dispatch: Dispatch<CampaignActions>) => {
+    const keyword = encodeURI(keywordArg);
+    axios.get<CapstoneICO.ICampaign[]>(`${process.env.REACT_APP_API_SERVER}/api/campaign/search?keyword=${keyword}`,{
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    }).then(res => {
+      dispatch(loadCampaigns(res.data));
+    })
+  }
+}
+
 export function uploadCampaignThunk(campaign: any) {
   return async (dispatch: Dispatch<CampaignActions>) => {
     dispatch(uploadCampaignStart());
