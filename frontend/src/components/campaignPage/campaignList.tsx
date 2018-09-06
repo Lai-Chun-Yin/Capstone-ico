@@ -4,7 +4,7 @@ import { Progress } from "reactstrap";
 import getDateTimeHK from "../../services/timeService";
 import LinkButton from "../common/linkButton";
 
-const CampaignListItem = ({
+const CampaignList = ({
   title,
   creator,
   description,
@@ -26,7 +26,10 @@ const CampaignListItem = ({
                 <a className="grid-thumb-cover" href="javascript:void(0)">
                   <img
                     className="img-fluid"
-                    src={"https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" + image}
+                    src={
+                      "https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" +
+                      image
+                    }
                     alt="..."
                   />
                 </a>
@@ -96,4 +99,4 @@ const CampaignListItem = ({
   );
 };
 
-export default CampaignListItem;
+export default CampaignList;

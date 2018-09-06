@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 import ContainerHeader from "../common/containerHeader";
-import CampaignListItem from "./campaignItem";
+import CampaignList from "./campaignList";
 // import productData from "./productData";
 
 interface ICampaignProps {
@@ -15,7 +15,7 @@ interface ICampaignProps {
   history: History.History;
 }
 
-class PureCampaigns extends React.Component<ICampaignProps> {
+class CampaignPage extends React.Component<ICampaignProps> {
   public componentDidMount() {
     this.props.reloadCampaign();
   }
@@ -47,7 +47,7 @@ class PureCampaigns extends React.Component<ICampaignProps> {
         <div>
           <List>
             {campaigns.map((e: CapstoneICO.ICampaign) => (
-              <CampaignListItem
+              <CampaignList
                 key={e.id}
                 title={e.title}
                 description={e.short_description}
@@ -68,12 +68,11 @@ class PureCampaigns extends React.Component<ICampaignProps> {
 
 const Campaigns = connect(
   (state: IRootState) => ({
-    campaigns: state.campaign.campaigns,
-    user: state.auth.user
+    campaigns: state.campaign.campaigns
   }),
   (dispatch: any) => ({
     reloadCampaign: () => dispatch(loadCampaignsThunk())
   })
-)(PureCampaigns);
+)(CampaignPage);
 
 export default Campaigns;
