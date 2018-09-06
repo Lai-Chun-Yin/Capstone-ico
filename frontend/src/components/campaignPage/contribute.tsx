@@ -12,6 +12,7 @@ import { Button, Card, CardImg, CardSubtitle, CardText, CardTitle, Col, Row } fr
 import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import web3 from '../../ethereum/web3';
 import { IRootState } from "../../reducers";
+import * as Authactions from "../../reducers/auth/actions";
 
 
 // interface IContributeFormState {
@@ -22,9 +23,11 @@ import { IRootState } from "../../reducers";
 // }
 
 interface IFormProps {
+  isAuthenticated: boolean;
   campaigns: CapstoneICO.ICampaign[];
   match: match<ICampaignIdPathParam>;
   history: History.History;
+  onSetAuthRedirectPath: (path: any) => void;
 }
 interface IFormState {
   fromAddress: string;
@@ -34,7 +37,7 @@ interface IFormState {
   receipt: object;
   campaign: CapstoneICO.ICampaign | null;
   // below is for prevent breaking mechanism
-  dialogOpen: boolean;
+  dialog: any;
 }
 interface ICampaignIdPathParam {
   campaignId: number
@@ -51,11 +54,15 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
       value: '',
       receipt: {},
       campaign: targetCampaign[0],
-      dialogOpen: false
+      dialog: {
+        problem: null,
+        dialogOpen: false
+      }
     };
   }
 
-  public async componentDidMount() {
+  public componentDidMount = async () => {
+    if (!this.props.isAuthenticated) { this.onNotLogIn(); }
     const accounts = await web3.eth.getAccounts();
     if (accounts.length) {
       const balance = await web3.eth.getBalance(accounts[0]);
@@ -63,8 +70,8 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
         balance: web3.utils.fromWei(balance, 'ether'),
         fromAddress: accounts[0],
       })
-    } else if(accounts.length===0){
-      this.onNoAddress(); return; 
+    } else if (accounts.length === 0) {
+      this.onNoAddress(); return;
     }
 
     this.setState({
@@ -128,15 +135,23 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
       form = null
     }
 
+    let problemMessage = "";
+    if (this.state.dialog.problem === "noAddress") {
+      problemMessage = "Cannot find any addresses. Please make sure Metamask is loaded."
+    }
+    else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
+      problemMessage = "Please log in to continue."
+    }
+
     return (
       <React.Fragment>
         <div>{form}</div>
 
-        <Dialog open={this.state.dialogOpen} onClose={this.handlePageClose}>
+        <Dialog open={this.state.dialog.dialogOpen} onClose={this.handlePageClose}>
           <DialogTitle>Subscribe</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Cannot find any addresses. Please make sure Metamask is loaded.
+              {problemMessage}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -183,20 +198,44 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     }
   }
 
+  private onNotLogIn = () => {
+    this.setState({
+      dialog: {
+        problem: "notLogIn",
+        dialogOpen: true
+      }
+    })
+  }
   private onNoAddress = () => {
     this.setState({
-      dialogOpen: true
+      dialog: {
+        problem: "noAddress",
+        dialogOpen: true
+      }
     })
   }
   private handlePageClose = () => {
-    this.props.history.goBack();
+    if (this.state.dialog.problem === "noAddress") {
+      this.props.history.goBack();
+    }
+    else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
+      this.props.onSetAuthRedirectPath(`/campaign/details/${this.state.campaign.id}/contribute`);
+      this.props.history.push("/login")
+    }
   }
 }
 
 const mapStateToProps = (state: IRootState) => {
   return {
+    isAuthenticated: state.auth.token !== null,
     campaigns: state.campaign.campaigns
   }
 };
 
-export default connect(mapStateToProps)(ContributeForm);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    onSetAuthRedirectPath: (path: any) => dispatch(Authactions.setAuthRedirectPath(path))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContributeForm);
