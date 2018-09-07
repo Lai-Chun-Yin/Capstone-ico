@@ -4,7 +4,7 @@ import { Progress } from "reactstrap";
 import getDateTimeHK from "../../services/timeService";
 import LinkButton from "../common/linkButton";
 
-const CampaignListItem = ({
+const CampaignList = ({
   title,
   creator,
   description,
@@ -26,7 +26,10 @@ const CampaignListItem = ({
                 <a className="grid-thumb-cover" href="javascript:void(0)">
                   <img
                     className="img-fluid"
-                    src={"https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" + image}
+                    src={
+                      "https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" +
+                      image
+                    }
                     alt="..."
                   />
                 </a>
@@ -61,7 +64,11 @@ const CampaignListItem = ({
                 <small>Soft cap</small>
               </div>
 
-              <Progress color="primary" value="30">
+              <Progress
+                color="bg-teal"
+                value="30"
+                className="bg-grey lighten-2"
+              >
                 25%
               </Progress>
             </div>
@@ -82,8 +89,7 @@ const CampaignListItem = ({
             </div>
 
             <LinkButton
-              className="text-capitalize"
-              color="primary"
+              className="text-capitalize text-light-blue"
               component={Link}
               to={`/campaign/details/${id}/contribute`}
             >
@@ -96,4 +102,4 @@ const CampaignListItem = ({
   );
 };
 
-export default CampaignListItem;
+export default CampaignList;

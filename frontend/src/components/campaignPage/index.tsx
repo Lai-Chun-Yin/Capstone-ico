@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk,searchCampaignsThunk } from "../../reducers/campaigns/actions";
 import ContainerHeader from "../common/containerHeader";
-import CampaignListItem from "./campaignItem";
+import CampaignList from "./campaignList";
 // import productData from "./productData";
 
 interface ICampaignProps {
@@ -55,7 +55,7 @@ class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
         <div>
           <List>
             {campaigns.map((e: CapstoneICO.ICampaign) => (
-              <CampaignListItem
+              <CampaignList
                 key={e.id}
                 title={e.title}
                 description={e.short_description}
@@ -87,8 +87,7 @@ class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
 
 const Campaigns = connect(
   (state: IRootState) => ({
-    campaigns: state.campaign.campaigns,
-    user: state.auth.user
+    campaigns: state.campaign.campaigns
   }),
   (dispatch: any) => ({
     reloadCampaign: () => dispatch(loadCampaignsThunk()),

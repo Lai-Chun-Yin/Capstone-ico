@@ -333,3 +333,16 @@
     padding-right: 0px !important;
   }
 }
+
+.nav-340-m-10{
+  @media screen and (max-width: 340px) {
+    margin-right: 0px
+  }
+}
+
+.nav-350-p-5 {
+  @media screen and (max-width: 350px) {
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+  }
+}
