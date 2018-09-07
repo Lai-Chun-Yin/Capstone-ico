@@ -1,0 +1,30 @@
+.break-text{
+  word-wrap: break-word;
+}
+
+.xlh1{
+  font-size: $h1-font-size * 1.8
+}
+
+
+@media screen and (max-width: 768px) {
+  .m-respon {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 335px) {
+  .share-respon{
+    margin-top: 20px !important;
+  }
+}
+
+@media screen and (max-width: 545px) {
+  .input-respon{
+    margin-top: 20px !important;
+  }
+}
+
+
+

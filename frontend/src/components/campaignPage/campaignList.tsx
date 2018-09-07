@@ -64,7 +64,11 @@ const CampaignList = ({
                 <small>Soft cap</small>
               </div>
 
-              <Progress color="primary" value="30">
+              <Progress
+                color="bg-teal"
+                value="30"
+                className="bg-grey lighten-2"
+              >
                 25%
               </Progress>
             </div>
@@ -85,8 +89,7 @@ const CampaignList = ({
             </div>
 
             <LinkButton
-              className="text-capitalize"
-              color="primary"
+              className="text-capitalize text-light-blue"
               component={Link}
               to={`/campaign/details/${id}/contribute`}
             >

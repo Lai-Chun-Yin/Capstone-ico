@@ -50,9 +50,9 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
 
     return (
       <AppBar className="app-main-header app-main-header-top">
-        <Toolbar className="app-toolbar" disableGutters={false}>
+        <Toolbar className="app-toolbar nav-350-p-5" disableGutters={false}>
           <div
-            className="d-block d-md-none pointer mr-3"
+            className="d-block d-md-none pointer mr-2"
             onClick={this.onToggleCollapsedNav}
           >
             <span className="jr-menu-icon">
@@ -60,7 +60,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
             </span>
           </div>
 
-          <Link className="app-logo mr-2" to="/">
+          <Link className="app-logo" to="/">
             <img
               src="http://via.placeholder.com/177x65"
               alt="app-logo"
@@ -77,7 +77,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
           />
 
           <ul className="header-notifications list-inline ml-auto navbar p-0">
-            <li className="d-inline-block d-lg-none list-inline-item mr-0">
+            <li className="d-inline-block d-lg-none list-inline-item mr-0 nav-450-p-0">
               <Dropdown
                 className="quick-menu nav-searchbox"
                 isOpen={searchBox}
@@ -110,7 +110,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                 <li className="nav-450-p-0">
                   <LinkButton
                     size="small"
-                    className="text-white"
+                    className="text-white pr-0"
                     component={Link}
                     to="/login"
                   >
