@@ -11,10 +11,11 @@ module.exports = class CampaignService {
 
   searchCampaign(search) {
     if (search) {
+      const searchWord = decodeURI(search).toLowerCase();
       let query = this.knex('campaigns')
-      .where('title', 'like', `%${search}%`)
-      .orWhere('short_description', 'like', `%${search}%`)
-      .orWhere('long_description', 'like', `%${search}%`);
+      .where(this.knex.raw("LOWER(title) LIKE ?",`%${searchWord}%`))
+      .orWhere(this.knex.raw("LOWER(short_description) LIKE ?",`%${searchWord}%`))
+      .orWhere(this.knex.raw("LOWER(long_description) LIKE ?",`%${searchWord}%`));
 
       return query;
     } else {
