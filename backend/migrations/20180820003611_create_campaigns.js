@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.string('short_description');
     table.string('project_photo');  // Can store path to AWS S3
     table.string('video_url');
-    table.string('long_description');
+    table.text('long_description');
     table.string('full_name');
     table.string('email');
     table.string('company_name');

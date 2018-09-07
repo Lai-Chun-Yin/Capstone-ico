@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import * as History from "history";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link, match } from "react-router-dom";
@@ -21,6 +22,7 @@ interface ICampaignDetailsProps {
   end_date: string;
   match: match<ICampaignIdPathParam>;
   reloadCampaign: () => void;
+  history: History.History;
 }
 interface ICampaignDetailsState {
   campaign: CapstoneICO.ICampaign | null;
@@ -60,6 +62,13 @@ class CampaignDetails extends React.Component<
       this.props.reloadCampaign();
     }
 
+    const targetCampaign = this.props.campaigns.filter(
+      campaign => campaign.id === +this.props.match.params.campaignId
+    );
+    if(targetCampaign.length===0){
+      this.props.history.push("/not-found");
+      return;
+    }
     // get campaign balance
     const tokenAddr = this.state.campaign
       ? this.state.campaign.token_address
