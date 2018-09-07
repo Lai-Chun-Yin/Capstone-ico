@@ -23,10 +23,14 @@ module.exports = class TransactionRouter {
   }
 
   post(req, res) {
+    req.body.user_id = req.user.id;
     return this.transactionService.postTxn(req.body)
     .then(() => this.transactionService.getTxn())
     .then(results => res.json(results))
-    .catch(err => res.status(500).json(err));
+    .catch(err => {
+      console.log('POST transaction error',err);
+      res.status(500).json(err);
+    });
   }
 
   put(req, res) {

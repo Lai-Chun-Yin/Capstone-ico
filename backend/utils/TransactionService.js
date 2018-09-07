@@ -29,9 +29,9 @@ module.exports = class TransactionService {
     let action = this.knex('transactions').insert({
       date: newTxn.date,
       amount: newTxn.amount,
-      tx_hash: newTxn.tx_hash,
+      tx_hash: newTxn.txHash,
       user_id: newTxn.user_id,
-      campaign_id: newTxn.campaign_id
+      campaign_id: newTxn.campaignId
     })
 
     return action;
