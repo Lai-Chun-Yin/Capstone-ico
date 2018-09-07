@@ -19,10 +19,18 @@ const WysiwygEditor = ({
   <div className="WysiwygEditor">
     {editorState && (
       <Editor
+        editorStyle={{
+          width: "100%",
+          minHeight: 100,
+          borderWidth: 1,
+          borderStyle: "solid",
+          borderColor: "lightgray"
+        }}
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
-        editorClassName="editor"
-        toolbarClassName="toolbar"
+        editorClassName="editor-class"
+        toolbarClassName="toolbar-class"
+        wrapperClassName="demo-wrapper"
       />
     )}
     {touched && error && <FormFeedback>{error}</FormFeedback>}

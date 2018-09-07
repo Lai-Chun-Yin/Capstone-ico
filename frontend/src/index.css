@@ -15880,6 +15880,10 @@ label {
   margin-bottom: 6px;
 }
 
+.editor-class {
+  word-wrap: break-word !important;
+}
+
 /*Contact Page Styles*/
 .contact-form {
   padding: 60px;
@@ -16575,12 +16579,12 @@ label {
   }
 }
 @media screen and (max-width: 335px) {
-  .m-respon {
-    margin-right: 20px !important;
+  .share-respon {
+    margin-top: 20px !important;
   }
 }
-@media screen and (max-width: 335px) {
-  .share-respon {
+@media screen and (max-width: 545px) {
+  .input-respon {
     margin-top: 20px !important;
   }
 }
