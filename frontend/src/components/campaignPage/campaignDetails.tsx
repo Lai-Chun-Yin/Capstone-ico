@@ -62,7 +62,10 @@ class CampaignDetails extends React.Component<
       this.props.reloadCampaign();
     }
 
-    if(typeof this.props.campaigns[this.props.match.params.campaignId] === "undefined"){
+    const targetCampaign = this.props.campaigns.filter(
+      campaign => campaign.id === +this.props.match.params.campaignId
+    );
+    if(targetCampaign.length===0){
       this.props.history.push("/not-found");
       return;
     }

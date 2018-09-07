@@ -16,6 +16,7 @@ module.exports = class UserRouter {
         router.post('/auth/login', this.localLogin.bind(this));
         router.post('/auth/signup', this.localSignUp.bind(this));
         router.post('/auth/facebook', this.facebookLogin.bind(this));
+        router.get('/user', passport.authenticate('jwt', { session: false }),this.getUserDetails.bind(this))
         router.get('/user/profilePic', passport.authenticate('jwt', { session: false }), this.fetchProfilePic.bind(this));
         router.post('/user/profilePic', passport.authenticate('jwt', { session: false }), this.uploadProfilePic.bind(this));
 
@@ -33,9 +34,9 @@ module.exports = class UserRouter {
             const result = await this.userService.localLogin(email, password);
             if (result[0]) {
                 let pwMatch = await bcrypt.checkPassword(password, result[0].pw);
-                if (!pwMatch) { 
-                  res.status(400).end("Incorrect password");
-                  return;   // add this line to prevent "Can't set headers after they are sent" error
+                if (!pwMatch) {
+                    res.status(400).end("Incorrect password");
+                    return;   // add this line to prevent "Can't set headers after they are sent" error
                 }
                 var payload = {
                     id: result[0].id,
@@ -47,7 +48,12 @@ module.exports = class UserRouter {
 
                 res.json({
                     token: token,
-                    is_admin: result[0].is_admin
+                    user: {
+                        id: result[0].id,
+                        alias: result[0].alias,
+                        photo: result[0].photo,
+                        is_admin: result[0].is_admin
+                    }
                 });
             } else {
                 res.status(400).send('User not found');
@@ -74,7 +80,12 @@ module.exports = class UserRouter {
 
             res.json({
                 token,
-                is_admin: userDetails[0].is_admin
+                user: {
+                    id: newUser[0],
+                    alias: userDetails[0].alias,
+                    photo: userDetails[0].photo,
+                    is_admin: userDetails[0].is_admin
+                }
             });
         } catch (err) {
             res.sendStatus(401).json(err);
@@ -110,7 +121,12 @@ module.exports = class UserRouter {
                 console.log({ token, userId })
                 res.json({
                     token,
-                    is_admin: userDetails[0].is_admin
+                    user: {
+                        id: userId,
+                        alias: userDetails[0].alias,
+                        photo: userDetails[0].photo,
+                        is_admin: userDetails[0].is_admin
+                    }
                 });
             } catch (err) {
                 res.sendStatus(401).json(err);
@@ -119,6 +135,21 @@ module.exports = class UserRouter {
         } else {
             res.sendStatus(401);
         }
+    }
+
+    getUserDetails(req,res){
+        this.userService.getUserDetailsById(req.user.id)
+            .then((result)=>{
+                let user = {
+                    id: req.user.id,
+                    alias: result[0].alias,
+                    photo: result[0].photo,
+                    is_admin: result[0].is_admin
+                }
+                res.json({user});
+            }).catch((err)=>{
+                res.sendStatus(401).json(err);
+            });
     }
 
     verifyUserByEmail(req, res) {

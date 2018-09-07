@@ -1,7 +1,7 @@
 /* tslint:disable */
 import axios from "axios";
 import { Dispatch, Action } from "redux";
-import * as jwtDecode from "jwt-decode";
+// import * as jwtDecode from "jwt-decode";
 
 export type AuthActions =
   | AuthStartAction
@@ -41,11 +41,11 @@ export interface AuthSuccessAction extends Action {
   user: object;
 }
 
-const authSuccess = (token: string): AuthSuccessAction => {
+const authSuccess = (token: string,user:any): AuthSuccessAction => {
   return {
     type: AUTH_SUCCESS,
     token: token,
-    user: jwtDecode(token)
+    user: user
   };
 };
 
@@ -110,7 +110,7 @@ export const auth = (
         // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
         localStorage.setItem("token", response.data.token);
         // localStorage.setItem('expirationDate', expirationDate.toString());
-        dispatch(authSuccess(response.data.token));
+        dispatch(authSuccess(response.data.token,response.data.user));
 
         // window.location.href = "/campaign/create/basic";
       })
@@ -134,7 +134,7 @@ export const loginFacebook = (accessToken: string) => {
           throw new Error(response.data.message || "Unknown error");
         } else {
           localStorage.setItem("token", response.data.token);
-          dispatch(authSuccess(response.data.token));
+          dispatch(authSuccess(response.data.token,response.data.user));
         }
       })
       .catch((err: any) => {
@@ -162,7 +162,10 @@ export const authCheckState = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      dispatch(authSuccess(token));
+      const response = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/user`,
+      { headers: { Authorization: `Bearer ${token}` } });
+      if(response.data.user){dispatch(authSuccess(token,response.data.user));}
+      else{dispatch(logout());}
     }
   };
 };
