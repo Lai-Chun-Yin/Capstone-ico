@@ -1,3 +1,4 @@
+import TextField from "@material-ui/core/TextField";
 import * as React from "react";
 import { ComponentType } from "react";
 import { WrappedFieldInputProps, WrappedFieldMetaProps } from "redux-form";
@@ -15,8 +16,15 @@ const renderDatePicker: ComponentType<IdatePickerProps> = ({
 }) => {
   return (
     <div className="col-12 mb-3">
-      <label className="col-12">{label}</label>
-      <input type="date" {...input} />
+      <TextField
+        id="date"
+        label={label}
+        type="date"
+        {...input}
+        InputLabelProps={{
+          shrink: true
+        }}
+      />
       {touched &&
         error && <span className="m-1 text-danger">{"*" + error}</span>}
     </div>

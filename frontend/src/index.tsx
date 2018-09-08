@@ -20,4 +20,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("app-site") as HTMLElement
 );
+
 registerServiceWorker();

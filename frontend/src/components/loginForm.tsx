@@ -1,6 +1,8 @@
 import IconButton from "@material-ui/core/IconButton";
 import * as Joi from "joi";
 import * as React from "react";
+// tslint:disable-next-line:no-var-requires
+const ReactDOM = require("react-dom");
 import FacebookLogin from "react-facebook-login";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -49,6 +51,10 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
       },
       errors: {}
     };
+  }
+
+  public componentDidUpdate() {
+    ReactDOM.findDOMNode(this).scrollTop = 0;
   }
 
   public render() {

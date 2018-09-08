@@ -1,15 +1,12 @@
 import Button from "@material-ui/core/Button";
 import * as React from "react";
-import { Field, InjectedFormProps, reduxForm } from "redux-form";
-// import textAreaField from "./textAreaField";
-// import FileInput from "./imageUploadField";
+import { InjectedFormProps, reduxForm } from "redux-form";
+
 import RenderTextField from "../common/textField";
+import Editor from "./editor";
 import * as validation from "./fieldLevelValidation";
-
-// import validate from "./validate";
-
-// const renderError = ({ meta: { touched, error } }: any) =>
-//   touched && error ? <span>{error}</span> : false;
+// tslint:disable-next-line:no-var-requires
+const Field = require("redux-form").Field;
 
 export interface ISecondPageProps {
   previousPage: any;
@@ -25,7 +22,16 @@ const SecondPage: React.ComponentType<
     <form onSubmit={handleSubmit} className="row">
       <h1 className="entry-heading mb-4 col-12 text-center">2 of 4: story</h1>
 
-      <input onChange={props.onFileChange} type="file" accept="image/*" />
+      <div className="col-12 mb-4">
+        <label className="h2">Campaign card image</label>
+        <input
+          className="d-block"
+          onChange={props.onFileChange}
+          type="file"
+          accept="image/*"
+        />
+      </div>
+
       <Field
         name="video"
         type="text"
@@ -34,13 +40,13 @@ const SecondPage: React.ComponentType<
         helper="Upload your video to YouTube and paste the link here. It doesn't have to be fancy or professional. Just be yourself and tell everyone about your dream."
         validate={validation.ytlink}
       />
+
       <Field
-        name="longDescription"
-        component={RenderTextField}
+        component={Editor}
         label="Campaign Description"
-        helper="f you can’t make a video, just write your story here instead. Tell what your goal is, why you want to reach it, and what will happen when you do."
-        validate={validation.required}
+        name="longDescription"
       />
+
       <div>
         <Button
           className="ml-2 jr-btn"

@@ -6,7 +6,6 @@ const Field = require("redux-form").Field;
 import RenderTextField from "../common/textField";
 import renderDatePicker from "./datePickerField";
 
-import compose from "./editor3";
 import * as validation from "./fieldLevelValidation";
 
 // // import validate from "./validate";
@@ -19,12 +18,6 @@ const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
       <h1 className="entry-heading mb-4 col-12 text-center">
         1 of 4: basic information
       </h1>
-
-      <Field
-        component={compose}
-        label="long description"
-        name="longDescription"
-      />
 
       <Field
         name="campaignName"

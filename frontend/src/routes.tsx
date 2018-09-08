@@ -2,7 +2,6 @@ import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
 import CampaignForm from "./components/campaignForm";
-import WYSISWYG from "./components/campaignForm/editor";
 import Campaigns from "./components/campaignPage";
 import CampaignDetails from "./components/campaignPage/campaignDetails";
 import ContributeForm from "./components/campaignPage/contribute";
@@ -34,8 +33,6 @@ const Routes = () => {
               component={CampaignDetails}
             />
             <Route path="/campaign/create/basic" component={CampaignForm} />
-            <Route path="/tested" component={WYSISWYG} />
-
             <Route path="/campaign" component={Campaigns} />
             <Route path="/userProfile" component={UserProfile} />
             <Route path="/userSetting" component={UserSetting} />
@@ -47,7 +44,6 @@ const Routes = () => {
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={NotFound} />
             <Route path="/" exact={true} component={HomePage} />
-
             <Redirect to="/not-found" />
           </Switch>
         </div>

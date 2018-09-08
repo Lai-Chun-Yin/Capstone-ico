@@ -20,7 +20,9 @@ const ThirdPage: React.ComponentType<
       <h1 className="entry-heading mb-3 col-12 text-center">
         3 of 4: profile and legal entity
       </h1>
-      <h2 className="entry-heading mb-3 col-12">Now, a little bit about you</h2>
+      <h2 className="entry-heading mt-5 mb-3 col-12 text-center">
+        Now, a little bit about you
+      </h2>
       <Field
         name="fullName"
         type="text"
