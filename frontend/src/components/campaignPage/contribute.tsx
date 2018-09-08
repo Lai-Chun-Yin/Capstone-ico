@@ -170,20 +170,38 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
   }
 
   private handleSendEther = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const self = this;
     const accounts = await web3.eth.getAccounts();
+    const amount = Number(this.state.value);
     this.setState({
       fromAddress: accounts[0]
     });
-    web3.eth.sendTransaction({
+    const receipt = await web3.eth.sendTransaction({
       from: this.state.fromAddress,
       to: this.state.toAddress,
       value: web3.utils.toWei(this.state.value, 'ether')
     })
-      .then((receipt: any) => {
-        self.setState({ receipt })
-        console.log(self.state.receipt)
+      
+    this.setState({ receipt });
+    const block = await web3.eth.getBlock(receipt.blockHash);
+    const txDate = (new Date(block.timestamp*1000)).toISOString();
+    const txHash = receipt.transactionHash;
+    const token = localStorage.getItem('token');
+    if (this.state.campaign) {
+      await this.postTransaction(txDate, amount, txHash, this.state.campaign.id, token);
+    }
+  }
+
+  private async postTransaction(date:string,amount:number,txHash:string, campaignId:number, token: string | null) {
+    try {
+      const result = await axios.post(`${process.env.REACT_APP_API_SERVER}/api/transaction`,
+        {date, amount, txHash, campaignId},   // transaction as JSON object
+        { headers: { Authorization: `Bearer ${token}` } });
+      this.setState({
+        campaign: result.data[0]
       })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   private async fetchCampaign(token: string | null) {
