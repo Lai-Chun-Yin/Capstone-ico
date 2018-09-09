@@ -15,6 +15,7 @@ module.exports = class CampaignRouter {
     router.get('/pending',auth.authenticate(),this.getPending.bind(this));
     router.get('/:cid', this.get.bind(this));
     router.post('/', auth.authenticate(), this.post.bind(this));
+    router.put('/pending/approve/:cid',auth.authenticate(), this.approveCampaign.bind(this));
     router.put('/:cid', auth.authenticate(), this.put.bind(this));
     router.delete('/:cid', auth.authenticate(), this.delete.bind(this));
 
@@ -46,7 +47,7 @@ module.exports = class CampaignRouter {
   getPending(req,res) {
     return this.campaignService.getPending(req.user.id)
     .then(values => {
-      if(values[1][0]===false){res.status(400).send("Permission denied. Only admin can access.");return;}
+      if(values[1][0].is_admain===false){res.status(400).send("Permission denied. Only admin can access.");return;}
       res.json(values[0]);
     }).catch(err => res.status(500).send(err.message));
   }
@@ -66,6 +67,18 @@ module.exports = class CampaignRouter {
     .then(() => this.campaignService.getCampaign())
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
+  }
+
+  approveCampaign(req,res){
+    return this.campaignService.approveCampaign(req.params.cid,req.user.id)
+    .then(results => {
+      if(results.error === "Not Admin"){
+        res.status(400).send("Permission denied. Only admin can access.");
+        return;
+      }
+      res.json(results);
+    })
+    .catch(err => res.json(500).json(err));
   }
 
   delete(req, res) {

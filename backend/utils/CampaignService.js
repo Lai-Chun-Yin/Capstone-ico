@@ -13,9 +13,9 @@ module.exports = class CampaignService {
     if (search) {
       const searchWord = decodeURI(search).toLowerCase();
       let query = this.knex('campaigns')
-      .where(this.knex.raw("LOWER(title) LIKE ?",`%${searchWord}%`))
-      .orWhere(this.knex.raw("LOWER(short_description) LIKE ?",`%${searchWord}%`))
-      .orWhere(this.knex.raw("LOWER(long_description) LIKE ?",`%${searchWord}%`));
+        .where(this.knex.raw("LOWER(title) LIKE ?", `%${searchWord}%`))
+        .orWhere(this.knex.raw("LOWER(short_description) LIKE ?", `%${searchWord}%`))
+        .orWhere(this.knex.raw("LOWER(long_description) LIKE ?", `%${searchWord}%`));
 
       return query;
     } else {
@@ -25,7 +25,7 @@ module.exports = class CampaignService {
     }
   }
 
-  getCampaign(cid, user_id) { 
+  getCampaign(cid, user_id) {
     if (!user_id) {
       if (cid) {
         // return specific campaigns
@@ -44,9 +44,9 @@ module.exports = class CampaignService {
     } else {
       // return campaigns in watchlist (of particular user)
       let query = this.knex('watchlists')
-      .leftJoin('campaigns', 'watchlists.campaign_id', 'campaigns.id')
-      .select('*')
-      .where('watchlists.user_id', user_id);
+        .leftJoin('campaigns', 'watchlists.campaign_id', 'campaigns.id')
+        .select('*')
+        .where('watchlists.user_id', user_id);
 
       return query;
     }
@@ -134,9 +134,21 @@ module.exports = class CampaignService {
 
   getPending(userId) {
     let query = this.knex.select().from("campaigns")
-      .where("status","pending");
+      .where("status", "pending");
     let checkAdmin = this.knex.select("is_admin").from("users")
-      .where("id",userId);
-    return Promise.all([query,checkAdmin]);
+      .where("id", userId);
+    return Promise.all([query, checkAdmin]);
+  }
+
+  async approveCampaign(campaignId, userId) {
+    let checkAdmin = await this.knex.select("is_admin").from("users")
+      .where("id", userId);
+    if (checkAdmin[0].is_admin === false) { return Promise.resolve({error:"Not Admin"}); }
+    let action = this.knex("campaigns")
+      .where("id", campaignId)
+      .update({
+        status: "approved"
+      });
+    return action;
   }
 };
