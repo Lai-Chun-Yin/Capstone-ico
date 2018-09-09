@@ -31,7 +31,7 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
     const { page } = this.state;
 
     return (
-      <React.Fragment>
+      <div className="animated slideInUpTiny animation-duration-3">
         {!this.props.isAuthenticated && <Redirect to="/login" />}
 
         <ContainerHeader title="Create Campaign" />
@@ -64,7 +64,7 @@ class CampaignForm extends React.Component<any, ICampaignFormState> {
             </div>
           </CardBox>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
   private nextPage() {

@@ -20,6 +20,19 @@ module.exports = class TransactionService {
     }
   }
 
+  getCampaignBalance(campaign_id) {
+    // return sum of Eth grouped by campaign
+    if (campaign_id) {  // for one user
+      let query = this.knex('transactions').select('campaign_id').sum('amount').where('campaign_id',campaign_id).groupBy('campaign_id');
+
+      return query;
+    } else {  // for all users
+      let query = this.knex('transactions').select('campaign_id').sum('amount').groupBy('campaign_id');
+
+      return query;
+    }
+  }
+
   postTxn(newTxn) {
     /* 
       any data pre-processing (trim, format, etc) belongs here

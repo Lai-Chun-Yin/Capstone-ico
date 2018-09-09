@@ -5,13 +5,14 @@ import {
   CarouselIndicators,
   CarouselItem
 } from "reactstrap";
+import carousel1 from "../../assets/images/Splash.jpg";
 
 const items = [
   {
     id: 1,
     altText: "Slide 1",
     caption: "Slide 1",
-    src: "http://via.placeholder.com/1280x450"
+    src: carousel1
   },
   {
     id: 2,

@@ -6,6 +6,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
+import logo from "../assets/images/logo.png"
 import { authCheckState } from "../reducers/auth/actions";
 import { IRootState } from "../reducers/index";
 import { toggleCollapsedNav } from "../reducers/sideNav/action";
@@ -62,7 +63,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
 
           <Link className="app-logo" to="/">
             <img
-              src="http://via.placeholder.com/177x65"
+              src={logo}
               alt="app-logo"
               title="app-logo"
             />

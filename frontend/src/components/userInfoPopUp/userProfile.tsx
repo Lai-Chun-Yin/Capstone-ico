@@ -1,4 +1,5 @@
 import * as React from "react";
+import ContainerHeader from "../common/containerHeader";
 
 // export interface IUserProfileProps {
 
@@ -10,7 +11,11 @@ import * as React from "react";
 
 class UserProfile extends React.Component {
   public render() {
-    return <h1>User Profile</h1>;
+    return (
+      <div className="animated slideInUpTiny animation-duration-3">
+        <ContainerHeader title="User Profile" />
+      </div>
+    );
   }
 }
 

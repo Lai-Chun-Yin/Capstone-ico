@@ -66,3 +66,4 @@ declare namespace CapstoneICO {
     updated_at: Date;
   }
 }
+

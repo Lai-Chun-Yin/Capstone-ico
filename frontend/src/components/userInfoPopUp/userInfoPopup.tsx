@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export interface IUserInfoPopupProps {
   user: {
@@ -28,18 +28,18 @@ class UserInfoPopup extends React.Component<IUserInfoPopupProps> {
             <small>abc@123.com</small>
           </div>
         </div>
-        <NavLink className="dropdown-item text-muted" to="/userProfile">
+        <Link className="dropdown-item text-muted" to="/userProfile">
           <i className="zmdi zmdi-face zmdi-hc-fw mr-1" />
           <span>Profile</span>
-        </NavLink>
-        <NavLink className="dropdown-item text-muted" to="/userSetting">
+        </Link>
+        <Link className="dropdown-item text-muted" to="/userSetting">
           <i className="zmdi zmdi-settings zmdi-hc-fw mr-1" />
           <span>Setting</span>
-        </NavLink>
-        <NavLink className="dropdown-item text-muted" to="/logout">
+        </Link>
+        <Link className="dropdown-item text-muted" to="/logout">
           <i className="zmdi zmdi-sign-in zmdi-hc-fw mr-1" />
           <span>Logout</span>
-        </NavLink>
+        </Link>
       </div>
     );
   }

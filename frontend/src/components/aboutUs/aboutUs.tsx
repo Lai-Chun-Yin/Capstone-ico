@@ -1,5 +1,8 @@
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
+import image3 from "../../assets/images/aboutus/imac-40.jpg";
+import image1 from "../../assets/images/aboutus/macbook-40.jpg";
+import image2 from "../../assets/images/aboutus/office-40.jpg";
 import ContainerHeader from "../common/containerHeader";
 import Client from "./componets/client";
 import Service from "./componets/service";
@@ -7,25 +10,25 @@ import Team from "./componets/team";
 
 const services = [
   {
-    id: "infinite-widgets",
-    title: "Infinite Widgets",
+    id: "Startoken",
+    title: "Startoken",
     description:
-      'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
-    image: "http://via.placeholder.com/600x420"
+      "We developed Startoken to bring innovative projects to life with the use of blockchain technology. Startoken is an ecosystem-based platform enabling projects to raise funds via crypto-currency and bridge investors with the projects.",
+    image: image1
   },
   {
     id: "box-idea",
     title: "Out of the Box Idea",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis scelerisque sollicitudinThis video will give you a walk through on how to create your own age verification template Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis scelerisque sollicitudin",
-    image: "http://via.placeholder.com/600x480"
+      "The team of Startoken consists of creators, finance experts and blockchain enthuaists who are early adopters of crypto currencies.",
+    image: image2
   },
   {
-    id: "easy-template",
-    title: "Easy Template Builder",
+    id: "easy-token",
+    title: "Easy ICO platform",
     description:
-      "Duis a    ute irure dolor in reprehenderit in voluptate velit esse cillumtemplate Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis scelerisque sollicitudin Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mattis scelerisque sollicitudin",
-    image: "http://via.placeholder.com/600x400"
+      "Since the birth of Bitcoin in 2009, cryptocurrency has given us good demonstrations on the applications in terms of cross-broader funding and microfinancing. Startoken aims to promote the adoption of blockchain technology and establish a smarter society.",
+    image: image3
   }
 ];
 const teams = [

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 // import { Link } from "react-router-dom";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk,searchCampaignsThunk } from "../../reducers/campaigns/actions";
+import { getCampaignBalance } from "../../services/campaignService";
 import ContainerHeader from "../common/containerHeader";
 import CampaignList from "./campaignList";
 // import productData from "./productData";
@@ -16,15 +17,25 @@ interface ICampaignProps {
   searchCampaign: (keyword:string) => void;
 }
 interface ICampaignState {
+  campaignBalance: Array<{campaign_id:number,sum:string}>;
   searchKeyword: string;
 }
 
 class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
-  public componentDidMount() {
-    this.props.reloadCampaign();
+  constructor(props: ICampaignProps) {
+    super(props);
     this.state = {
+      campaignBalance: [],
       searchKeyword: ""
     }
+  }
+
+  public componentDidMount = async () => {
+    this.props.reloadCampaign();
+    const result = await getCampaignBalance(null);
+    this.setState({
+      campaignBalance: result.data
+    })
   }
 
   public render() {
@@ -65,6 +76,7 @@ class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
                 soft={e.soft_cap}
                 id={e.id}
                 image={e.project_photo}
+                balance={this.state.campaignBalance.filter(campaign => campaign.campaign_id === e.id)[0]}
               />
             ))}
           </List>
@@ -83,6 +95,17 @@ class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
     e.preventDefault();
     this.props.searchCampaign(this.state.searchKeyword);
   }
+
+  // private async fetchCampaignBalance() {
+  //   try {
+  //     const result = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/transaction/balance`);
+  //     this.setState({
+  //       campaignBalance: result.data
+  //     })
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 }
 
 const Campaigns = connect(
