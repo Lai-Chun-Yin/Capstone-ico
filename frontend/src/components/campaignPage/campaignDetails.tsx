@@ -35,7 +35,7 @@ interface ICampaignIdPathParam {
 class CampaignDetails extends React.Component<
   ICampaignDetailsProps,
   ICampaignDetailsState
-> {
+  > {
   constructor(props: ICampaignDetailsProps) {
     super(props);
     const targetCampaign = props.campaigns.filter(
@@ -51,7 +51,7 @@ class CampaignDetails extends React.Component<
   public async componentDidMount() {
     if (!this.state.campaign) {
       const campaignId = this.props.match.params.campaignId;
-      
+
       // trigger get campaign action if access campagin directly
       this.props.reloadCampaign();
 
@@ -68,7 +68,7 @@ class CampaignDetails extends React.Component<
     const targetCampaign = this.props.campaigns.filter(
       campaign => campaign.id === +this.props.match.params.campaignId
     );
-    if(targetCampaign.length===0){
+    if (targetCampaign.length === 0) {
       this.props.history.push("/not-found");
       return;
     }
@@ -150,7 +150,7 @@ class CampaignDetails extends React.Component<
           <div className="row mb-5">
             <div className="col-12 d-md-flex align-items-center justify-content-start">
               <div className="pr-3 m-respon">
-                <span className="d-block h1 m-0">{this.state.balance}</span>
+                <span className="d-block h1 m-0">{this.state.balance.toFixed(2)}</span>
                 <span className="h4">Raised, Eth</span>
               </div>
 
@@ -189,8 +189,13 @@ class CampaignDetails extends React.Component<
           </div>
 
           <div>
-            <div className="row">
-              <div className="col-sm-4 text-right">
+            <div className="row d-flex justify-content-between">
+              <div className="col-sm-1 text-left">
+                <span>{`${(this.state.balance).toFixed(2)} ETH`}</span>
+                <span className="d-block">Raised</span>
+              </div>
+
+              <div className="col-sm-3 text-right">
                 <span>{`${campaign.soft_cap} ETH`}</span>
                 <span className="d-block">Soft cap</span>
               </div>
@@ -201,8 +206,8 @@ class CampaignDetails extends React.Component<
               </div>
             </div>
 
-            <Progress color="bg-teal" value="30" className="bg-grey lighten-2">
-              25%
+            <Progress color="bg-teal" value={String((this.state.balance * 100)/campaign.hard_cap)} className="bg-grey lighten-2">
+              {`${((this.state.balance * 100)/campaign.hard_cap).toFixed(1)}%`}
             </Progress>
           </div>
         </React.Fragment>
@@ -215,7 +220,7 @@ class CampaignDetails extends React.Component<
 
             <h3>{campaign.short_description}</h3>
             {/* <p>{campaign.long_description}</p> */}
-            <div dangerouslySetInnerHTML={{__html: campaign.long_description}}/>
+            <div dangerouslySetInnerHTML={{ __html: campaign.long_description }} />
           </section>
         </React.Fragment>
       );

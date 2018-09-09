@@ -95,17 +95,6 @@ class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
     e.preventDefault();
     this.props.searchCampaign(this.state.searchKeyword);
   }
-
-  // private async fetchCampaignBalance() {
-  //   try {
-  //     const result = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/transaction/balance`);
-  //     this.setState({
-  //       campaignBalance: result.data
-  //     })
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
 }
 
 const Campaigns = connect(
