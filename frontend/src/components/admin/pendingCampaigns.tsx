@@ -3,8 +3,8 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { IRootState } from "../../reducers";
 import { loadPendingCampaignsThunk } from "../../reducers/campaigns/actions";
-import CampaignList from "../campaignPage/campaignList";
 import ContainerHeader from "../common/containerHeader";
+import PendingList from "./pendingList";
 
 interface IPendingCampaignsProps {
     pendingCampaigns: CapstoneICO.ICampaign[];
@@ -29,7 +29,7 @@ class PendingCampaigns extends React.Component<IPendingCampaignsProps>{
                 <div>
                     <List>
                         {pendingCampaigns.map((e: CapstoneICO.ICampaign) => (
-                            <CampaignList
+                            <PendingList
                                 key={e.id}
                                 title={e.title}
                                 description={e.short_description}
