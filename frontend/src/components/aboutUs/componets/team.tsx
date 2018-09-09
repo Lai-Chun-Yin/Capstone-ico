@@ -16,7 +16,7 @@ const Team = ({ team }: any) => {
           <span className="post-designation">{destination}</span>
           <p className="card-text">{description}</p>
           <Button color="primary">
-            <span>GO SOMEWHERE</span>
+            <span>Personal Pages</span>
           </Button>
         </div>
       </div>

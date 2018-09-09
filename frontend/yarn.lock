@@ -85,6 +85,10 @@
   dependencies:
     "@types/node" "*"
 
+"@types/classnames@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.6.tgz#dbe8a666156d556ed018e15a4c65f08937c3f628"
+
 "@types/draft-js@^0.10.24":
   version "0.10.24"
   resolved "https://registry.yarnpkg.com/@types/draft-js/-/draft-js-0.10.24.tgz#08145421cfc7ef31e382e4fa8bd9e78ef6983445"

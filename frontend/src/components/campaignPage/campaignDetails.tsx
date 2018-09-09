@@ -9,7 +9,10 @@ import { Link, match } from "react-router-dom";
 import { Progress } from "reactstrap";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
-import { getCampaign, getCampaignBalance } from "../../services/campaignService";
+import {
+  getCampaign,
+  getCampaignBalance
+} from "../../services/campaignService";
 import getDateTimeHK from "../../services/timeService";
 import CardBox from "../common/cardBox";
 import LinkButton from "../common/linkButton";
@@ -51,7 +54,7 @@ class CampaignDetails extends React.Component<
   public async componentDidMount() {
     if (!this.state.campaign) {
       const campaignId = this.props.match.params.campaignId;
-      
+
       // trigger get campaign action if access campagin directly
       this.props.reloadCampaign();
 
@@ -68,7 +71,7 @@ class CampaignDetails extends React.Component<
     const targetCampaign = this.props.campaigns.filter(
       campaign => campaign.id === +this.props.match.params.campaignId
     );
-    if(targetCampaign.length===0){
+    if (targetCampaign.length === 0) {
       this.props.history.push("/not-found");
       return;
     }
@@ -213,9 +216,10 @@ class CampaignDetails extends React.Component<
             {videoPlayer}
             {projectPic}
 
-            <h3>{campaign.short_description}</h3>
             {/* <p>{campaign.long_description}</p> */}
-            <div dangerouslySetInnerHTML={{__html: campaign.long_description}}/>
+            <div
+              dangerouslySetInnerHTML={{ __html: campaign.long_description }}
+            />
           </section>
         </React.Fragment>
       );
@@ -224,7 +228,9 @@ class CampaignDetails extends React.Component<
     return (
       <div className="animated slideInUpTiny animation-duration-3">
         <CardBox styleName="col-lg-12 p-0" cardStyle="p-0">
-          <div className="container-fluid p-2">{campaignHeader}</div>
+          <div className="container-fluid p-2 bg-light lighten-5">
+            {campaignHeader}
+          </div>
         </CardBox>
         <div className="container">
           <div className="row">

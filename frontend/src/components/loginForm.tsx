@@ -11,6 +11,7 @@ import { IErrors } from "../modules";
 import { IRootState } from "../reducers";
 import * as Authactions from "../reducers/auth/actions";
 import Input from "./common/input";
+import { logo } from "./ImagesImport";
 
 interface ILoginFormProps {
   history: any;
@@ -69,11 +70,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
           <div className="app-login-main-content">
             <div className="app-logo-content d-flex align-items-center justify-content-center">
               <Link className="logo-lg" to="/" title="app-logo">
-                <img
-                  src="http://via.placeholder.com/177x65"
-                  alt="app-logo"
-                  title="app-logo"
-                />
+                <img src={logo} alt="app-logo" title="app-logo" />
               </Link>
             </div>
 
@@ -127,7 +124,7 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                             onClick={this.componentClicked}
                             callback={this.responseFacebook}
                             textButton=""
-                            cssClass="icon zmdi zmdi-facebook bg-light"
+                            cssClass="icon zmdi zmdi-facebook bg-white"
                           />
                         </IconButton>
                       </li>

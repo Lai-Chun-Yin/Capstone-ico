@@ -1,9 +1,9 @@
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
-import image3 from "../../assets/images/aboutus/imac-40.jpg";
-import image1 from "../../assets/images/aboutus/macbook-40.jpg";
-import image2 from "../../assets/images/aboutus/office-40.jpg";
 import ContainerHeader from "../common/containerHeader";
+import { aboutus1 } from "../ImagesImport";
+import { aboutus2 } from "../ImagesImport";
+import { aboutus3 } from "../ImagesImport";
 import Client from "./componets/client";
 import Service from "./componets/service";
 import Team from "./componets/team";
@@ -14,74 +14,54 @@ const services = [
     title: "Startoken",
     description:
       "We developed Startoken to bring innovative projects to life with the use of blockchain technology. Startoken is an ecosystem-based platform enabling projects to raise funds via crypto-currency and bridge investors with the projects.",
-    image: image1
+    image: aboutus1
   },
   {
     id: "box-idea",
     title: "Out of the Box Idea",
     description:
       "The team of Startoken consists of creators, finance experts and blockchain enthuaists who are early adopters of crypto currencies.",
-    image: image2
+    image: aboutus2
   },
   {
     id: "easy-token",
     title: "Easy ICO platform",
     description:
       "Since the birth of Bitcoin in 2009, cryptocurrency has given us good demonstrations on the applications in terms of cross-broader funding and microfinancing. Startoken aims to promote the adoption of blockchain technology and establish a smarter society.",
-    image: image3
+    image: aboutus3
   }
 ];
 const teams = [
   {
-    name: "Alex Dolgove",
-    destination: "Co-Founder & CEO",
+    name: "Tommy Chun",
+    destination: "Team member",
     description:
       "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
     image: "http://via.placeholder.com/150x150"
   },
   {
-    name: "Domnic Brown",
-    destination: "HR Manager",
+    name: "CK C",
+    destination: "Team member",
     description:
       "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
     image: "http://via.placeholder.com/150x150"
   },
   {
-    name: "Stella Johnson",
-    destination: "BDM",
+    name: "Benjamin Tin",
+    destination: "Team member",
     description:
       "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
     image: "http://via.placeholder.com/150x150"
   },
   {
-    name: "Domnic Harris",
-    destination: "HR Manager",
-    description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
-  },
-  {
-    name: "Garry Sobars",
-    destination: "Co-Founder & CEO",
-    description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
-  },
-  {
-    name: "John Smith",
-    destination: "BDM",
-    description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
-  },
-  {
-    name: "kadir",
-    destination: "BDM",
+    name: "Max Fong",
+    destination: "Team member",
     description:
       "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
     image: "http://via.placeholder.com/150x150"
   }
 ];
+
 const clients = [
   {
     image: "http://via.placeholder.com/92x53"
@@ -164,9 +144,6 @@ const AboutUs = ({ match }: any) => {
         <Team team={teams[1]} />
         <Team team={teams[2]} />
         <Team team={teams[3]} />
-        <Team team={teams[4]} />
-        <Team team={teams[5]} />
-        <Team team={teams[6]} />
       </OwlCarousel>
 
       <OwlCarousel className="owl-theme mb-4 owl-app-frame" {...options}>
