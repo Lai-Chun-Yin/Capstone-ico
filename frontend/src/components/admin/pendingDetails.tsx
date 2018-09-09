@@ -39,9 +39,9 @@ class PendingDetails extends React.Component<
 
   public async componentDidMount() {
     const campaignId = this.props.match.params.campaignId;
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
 
-    const result = await getCampaign(campaignId, token);
+    const result = await getCampaign(campaignId);
 
     this.setState({ campaign: result.data[0] });
   }
