@@ -13,6 +13,7 @@ import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import web3 from '../../ethereum/web3';
 import { IRootState } from "../../reducers";
 import * as Authactions from "../../reducers/auth/actions";
+import { getCampaign } from "../../services/campaignService";
 
 
 // interface IContributeFormState {
@@ -79,8 +80,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     });
 
     if (!this.state.campaign) {
-      const token = localStorage.getItem('token');
-      await this.fetchCampaign(token);
+      await getCampaign(this.props.match.params.campaignId);
     }
     console.log(this.state.campaign);
   }
@@ -195,18 +195,6 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     try {
       const result = await axios.post(`${process.env.REACT_APP_API_SERVER}/api/transaction`,
         {date, amount, txHash, campaignId},   // transaction as JSON object
-        { headers: { Authorization: `Bearer ${token}` } });
-      this.setState({
-        campaign: result.data[0]
-      })
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  private async fetchCampaign(token: string | null) {
-    try {
-      const result = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/campaign/${this.props.match.params.campaignId}`,
         { headers: { Authorization: `Bearer ${token}` } });
       this.setState({
         campaign: result.data[0]

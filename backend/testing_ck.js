@@ -6,6 +6,7 @@ const WatchlistService = require('./utils/WatchlistService');
 const TransactionService = require('./utils/TransactionService');
 let campaignService = new CampaignService(knex);
 let watchlistService = new WatchlistService(knex);
+let transactionService = new TransactionService(knex);
 
 
 (async () => {
@@ -13,7 +14,8 @@ let watchlistService = new WatchlistService(knex);
   // result = await campaignService.postCampaign({title: "Dafuq is this"});
   // result = await campaignService.getCampaign(1);
   // result = await campaignService.putCampaign(campaign,1);
-  result = await watchlistService.getWatchlist(3);
+  // result = await watchlistService.getWatchlist(3);
+  result = await transactionService.getCampaignBalance(6);
   if (result) {
     console.log('result:', result);
     console.log('result.length:', result.length);

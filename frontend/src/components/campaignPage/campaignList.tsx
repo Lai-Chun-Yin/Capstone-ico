@@ -12,7 +12,8 @@ const CampaignList = ({
   id,
   soft,
   startD,
-  image
+  image,
+  balance
 }: any) => {
   const startDstring = getDateTimeHK(startD, "d");
   const endDstring = getDateTimeHK(endD, "d");
@@ -58,18 +59,25 @@ const CampaignList = ({
               </div>
 
               <p>{description}</p>
+              
+              <div className="d-flex justify-content-between">
+                <div className="text-left">
+                  {`${balance ? Number(balance.sum).toFixed(2) : 0} ETH`} <br />
+                  <small>Raised</small>
+                </div>
 
-              <div className="text-right">
-                {`${soft} ETH`} <br />
-                <small>Soft cap</small>
+                <div className="text-right">
+                  {`${soft} ETH`} <br />
+                  <small>Soft cap</small>
+                </div>
               </div>
 
               <Progress
                 color="bg-teal"
-                value="30"
+                value={String((balance ? balance.sum * 100 : 0)/soft)}
                 className="bg-grey lighten-2"
               >
-                25%
+                {`${((balance ? balance.sum * 100 : 0)/soft).toFixed(1)}%`}
               </Progress>
             </div>
           </div>

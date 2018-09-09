@@ -1,4 +1,6 @@
 const express = require('express');
+const authClass = require('../utils/auth');
+const auth = authClass();
 
 module.exports = class TransactionRouter {
   constructor(transactionService) {
@@ -7,17 +9,25 @@ module.exports = class TransactionRouter {
 
   router() {
     let router = express.Router();
-    router.get('/', this.get.bind(this));
-    // router.get('/:txid', this.get.bind(this));
-    router.post('/', this.post.bind(this));
-    router.put('/:txid', this.put.bind(this));
-    router.delete('/:txid', this.delete.bind(this));
+    // router.get('/', auth.authenticate(), this.get.bind(this));
+    router.get('/balance', this.getBalance.bind(this));
+    router.get('/:txid', auth.authenticate(), this.get.bind(this));
+    router.get('/balance/:cid', this.getBalance.bind(this));
+    router.post('/', auth.authenticate(), this.post.bind(this));
+    router.put('/:txid', auth.authenticate(), this.put.bind(this));
+    router.delete('/:txid', auth.authenticate(), this.delete.bind(this));
 
     return router;
   }
 
   get(req, res) {
     return this.transactionService.getTxn(req.user.id)
+    .then(results => res.json(results))
+    .catch(err => res.status(500).json(err));
+  }
+
+  getBalance(req, res) {
+    return this.transactionService.getCampaignBalance(req.params.cid)
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }

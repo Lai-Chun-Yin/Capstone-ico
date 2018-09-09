@@ -7,10 +7,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link, match } from "react-router-dom";
 import { Progress } from "reactstrap";
-import web3 from "../../ethereum/web3";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
-import { getCampaign } from "../../services/campaignService";
+import { getCampaign, getCampaignBalance } from "../../services/campaignService";
 import getDateTimeHK from "../../services/timeService";
 import CardBox from "../common/cardBox";
 import LinkButton from "../common/linkButton";
@@ -26,7 +25,7 @@ interface ICampaignDetailsProps {
 }
 interface ICampaignDetailsState {
   campaign: CapstoneICO.ICampaign | null;
-  balance: string | null;
+  balance: number;
   dialogOpen: boolean;
 }
 interface ICampaignIdPathParam {
@@ -44,7 +43,7 @@ class CampaignDetails extends React.Component<
     );
     this.state = {
       campaign: targetCampaign[0],
-      balance: null,
+      balance: 0,
       dialogOpen: false
     };
   }
@@ -52,14 +51,17 @@ class CampaignDetails extends React.Component<
   public async componentDidMount() {
     if (!this.state.campaign) {
       const campaignId = this.props.match.params.campaignId;
-      const token = localStorage.getItem("token");
-
-      const result = await getCampaign(campaignId, token);
-
-      this.setState({ campaign: result.data[0] });
-
-      // trigger get campagin action if access campagin directly
+      
+      // trigger get campaign action if access campagin directly
       this.props.reloadCampaign();
+
+      const result1 = await getCampaign(campaignId);
+      const result2 = await getCampaignBalance(campaignId);
+      this.setState({
+        campaign: result1.data[0],
+        balance: Number(result2.data[0].sum)
+      });
+
       return;
     }
 
@@ -70,14 +72,6 @@ class CampaignDetails extends React.Component<
       this.props.history.push("/not-found");
       return;
     }
-    // get campaign balance
-    const tokenAddr = this.state.campaign
-      ? this.state.campaign.token_address
-      : null;
-    const balance = await web3.eth.getBalance(tokenAddr);
-    this.setState({
-      balance: web3.utils.fromWei(balance, "ether")
-    });
   }
 
   public onSupportHandler(event: any) {

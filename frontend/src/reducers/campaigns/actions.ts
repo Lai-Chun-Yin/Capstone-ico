@@ -30,7 +30,7 @@ export interface IUploadCampaignStartAction {
 
 
 // normal action creator
-export function loadCampaigns(campaigns: CapstoneICO.ICampaign[]): ILoadCampaignListAction {
+export function loadCampaigns(campaigns: CapstoneICO.ICampaign[]): CampaignActions {
   return {
     campaigns,
     type: LOAD_CAMPAIGNS,
