@@ -131,4 +131,12 @@ module.exports = class CampaignService {
       .del();
     return action;
   }
+
+  getPending(userId) {
+    let query = this.knex.select().from("campaigns")
+      .where("status","pending");
+    let checkAdmin = this.knex.select("is_admin").from("users")
+      .where("id",userId);
+    return Promise.all([query,checkAdmin]);
+  }
 };

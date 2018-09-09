@@ -4,7 +4,6 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import * as React from "react";
 import ContainerHeader from "../common/containerHeader";
-import ProfileCard from "./profileCard";
 
 export interface IFaqProps {
   match: any;
@@ -28,21 +27,17 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
       <div className=" animated slideInUpTiny animation-duration-3">
         <ContainerHeader title="FAQ" />
         <div className="row">
-          <div className="col-md-8 col-sm-7 col-12">
+          <div className="col-md-8 col-sm-7 col-12 m-auto">
             <ExpansionPanel
               expanded={expanded === "panel1"}
               onChange={this.handleChange("panel1")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                How does it work?
+                <h2>How to create a campaign on StarToken?</h2>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>
-                  Using WP Age Gate Pro is pretty straight forward. There is an
-                  easy to use interface given under settings to apply all the
-                  settings and integrate it with WooCommerce products &amp;
-                  categories easily You can find a quick How to video about this
-                  here which explains all the setings.
+                To create a campaign on the platform you need to sign in or register, and then fill in the required data in the campaign creation page.
                 </p>
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -52,21 +47,34 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
               onChange={this.handleChange("panel2")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                How does one click refund policy work?
+                <h2>Conditions and Requisites to launch at StarToken:</h2>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                  non cupidatat skateboard dolor brunch. Food truck quinoa
-                  nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                  aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-                  beer labore wes anderson cred nesciunt sapiente ea proident.
-                  Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                  beer farm-to-table, raw denim aesthetic synth nesciunt you
-                  probably haven't heard of them accusamus labore sustainable
-                  VHS.
+                1.	The company is required to provide a complete campaign page created in compliance with the platform requirements. The campaign shall primarily be submitted in the English language. The business model shall be based on utility-token implementation, which excludes any form of:
+                <ul>
+                  <li>dividend or equity,</li>
+                  <li>loans and buy-back,</li>
+                  <li>backers having any voting or decision-making right based on the token ownership.</li>
+                </ul>
+
+              2.	In order to successfully launch a campaign on StarToken, the campaign's author is required to go through the KYC procedure in his/her account profile.
+              <br/>
+              <br/>
+              3.	Each campaign is required have their tokensale soft cap and hard cap established and declared to public. In case the soft cap is not reached by the end of the respective tokensale, the company is obliged to offer every backer a full refund including fees and commissions applied.
+              <br/>
+              <br/>
+              4.	We recommend to follow the ratio of 1:5 for the soft cap / hard cap proportion, though deviations might be applicable in some cases.
+              <br/>
+              <br/>
+              5.	Campaigns chosen for launch from the Community Choice section can only be launched exclusively on StarToken
+              <br/>
+              <br/>
+              6.	The company needs to be registered in an appropriate legal domain to ensure the ICO compliance with the legal requirements of the domain. Currently US, Chinese, Japanese and Russian companies are unacceptable.
+              <br/>
+              <br/>
+              7.	On the date of the commencement of token sale, StarToken announces the start of campaign to users via channels such as email, Telegram, Facebook, Twitter, Reddit, Bitcointalk thread and article on Medium.
+
                 </p>
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -76,21 +84,11 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
               onChange={this.handleChange("panel3")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                What if I face any trouble and need some help?
+                <h2>How long does a campaign go?</h2>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                  non cupidatat skateboard dolor brunch. Food truck quinoa
-                  nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                  aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-                  beer labore wes anderson cred nesciunt sapiente ea proident.
-                  Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                  beer farm-to-table, raw denim aesthetic synth nesciunt you
-                  probably haven't heard of them accusamus labore sustainable
-                  VHS.
+                Different campaigns have specific goals, hype levels and expectations. Usually, they take a week to a month, but the most anticipated ones can close their soft or even hardcaps in hours.
                 </p>
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -100,21 +98,11 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
               onChange={this.handleChange("panel4")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                What frequent updates do you do?
+              <h2>What is the purpose of launching a campaign?</h2>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                  non cupidatat skateboard dolor brunch. Food truck quinoa
-                  nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                  aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-                  beer labore wes anderson cred nesciunt sapiente ea proident.
-                  Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                  beer farm-to-table, raw denim aesthetic synth nesciunt you
-                  probably haven't heard of them accusamus labore sustainable
-                  VHS.
+                The goal of any fundraising campaigns is to raise funds. In case of ICOs, the ultimate goal is to distribute the maximum amount of tokens possible, not only attracting funds in exchange for them, but to form a community of token holders, able to support the project even after the campaign success.
                 </p>
               </ExpansionPanelDetails>
             </ExpansionPanel>
@@ -124,152 +112,16 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
               onChange={this.handleChange("panel5")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                What frequent updates do you do?
+                <h2>In case I need tokensale launch / promotion services, what regions and markets do you support?</h2>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                  non cupidatat skateboard dolor brunch. Food truck quinoa
-                  nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                  aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-                  beer labore wes anderson cred nesciunt sapiente ea proident.
-                  Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                  beer farm-to-table, raw denim aesthetic synth nesciunt you
-                  probably haven't heard of them accusamus labore sustainable
-                  VHS.
+                We have a pool of experts and contractors we can recommend, and StarToken platform itself can provide marketing support via Asian and European media and advertising platforms.
                 </p>
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </div>
 
-          <div className="col-md-4 col-sm-5 col-12 animation slideInRight">
-            <div className="sidebar">
-              <ProfileCard />
-
-              <div className="card shadow border-0 bg-white p-2">
-                <form className="m-0" role="search">
-                  <div className="search-bar">
-                    <div className="form-group">
-                      <input
-                        type="search"
-                        className="form-control form-control-lg border-0"
-                        placeholder="Search..."
-                      />
-                      <button className="search-icon">
-                        <i className="zmdi zmdi-search zmdi-hc-lg" />
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div className="card shadow border-0 p-4">
-                <h3 className="text-uppercase letter-spacing-base mb-3">
-                  Categories
-                </h3>
-
-                <ul className="categories-list list-unstyled">
-                  <li>
-                    <a href="javascript:void(0)">Technology</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Branding</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Holly</a>
-                  </li>
-                  <li className="active">
-                    <a href="javascript:void(0)">Stories</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Designing</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)">Programing</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="card shadow border-0 p-4">
-                <h3 className="text-uppercase letter-spacing-base mb-4">
-                  Popular Articles
-                </h3>
-
-                <ul className="articles-section list-unstyled">
-                  <li className="articles">
-                    <a className="article-image" href="javascript:void(0)">
-                      <img
-                        src="http://via.placeholder.com/500x330"
-                        alt="Articales Post"
-                      />
-                    </a>
-
-                    <div className="article-description">
-                      <p>
-                        <a href="javascript:void(0)">
-                          English breakfast.jpeg tea with desert donut
-                        </a>
-                      </p>
-                      <div className="meta-wrapper">
-                        <span className="meta-date">
-                          <i className="zmdi zmdi-calendar-note zmdi-hc-lg" />
-                          25 May, 2016
-                        </span>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="articles">
-                    <a className="article-image" href="javascript:void(0)">
-                      <img
-                        src="http://via.placeholder.com/500x330"
-                        alt="Articales Post"
-                      />
-                    </a>
-
-                    <div className="article-description">
-                      <p>
-                        <a href="javascript:void(0)">
-                          Two smart kids reading through tablet
-                        </a>
-                      </p>
-                      <div className="meta-wrapper">
-                        <span className="meta-date">
-                          <i className="zmdi zmdi-calendar-note zmdi-hc-lg" />
-                          25 May, 2016
-                        </span>
-                      </div>
-                    </div>
-                  </li>
-
-                  <li className="articles">
-                    <a className="article-image" href="javascript:void(0)">
-                      <img
-                        src="http://via.placeholder.com/500x330"
-                        alt="Articales Post"
-                      />
-                    </a>
-
-                    <div className="article-description">
-                      <p>
-                        <a href="javascript:void(0)">
-                          Co-founder trying to explain his idea to his employers
-                        </a>
-                      </p>
-                      <div className="meta-wrapper">
-                        <span className="meta-date">
-                          <i className="zmdi zmdi-calendar-note zmdi-hc-lg" />
-                          25 May, 2016
-                        </span>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     );
