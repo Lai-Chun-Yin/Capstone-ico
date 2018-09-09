@@ -60,6 +60,7 @@ class CampaignDetails extends React.Component<
 
       // trigger get campagin action if access campagin directly
       this.props.reloadCampaign();
+      return;
     }
 
     const targetCampaign = this.props.campaigns.filter(
@@ -218,8 +219,9 @@ class CampaignDetails extends React.Component<
             {videoPlayer}
             {projectPic}
 
-            <h4>{campaign.short_description}</h4>
-            <p>{campaign.long_description}</p>
+            <h3>{campaign.short_description}</h3>
+            {/* <p>{campaign.long_description}</p> */}
+            <div dangerouslySetInnerHTML={{__html: campaign.long_description}}/>
           </section>
         </React.Fragment>
       );
