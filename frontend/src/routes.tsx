@@ -2,6 +2,7 @@ import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
 import PendingCampaigns from "./components/admin/pendingCampaigns";
+import PendingDetails from "./components/admin/pendingDetails";
 import CampaignForm from "./components/campaignForm";
 import Campaigns from "./components/campaignPage";
 import CampaignDetails from "./components/campaignPage/campaignDetails";
@@ -24,7 +25,12 @@ const Routes = () => {
       <div className="app-main-content">
         <div className="app-wrapper">
           <Switch>
+<<<<<<< HEAD
             <Route path="/testapi" component={TestApi} />
+=======
+            <Route path="/test" component={TestApi} />
+            <Route path="/campaign/pending/details/:campaignId" component={PendingDetails} />
+>>>>>>> 7eacee7940d4a04af81b941421dce78aa3f5dd69
             <Route path="/campaign/pending" component={PendingCampaigns} />
             <Route
               path="/campaign/details/:campaignId/contribute"
