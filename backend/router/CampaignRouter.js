@@ -12,6 +12,7 @@ module.exports = class CampaignRouter {
     router.get('/', this.get.bind(this));
     router.get('/search', this.searchCampaigns.bind(this));
     router.get('/watchlist', auth.authenticate(), this.getWatchlistedCampaigns.bind(this));
+    router.get('/pending',auth.authenticate(),this.getPending.bind(this));
     router.get('/:cid', this.get.bind(this));
     router.post('/', auth.authenticate(), this.post.bind(this));
     router.put('/:cid', auth.authenticate(), this.put.bind(this));
@@ -40,6 +41,14 @@ module.exports = class CampaignRouter {
       // console.log("getWatchlistedCampaigns results...", results);
     })
     .catch(err => res.status(500).json(err));
+  }
+
+  getPending(req,res) {
+    return this.campaignService.getPending(req.user.id)
+    .then(values => {
+      if(values[1][0]===false){res.status(400).send("Permission denied. Only admin can access.");return;}
+      res.json(values[0]);
+    }).catch(err => res.status(500).send(err.message));
   }
 
   post(req, res) {

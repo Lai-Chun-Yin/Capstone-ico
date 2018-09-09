@@ -2,10 +2,13 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { reset } from 'redux-form';
 
-export type CampaignActions = ILoadCampaignListAction | IUploadCampaignSuccessAction | IUploadCampaignStartAction|IUploadCampaignFailureAction;
+export type CampaignActions = ILoadCampaignListAction | ILoadPendingCampaignAction | 
+  IUploadCampaignSuccessAction | IUploadCampaignStartAction | IUploadCampaignFailureAction;
 
 export const LOAD_CAMPAIGNS = 'LOAD_CAMPAIGNS';
 export type LOAD_CAMPAIGNS = typeof LOAD_CAMPAIGNS;
+export const LOAD_PENDING_CAMPAIGNS = "LOAD_PENDING_CAMPAIGNS";
+export type LOAD_PENDING_CAMPAIGNS = typeof LOAD_PENDING_CAMPAIGNS;
 export const UPLOAD_CAMPAIGN_SUCCESS = 'UPLOAD_CAMPAIGN_SUCCESS';
 export type UPLOAD_CAMPAIGN_SUCCESS = typeof UPLOAD_CAMPAIGN_SUCCESS;
 export const UPLOAD_CAMPAIGN_FAILURE = 'UPLOAD_CAMPAIGN_FAILURE';
@@ -15,6 +18,10 @@ export type UPLOAD_CAMPAIGN_START = typeof UPLOAD_CAMPAIGN_START;
 
 export interface ILoadCampaignListAction {
   type: LOAD_CAMPAIGNS;
+  campaigns: CapstoneICO.ICampaign[];
+}
+export interface ILoadPendingCampaignAction {
+  type: LOAD_PENDING_CAMPAIGNS;
   campaigns: CapstoneICO.ICampaign[];
 }
 export interface IUploadCampaignSuccessAction {
@@ -36,12 +43,18 @@ export function loadCampaigns(campaigns: CapstoneICO.ICampaign[]): ILoadCampaign
     type: LOAD_CAMPAIGNS,
   }
 }
+export function loadPendingCampaigns(campaigns: CapstoneICO.ICampaign[]): ILoadPendingCampaignAction {
+  return {
+    campaigns,
+    type: LOAD_PENDING_CAMPAIGNS
+  }
+}
 export function uploadCampaign(): IUploadCampaignSuccessAction {
   return {
     type: UPLOAD_CAMPAIGN_SUCCESS
   }
 }
-export function uploadCampaignFailure(): IUploadCampaignFailureAction{
+export function uploadCampaignFailure(): IUploadCampaignFailureAction {
   return {
     type: UPLOAD_CAMPAIGN_FAILURE
   }
@@ -66,10 +79,10 @@ export function loadCampaignsThunk() {
   };
 }
 
-export function searchCampaignsThunk(keywordArg:string) {
+export function searchCampaignsThunk(keywordArg: string) {
   return (dispatch: Dispatch<CampaignActions>) => {
     const keyword = encodeURI(keywordArg);
-    axios.get<CapstoneICO.ICampaign[]>(`${process.env.REACT_APP_API_SERVER}/api/campaign/search?keyword=${keyword}`,{
+    axios.get<CapstoneICO.ICampaign[]>(`${process.env.REACT_APP_API_SERVER}/api/campaign/search?keyword=${keyword}`, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
@@ -83,21 +96,21 @@ export function uploadCampaignThunk(campaign: any) {
   return async (dispatch: Dispatch<CampaignActions>) => {
     dispatch(uploadCampaignStart());
     const token = localStorage.getItem('token');
-    const campaignToBeSent = Object.assign({},campaign);
+    const campaignToBeSent = Object.assign({}, campaign);
     try {
-      if(campaign.imageFile){
+      if (campaign.imageFile) {
         const fileType = campaign.imageFile.type.replace("image/", "");
         const uploadConfig = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/upload?fileType=${fileType}`,
-        { headers: { Authorization: `Bearer ${token}` } });
+          { headers: { Authorization: `Bearer ${token}` } });
         // upload the file to S3 directly after
         await axios.put(uploadConfig.data.url, campaign.imageFile, {
           headers: {
-              'Content-Type': campaign.imageFile.type
+            'Content-Type': campaign.imageFile.type
           }
         });
         campaignToBeSent.imageFile = uploadConfig.data.key;
       }
-      
+
       await axios.post(`${process.env.REACT_APP_API_SERVER}/api/campaign`, campaignToBeSent, {
         headers: {
           Authorization: 'Bearer ' + token
@@ -108,5 +121,19 @@ export function uploadCampaignThunk(campaign: any) {
     } catch (err) {
       dispatch(uploadCampaignFailure());
     }
+  }
+}
+
+// admin
+export function loadPendingCampaignsThunk() {
+  return (dispatch: Dispatch<CampaignActions>) => {
+    axios.get<CapstoneICO.ICampaign[]>(`${process.env.REACT_APP_API_SERVER}/api/campaign/pending`, {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      }
+    })
+      .then(res => {
+        dispatch(loadPendingCampaigns(res.data));
+      });
   }
 }

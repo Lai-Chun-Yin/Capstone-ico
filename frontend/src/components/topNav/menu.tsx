@@ -51,7 +51,7 @@ class Menu extends React.Component<IMenuProps> {
         <div className="app-main-menu d-none d-md-block">
           <ul className="navbar-nav navbar-nav-mega">
             <li className="nav-item">
-              <Link to="/">
+              <Link to="/campaign/pending">
                 <span>Pending</span>
               </Link>
             </li>
