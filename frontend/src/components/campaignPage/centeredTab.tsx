@@ -23,7 +23,8 @@ function TabContainer({ children, dir }: any) {
 }
 
 interface ICenteredTabsProps {
-  campaign: any;
+  campaign: CapstoneICO.ICampaign;
+  comments: CapstoneICO.IComment[];
 }
 
 class CenteredTabs extends React.Component<ICenteredTabsProps> {
@@ -36,7 +37,7 @@ class CenteredTabs extends React.Component<ICenteredTabsProps> {
   };
 
   public render() {
-    const { campaign } = this.props;
+    const { campaign, comments } = this.props;
 
     let videoPlayer: any;
     if (campaign) {
@@ -50,6 +51,7 @@ class CenteredTabs extends React.Component<ICenteredTabsProps> {
     return (
       <Paper className="w-100">
         <Tabs
+          className="border-bottom"
           value={this.state.value}
           onChange={this.handleChange}
           indicatorColor="primary"
@@ -75,7 +77,7 @@ class CenteredTabs extends React.Component<ICenteredTabsProps> {
             </section>
           </TabContainer>
           <TabContainer dir="x">
-            <Comment />
+            <Comment comments={comments} />
           </TabContainer>
         </SwipeableViews>
       </Paper>

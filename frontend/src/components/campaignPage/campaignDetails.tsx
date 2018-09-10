@@ -9,6 +9,7 @@ import { Link, match } from "react-router-dom";
 import { Progress } from "reactstrap";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
+import { loadCommentsThunk } from "../../reducers/comments/actions";
 import {
   getCampaign,
   getCampaignBalance
@@ -24,6 +25,8 @@ interface ICampaignDetailsProps {
   end_date: string;
   match: match<ICampaignIdPathParam>;
   reloadCampaign: () => void;
+  loadComments: () => void;
+  comments: CapstoneICO.IComment[];
   history: History.History;
 }
 interface ICampaignDetailsState {
@@ -64,8 +67,6 @@ class CampaignDetails extends React.Component<
         campaign: result1.data[0],
         balance: Number(result2.data[0].sum)
       });
-
-      return;
     }
 
     const targetCampaign = this.props.campaigns.filter(
@@ -75,6 +76,8 @@ class CampaignDetails extends React.Component<
       this.props.history.push("/not-found");
       return;
     }
+
+    this.props.loadComments();
   }
 
   public onSupportHandler(event: any) {
@@ -83,7 +86,7 @@ class CampaignDetails extends React.Component<
 
   public render() {
     const { campaign, dialogOpen } = this.state;
-    const { end_date } = this.props;
+    const { end_date, comments } = this.props;
 
     const endDateString = getDateTimeHK(end_date, "d");
 
@@ -199,11 +202,7 @@ class CampaignDetails extends React.Component<
           </div>
         </React.Fragment>
       );
-      campaignContent = (
-        <React.Fragment>
-          <CenteredTab campaign={campaign} />
-        </React.Fragment>
-      );
+      campaignContent = <CenteredTab campaign={campaign} comments={comments} />;
     }
 
     return (
@@ -249,15 +248,19 @@ class CampaignDetails extends React.Component<
   };
 }
 
-const mapStateToProps = (state: IRootState) => {
+const mapStateToProps = (state: IRootState, props: any) => {
   return {
-    campaigns: state.campaign.campaigns
+    campaigns: state.campaign.campaigns,
+    comments: state.comment.comments.filter(
+      e => e.campaign_id === Number(props.match.params.campaignId)
+    )
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    reloadCampaign: () => dispatch(loadCampaignsThunk())
+    reloadCampaign: () => dispatch(loadCampaignsThunk()),
+    loadComments: () => dispatch(loadCommentsThunk())
   };
 };
 

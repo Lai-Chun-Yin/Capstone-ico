@@ -8,7 +8,7 @@ module.exports = class CommentRouter {
   router() {
     let router = express.Router();
     router.get('/', this.get.bind(this));
-    router.get("/:co_id", this.get.bind(this));
+    router.get("/campaign/:campaign_id", this.get.bind(this));
     router.post("/", this.post.bind(this));
     router.put("/:co_id", this.put.bind(this));
     router.delete("/:co_id", this.delete.bind(this));
@@ -17,7 +17,7 @@ module.exports = class CommentRouter {
   }
 
   get(req, res) {
-    return this.commentService.getComment(req.params.co_id)
+    return this.commentService.getComment(req.params.campaign_id)
       .then(results => res.json(results))
       .catch(err => res.status(500).json(err));
   }
