@@ -17,7 +17,7 @@ import getDateTimeHK from "../../services/timeService";
 import CardBox from "../common/cardBox";
 import LinkButton from "../common/linkButton";
 import LinkCopy from "../common/linkCopy";
-import Youtube from "../Youtube";
+import CenteredTab from "./centeredTab";
 
 interface ICampaignDetailsProps {
   campaigns: CapstoneICO.ICampaign[];
@@ -38,7 +38,7 @@ interface ICampaignIdPathParam {
 class CampaignDetails extends React.Component<
   ICampaignDetailsProps,
   ICampaignDetailsState
-  > {
+> {
   constructor(props: ICampaignDetailsProps) {
     super(props);
     const targetCampaign = props.campaigns.filter(
@@ -87,30 +87,6 @@ class CampaignDetails extends React.Component<
 
     const endDateString = getDateTimeHK(end_date, "d");
 
-    let projectPic: any;
-    if (campaign) {
-      projectPic = campaign.project_photo ? (
-        <img
-          src={
-            "https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" +
-            campaign.project_photo
-          }
-          className="img-fluid img-thumbnail"
-          alt="logo"
-        />
-      ) : null;
-    } else {
-      projectPic = null;
-    }
-    let videoPlayer: any;
-    if (campaign) {
-      videoPlayer = campaign.video_url ? (
-        <Youtube videoId={campaign.video_url} />
-      ) : null;
-    } else {
-      videoPlayer = null;
-    }
-
     let campaignHeader: any;
     let campaignContent: any;
     if (campaign) {
@@ -153,7 +129,9 @@ class CampaignDetails extends React.Component<
           <div className="row mb-5">
             <div className="col-12 d-md-flex align-items-center justify-content-start">
               <div className="pr-3 m-respon">
-                <span className="d-block h1 m-0">{this.state.balance.toFixed(2)}</span>
+                <span className="d-block h1 m-0">
+                  {this.state.balance.toFixed(2)}
+                </span>
                 <span className="h4">Raised, Eth</span>
               </div>
 
@@ -194,7 +172,7 @@ class CampaignDetails extends React.Component<
           <div>
             <div className="row d-flex justify-content-between">
               <div className="col-sm-1 text-left">
-                <span>{`${(this.state.balance).toFixed(2)} ETH`}</span>
+                <span>{`${this.state.balance.toFixed(2)} ETH`}</span>
                 <span className="d-block">Raised</span>
               </div>
 
@@ -209,21 +187,21 @@ class CampaignDetails extends React.Component<
               </div>
             </div>
 
-            <Progress color="bg-teal" value={String((this.state.balance * 100)/campaign.hard_cap)} className="bg-grey lighten-2">
-              {`${((this.state.balance * 100)/campaign.hard_cap).toFixed(1)}%`}
+            <Progress
+              color="bg-teal"
+              value={String((this.state.balance * 100) / campaign.hard_cap)}
+              className="bg-grey lighten-2"
+            >
+              {`${((this.state.balance * 100) / campaign.hard_cap).toFixed(
+                1
+              )}%`}
             </Progress>
           </div>
         </React.Fragment>
       );
       campaignContent = (
         <React.Fragment>
-          <section>
-            {videoPlayer}
-            {projectPic}
-
-            {/* <p>{campaign.long_description}</p> */}
-            <div dangerouslySetInnerHTML={{ __html: campaign.long_description }} />
-          </section>
+          <CenteredTab campaign={campaign} />
         </React.Fragment>
       );
     }
@@ -235,10 +213,9 @@ class CampaignDetails extends React.Component<
             {campaignHeader}
           </div>
         </CardBox>
-        <div className="container">
-          <div className="row">
-            <div className="col-12">{campaignContent}</div>
-          </div>
+
+        <div className="row">
+          <div className="col-12">{campaignContent}</div>
         </div>
 
         <Dialog open={dialogOpen} onClose={this.handleDialogClose}>

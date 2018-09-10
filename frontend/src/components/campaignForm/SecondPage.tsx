@@ -2,9 +2,9 @@ import Button from "@material-ui/core/Button";
 import * as React from "react";
 import { InjectedFormProps, reduxForm } from "redux-form";
 
-import RenderTextField from "../common/textField";
 import Editor from "./editor";
 import * as validation from "./fieldLevelValidation";
+import RenderTextField from "./renderTextField";
 // tslint:disable-next-line:no-var-requires
 const Field = require("redux-form").Field;
 

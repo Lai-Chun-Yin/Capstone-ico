@@ -6,6 +6,7 @@ import PendingDetails from "./components/admin/pendingDetails";
 import CampaignForm from "./components/campaignForm";
 import Campaigns from "./components/campaignPage";
 import CampaignDetails from "./components/campaignPage/campaignDetails";
+import CenteredTabs from "./components/campaignPage/centeredTab";
 import ContributeForm from "./components/campaignPage/contribute";
 import FAQ from "./components/faq/faq";
 import Footer from "./components/footer";
@@ -25,8 +26,12 @@ const Routes = () => {
       <div className="app-main-content">
         <div className="app-wrapper">
           <Switch>
+            <Route path="/testa" component={CenteredTabs} />
             <Route path="/test" component={TestApi} />
-            <Route path="/campaign/pending/details/:campaignId" component={PendingDetails} />
+            <Route
+              path="/campaign/pending/details/:campaignId"
+              component={PendingDetails}
+            />
             <Route path="/campaign/pending" component={PendingCampaigns} />
             <Route
               path="/campaign/details/:campaignId/contribute"
