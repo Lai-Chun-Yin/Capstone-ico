@@ -25,12 +25,8 @@ const Routes = () => {
       <div className="app-main-content">
         <div className="app-wrapper">
           <Switch>
-<<<<<<< HEAD
-            <Route path="/testapi" component={TestApi} />
-=======
             <Route path="/test" component={TestApi} />
             <Route path="/campaign/pending/details/:campaignId" component={PendingDetails} />
->>>>>>> 7eacee7940d4a04af81b941421dce78aa3f5dd69
             <Route path="/campaign/pending" component={PendingCampaigns} />
             <Route
               path="/campaign/details/:campaignId/contribute"
