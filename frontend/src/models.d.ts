@@ -59,11 +59,9 @@ declare namespace CapstoneICO {
   }
 
   interface IComment {
-    id: number;
-    user_id: number;
+    alias: string;
+    campaign_id: number;
     content: string;
-    created_at: Date;
-    updated_at: Date;
+    date: string;
   }
 }
-

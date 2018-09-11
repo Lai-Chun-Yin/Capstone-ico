@@ -5,19 +5,23 @@ module.exports = class CommentService {
     this.knex = knex;
   }
 
-  getComment(co_id) {
-    if (co_id) {
-      let query = this.knex
-        .select()
-        .from('comments')
-        .where('id',co_id);
-
-    return query;
-    } else {
-      let query = this.knex.select().from('comments');
+  getComment(campaign_id) {
+    if (campaign_id) {
+      let query = this.knex('comments')
+      .join('users', 'comments.user_id', '=', 'users.id')
+      .where("campaign_id", campaign_id)
+      .select("alias","date","content")
 
       return query;
     }
+    else{
+      let query = this.knex('comments')
+      .join('users', 'comments.user_id', '=', 'users.id')
+      .select("alias","date","content", "campaign_id")
+
+      return query;
+    }
+ 
   }
 
   postComment(newComment) {
