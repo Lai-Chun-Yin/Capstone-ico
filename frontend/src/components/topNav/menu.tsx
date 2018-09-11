@@ -16,7 +16,7 @@ export interface IMenuProps {
 
 class Menu extends React.Component<IMenuProps> {
   public render() {
-    let bar: JSX.Element =
+    let bar: JSX.Element = (
       <div className="app-main-menu d-none d-md-block">
         <ul className="navbar-nav navbar-nav-mega">
           <li className="nav-item">
@@ -35,6 +35,11 @@ class Menu extends React.Component<IMenuProps> {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink to="/blog">
+              <span>Blog</span>
+            </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink to="/aboutus">
               <span>About us</span>
             </NavLink>
@@ -46,8 +51,9 @@ class Menu extends React.Component<IMenuProps> {
           </li>
         </ul>
       </div>
+    );
     if (this.props.user.is_admin) {
-      bar =
+      bar = (
         <div className="app-main-menu d-none d-md-block">
           <ul className="navbar-nav navbar-nav-mega">
             <li className="nav-item">
@@ -62,21 +68,16 @@ class Menu extends React.Component<IMenuProps> {
             </li>
           </ul>
         </div>
+      );
     }
-    ;
-
-    return (
-      <React.Fragment>
-        {bar}        
-      </React.Fragment>
-    );
+    return <React.Fragment>{bar}</React.Fragment>;
   }
 }
 
 const mapStateToProps = (state: IRootState) => {
   return {
     user: state.auth.user
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(Menu);

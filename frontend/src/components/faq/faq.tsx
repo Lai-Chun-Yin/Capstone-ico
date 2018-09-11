@@ -24,16 +24,16 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
   public render() {
     const { expanded } = this.state;
     return (
-      <div className=" animated slideInUpTiny animation-duration-3">
+      <div className="animated slideInUpTiny animation-duration-3 mb-5">
         <ContainerHeader title="FAQ" />
-        <div className="row">
-          <div className="col-md-8 col-sm-7 col-12 m-auto">
+        <div className="row mb-5">
+          <div className="col-md-11 col-12 m-auto">
             <ExpansionPanel
               expanded={expanded === "panel1"}
               onChange={this.handleChange("panel1")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <h5>How to create a campaign on StarToken?</h5>
+                How to create a campaign on StarToken?
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>
@@ -49,7 +49,7 @@ class FAQ extends React.Component<IFaqProps, IFaqState> {
               onChange={this.handleChange("panel2")}
             >
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <h4>Conditions and Requisites to launch at StarToken:</h4>
+                Conditions and Requisites to launch at StarToken:
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
                 <p>

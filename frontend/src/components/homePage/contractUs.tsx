@@ -109,9 +109,9 @@ const ContactUs: React.SFC<IContactUsProps> = (props: any) => {
                   <address className="mb-0">
                     44 New Design Street
                     <br />
-                    Melbourne 005
+                    Sheung Wan 005
                     <br />
-                    Australia 300
+                    Hong Kong
                   </address>
                 </div>
               </li>
@@ -125,7 +125,7 @@ const ContactUs: React.SFC<IContactUsProps> = (props: any) => {
                       href="javascript:void(0)"
                       className="text-primary disable-link"
                     >
-                      01 (800) 433 544
+                      (852) 2331 5442
                     </a>
                   </div>
                   <div>
@@ -133,7 +133,7 @@ const ContactUs: React.SFC<IContactUsProps> = (props: any) => {
                       href="javascript:void(0)"
                       className="text-primary disable-link"
                     >
-                      01 (800) 123 524
+                      (852) 2234 5245
                     </a>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ const ContactUs: React.SFC<IContactUsProps> = (props: any) => {
                   <h4 className="text-uppercase">E-mail</h4>
                   <div>
                     <a className="text-primary" href="javascript:void(0)">
-                      info@Example.com
+                      info@startoken.com
                     </a>
                   </div>
                   <div className="icons-wrapper">
