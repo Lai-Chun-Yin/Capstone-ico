@@ -56,21 +56,20 @@ class CampaignDetails extends React.Component<
 
   public async componentDidMount() {
     if (!this.state.campaign) {
-      const campaignId = this.props.match.params.campaignId;
-
       // trigger get campaign action if access campagin directly
       this.props.reloadCampaign();
-
-      const result1 = await getCampaign(campaignId);
-      const result2 = await getCampaignBalance(campaignId);
-      this.setState({
-        campaign: result1.data[0],
-        balance: Number(result2.data[0].sum)
-      });
     }
 
+    const campaignId = this.props.match.params.campaignId;
+    const result1 = await getCampaign(campaignId);
+    const result2 = await getCampaignBalance(campaignId);
+    this.setState({
+      campaign: result1.data[0],
+      balance: Number(result2.data[0].sum)
+    });
+
     const targetCampaign = this.props.campaigns.filter(
-      campaign => campaign.id === +this.props.match.params.campaignId
+      campaign => campaign.id === +campaignId
     );
     if (targetCampaign.length === 0) {
       this.props.history.push("/not-found");
