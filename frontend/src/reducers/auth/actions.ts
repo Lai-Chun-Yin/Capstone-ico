@@ -41,7 +41,7 @@ export interface AuthSuccessAction extends Action {
   user: object;
 }
 
-const authSuccess = (token: string,user:any): AuthSuccessAction => {
+const authSuccess = (token: string, user: any): AuthSuccessAction => {
   return {
     type: AUTH_SUCCESS,
     token: token,
@@ -110,7 +110,7 @@ export const auth = (
         // const expirationDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
         localStorage.setItem("token", response.data.token);
         // localStorage.setItem('expirationDate', expirationDate.toString());
-        dispatch(authSuccess(response.data.token,response.data.user));
+        dispatch(authSuccess(response.data.token, response.data.user));
 
         // window.location.href = "/campaign/create/basic";
       })
@@ -134,7 +134,7 @@ export const loginFacebook = (accessToken: string) => {
           throw new Error(response.data.message || "Unknown error");
         } else {
           localStorage.setItem("token", response.data.token);
-          dispatch(authSuccess(response.data.token,response.data.user));
+          dispatch(authSuccess(response.data.token, response.data.user));
         }
       })
       .catch((err: any) => {
@@ -163,9 +163,27 @@ export const authCheckState = () => {
       dispatch(logout());
     } else {
       const response = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/user`,
-      { headers: { Authorization: `Bearer ${token}` } });
-      if(response.data.user){dispatch(authSuccess(token,response.data.user));}
-      else{dispatch(logout());}
+        { headers: { Authorization: `Bearer ${token}` } });
+      if (response.data.user) { dispatch(authSuccess(token, response.data.user)); }
+      else { dispatch(logout()); }
     }
   };
 };
+
+export const userSettingsThunk = (requestObj: any) => {
+  return async (dispatch: Dispatch<AuthActions>) => {
+    const token = localStorage.getItem("token");
+    dispatch(authStart());
+    try {
+      let response = await axios.put(`${process.env.REACT_APP_API_SERVER}/api/user/profilePic`, requestObj,
+        { headers: { Authorization: `Bearer ${token}` } });
+      if(!response.data){
+        throw new Error("Cannot amend user's settings");
+      }else{
+        dispatch(authSuccess(response.data.token, response.data.user));
+      }
+    } catch (err) {
+      dispatch(authFail(err));
+    }
+  }
+}

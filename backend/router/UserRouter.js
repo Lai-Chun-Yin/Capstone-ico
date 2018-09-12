@@ -16,9 +16,9 @@ module.exports = class UserRouter {
         router.post('/auth/login', this.localLogin.bind(this));
         router.post('/auth/signup', this.localSignUp.bind(this));
         router.post('/auth/facebook', this.facebookLogin.bind(this));
-        router.get('/user', passport.authenticate('jwt', { session: false }),this.getUserDetails.bind(this))
+        router.get('/user', passport.authenticate('jwt', { session: false }), this.getUserDetails.bind(this))
         router.get('/user/profilePic', passport.authenticate('jwt', { session: false }), this.fetchProfilePic.bind(this));
-        router.post('/user/profilePic', passport.authenticate('jwt', { session: false }), this.uploadProfilePic.bind(this));
+        router.put('/user/profilePic', passport.authenticate('jwt', { session: false }), this.uploadProfilePic.bind(this));
 
         return router;
     }
@@ -137,17 +137,17 @@ module.exports = class UserRouter {
         }
     }
 
-    getUserDetails(req,res){
+    getUserDetails(req, res) {
         this.userService.getUserDetailsById(req.user.id)
-            .then((result)=>{
+            .then((result) => {
                 let user = {
                     id: req.user.id,
                     alias: result[0].alias,
                     photo: result[0].photo,
                     is_admin: result[0].is_admin
                 }
-                res.json({user});
-            }).catch((err)=>{
+                res.json({ user });
+            }).catch((err) => {
                 res.sendStatus(401).json(err);
             });
     }
@@ -168,9 +168,20 @@ module.exports = class UserRouter {
     }
 
     uploadProfilePic(req, res) {
-        this.userService.uploadProfilePic(req.user.id, req.body)
+        let request = { photo: req.body.url };
+        this.userService.uploadProfile(req.user.id, request)
             .then((result) => {
-                res.json(result);
-            })
+                return this.userService.getUserDetailsById(req.user.id)
+            }).then((result)=>{
+                let user = {
+                    id: req.user.id,
+                    alias: result[0].alias,
+                    photo: result[0].photo,
+                    is_admin: result[0].is_admin
+                }
+                res.json({ user });
+            }).catch((err) => {
+                res.sendStatus(401).json(err);
+            });
     }
 }

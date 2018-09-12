@@ -1,22 +1,54 @@
 import { Avatar } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
 import * as React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { IRootState } from "../../reducers";
 import ContainerHeader from "../common/containerHeader";
 import LinkButton from "../common/linkButton";
 import BackedTable from "./table/backedTable";
 import CreatedTable from "./table/createdTable";
 import FollowedTable from "./table/followedTable";
+import UserChangePic from "./userChangePic";
 
-// export interface IUserProfileProps {
+export interface IUserProfileProps {
+  profilePic: string
+}
 
-// }
+export interface IUserProfileState {
+  editPic: boolean;
+}
 
-// export interface IUserProfileState {
+class UserProfile extends React.Component<IUserProfileProps, IUserProfileState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      editPic: false
+    }
+  }
 
-// }
-
-class UserProfile extends React.Component {
   public render() {
+    const profilePic = `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${this.props.profilePic}` || "http://via.placeholder.com/150x150";
+    let avatar;
+    if (this.state.editPic) {
+      avatar = <UserChangePic />
+    } else {
+      avatar =
+        <React.Fragment>
+          <Avatar
+            className="size-120 m-auto"
+            alt=" user image"
+            src={profilePic}
+          />
+          <div className="m-auto">
+            <Button variant="fab" color="secondary" aria-label="Edit" onClick={this.openEdit} >
+              <Icon>edit_icon</Icon>
+            </Button>
+          </div>
+        </React.Fragment>
+    }
+
     return (
       <div className="animated slideInUpTiny animation-duration-3">
         <ContainerHeader title="User Profile" />
@@ -25,11 +57,7 @@ class UserProfile extends React.Component {
           <div className="col-md-4 col-sm-5 col-12">
             <div className="jr-card">
               <div className="jr-card-body ">
-                <Avatar
-                  className="size-120 m-auto"
-                  alt=" user image"
-                  src="http://via.placeholder.com/150x150"
-                />
+                {avatar}
                 <h2 className="text-center mb-2 mt-2">max</h2>
 
                 <h2 className="text-center mb-2 mt-2">abc@email.com</h2>
@@ -74,6 +102,19 @@ class UserProfile extends React.Component {
       </div>
     );
   }
+
+  private openEdit = (event: any) => {
+    event.preventDefault();
+    this.setState({
+      editPic: true
+    })
+  }
 }
 
-export default UserProfile;
+const mapStateToProps = (state: IRootState) => {
+  return {
+    profilePic: state.auth.user.photo
+  }
+}
+
+export default connect(mapStateToProps)(UserProfile);

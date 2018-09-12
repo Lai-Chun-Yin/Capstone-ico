@@ -13,12 +13,13 @@ export interface IUserInfoPopupProps {
 
 class UserInfoPopup extends React.Component<IUserInfoPopupProps> {
   public render() {
+    const profilePic = `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${this.props.user.photo}` || "http://via.placeholder.com/150x150";
     return (
       <div>
         <div className="user-profile">
           <img
             className="user-avatar border-0 size-40 rounded-circle"
-            src="http://via.placeholder.com/150x150"
+            src={profilePic}
             alt="User"
           />
           <div className="user-detail ml-2">

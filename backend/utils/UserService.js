@@ -45,9 +45,9 @@ class UserService {
     //     return this.knex.select('profilePic').from('users').where("id",id);
     // }
 
-    // uploadProfilePic(id,url){
-    //     return this.knex('users').where('id',id).update('profilePic',url);
-    // }
+    uploadProfile(id,request){
+        return this.knex('users').where('id',id).update(request);
+    }
 }
 
 module.exports = UserService;
