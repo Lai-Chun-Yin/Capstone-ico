@@ -10,10 +10,7 @@ import { Progress } from "reactstrap";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 import { loadCommentsThunk } from "../../reducers/comments/actions";
-import {
-  getCampaign,
-  getCampaignBalance
-} from "../../services/campaignService";
+import { getCampaign, getCampaignBalance } from "../../services/campaignService";
 import getDateTimeHK from "../../services/timeService";
 import CardBox from "../common/cardBox";
 import LinkButton from "../common/linkButton";
@@ -46,11 +43,8 @@ class CampaignDetails extends React.Component<
 > {
   constructor(props: ICampaignDetailsProps) {
     super(props);
-    const targetCampaign = props.campaigns.filter(
-      campaign => campaign.id === +props.match.params.campaignId
-    );
     this.state = {
-      campaign: targetCampaign[0],
+      campaign: null,
       balance: 0,
       dialogOpen: false
     };
@@ -148,7 +142,7 @@ class CampaignDetails extends React.Component<
                   variant="raised"
                   className="bg-deep-purple text-white text-capitalize"
                   component={Link}
-                  to={`/campaign/details/${campaign.id}/contribute`}
+                  to={`/campaign/${campaign.id}/contribute`}
                 >
                   Support Campaign
                 </LinkButton>

@@ -17,7 +17,7 @@ import Logout from "./components/logout";
 import News from "./components/news";
 import NotFound from "./components/notFound";
 import SignupForm from "./components/signupForm";
-import { TestApi } from "./components/testApi_ck";
+import GenerateToken from "./components/tokenPage/generate";
 import UserProfile from "./components/userInfoPopUp/userProfile";
 import UserSetting from "./components/userInfoPopUp/userSetting";
 import ScrollToTop from "./services/scrollToTopService";
@@ -30,18 +30,18 @@ const Routes = () => {
           <ScrollToTop />
           <Switch>
             <Route path="/testa" component={CenteredTabs} />
-            <Route path="/test" component={TestApi} />
             <Route
-              path="/campaign/pending/details/:campaignId"
+              path="/campaign/pending/:campaignId/details"
               component={PendingDetails}
             />
-            <Route path="/campaign/pending" component={PendingCampaigns} />
+            <Route path="/campaign/pending" exact={true} component={PendingCampaigns} />
             <Route
-              path="/campaign/details/:campaignId/contribute"
+              path="/campaign/:campaignId/contribute"
               component={ContributeForm}
             />
             <Route
-              path="/campaign/details/:campaignId"
+              path="/campaign/:campaignId/details"
+              exact={true}
               component={CampaignDetails}
             />
             <Route path="/campaign/create/basic" component={CampaignForm} />
@@ -56,6 +56,7 @@ const Routes = () => {
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={NotFound} />
+            <Route path="/generate" component={GenerateToken} />
             <Route path="/" exact={true} component={HomePage} />
             <Redirect to="/not-found" />
           </Switch>

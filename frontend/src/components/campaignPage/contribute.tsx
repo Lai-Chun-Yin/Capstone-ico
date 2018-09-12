@@ -37,6 +37,7 @@ interface IFormProps {
   match: match<ICampaignIdPathParam>;
   history: History.History;
   onSetAuthRedirectPath: (path: any) => void;
+  reloadCampaign: () => void;
 }
 interface IFormState {
   fromAddress: string;
@@ -76,6 +77,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     if (!this.props.isAuthenticated) {
       this.onNotLogIn();
     }
+
     const accounts = await web3.eth.getAccounts();
     if (accounts.length) {
       const balance = await web3.eth.getBalance(accounts[0]);
@@ -257,7 +259,11 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
       );
       this.props.history.push("/login");
     }
-  };
+    else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
+      this.props.onSetAuthRedirectPath(`/campaign/${this.state.campaign.id}/contribute`);
+      this.props.history.push("/login")
+    }
+  }
 }
 
 const mapStateToProps = (state: IRootState) => {
@@ -269,10 +275,9 @@ const mapStateToProps = (state: IRootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSetAuthRedirectPath: (path: any) =>
-      dispatch(Authactions.setAuthRedirectPath(path))
-  };
-};
+    onSetAuthRedirectPath: (path: any) => dispatch(Authactions.setAuthRedirectPath(path))
+  }
+}
 
 export default connect(
   mapStateToProps,

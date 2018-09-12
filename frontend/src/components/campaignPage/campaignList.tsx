@@ -90,7 +90,7 @@ const CampaignList = ({
                 variant="raised"
                 className="bg-secondary text-white text-capitalize"
                 component={Link}
-                to={`/campaign/details/${id}`}
+                to={`/campaign/${id}/details`}
               >
                 Read more
               </LinkButton>
@@ -99,7 +99,7 @@ const CampaignList = ({
             <LinkButton
               className="text-capitalize text-light-blue"
               component={Link}
-              to={`/campaign/details/${id}/contribute`}
+              to={`/campaign/${id}/contribute`}
             >
               back campaign
             </LinkButton>

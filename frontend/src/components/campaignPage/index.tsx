@@ -99,7 +99,7 @@ class PureCampaigns extends React.Component<ICampaignProps,ICampaignState> {
 
 const Campaigns = connect(
   (state: IRootState) => ({
-    campaigns: state.campaign.campaigns
+    campaigns: state.campaign.campaigns,
   }),
   (dispatch: any) => ({
     reloadCampaign: () => dispatch(loadCampaignsThunk()),
