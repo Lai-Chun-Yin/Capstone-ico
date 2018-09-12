@@ -31,10 +31,10 @@ module.exports = class CommentService {
     */
 
     let action = this.knex('comments').insert({
-      user_id: newComment.user_id,
+      user_id: newComment.userId,
       content: newComment.content,
       date: newComment.date,
-      campaign_id: newComment.campaign_id
+      campaign_id: newComment.campaignId
     });
 
     return action;

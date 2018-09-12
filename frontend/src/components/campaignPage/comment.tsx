@@ -7,6 +7,7 @@ import Send from "@material-ui/icons/Send";
 import * as React from "react";
 import { connect } from "react-redux";
 import { addCommentsFront } from "../../reducers/comments/actions";
+import { postCommentBackend } from "../../services/commentService";
 import { currentTime, timeAgo } from "../../services/timeService";
 
 export interface ICommentProps {
@@ -14,7 +15,7 @@ export interface ICommentProps {
   user: any;
   isAuthenticated: boolean;
   campaignId: number;
-  addComment: (comment: any) => void;
+  addCommentFrontend: (comment: any) => void;
 }
 
 export interface ICommentState {
@@ -95,12 +96,21 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
   private handleSubmit = (e: any) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
     this.setState(
       {
         date: currentTime()
       },
       () => {
-        this.props.addComment(this.state);
+        this.props.addCommentFrontend(this.state);
+        postCommentBackend(
+          this.props.user.id,
+          this.state.content,
+          this.state.date,
+          this.props.campaignId,
+          token
+        );
         this.setState({ content: "" });
       }
     );
@@ -108,7 +118,9 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
 }
 
 const mapDispatchToProps = (dispatch: any) => {
-  return { addComment: (comment: any) => dispatch(addCommentsFront(comment)) };
+  return {
+    addCommentFrontend: (comment: any) => dispatch(addCommentsFront(comment))
+  };
 };
 
 export default connect(
