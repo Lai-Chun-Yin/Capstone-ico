@@ -9,6 +9,9 @@ import image6 from "../assets/images/FakeClients/crabbar.png";
 import image7 from "../assets/images/FakeClients/tasty-treats.png";
 import image8 from "../assets/images/FakeClients/velit.png";
 import image9 from "../assets/images/FakeClients/your-name.png";
+import image17 from "../assets/images/homePage/splash1.png";
+import image18 from "../assets/images/homePage/splash2.png";
+import image19 from "../assets/images/homePage/splash3.png";
 import image1 from "../assets/images/logo.png";
 import image10 from "../assets/images/team/ben.png";
 import image12 from "../assets/images/team/ck.png";
@@ -35,3 +38,7 @@ export const maxImage = image13;
 export const blogArticle1 = image14;
 export const blogArticle2 = image15;
 export const blogArticle3 = image16;
+
+export const carousel1 = image17;
+export const carousel2 = image18;
+export const carousel3 = image19;

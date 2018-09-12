@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 // import axios from "axios";
 import * as Joi from "joi";
 import * as React from "react";
@@ -11,14 +11,14 @@ import Input from "../common/input";
 
 export interface IUserSettingProps {
   error: any;
-  changeSettings: (obj:any)=>void;
+  changeSettings: (obj: any) => void;
 }
 
 export interface IUserSettingState {
   account: {
     oldPassword: string;
     newPassword: string;
-  }
+  };
   newUsername: string;
   errors: IErrors;
   dialog: any;
@@ -26,14 +26,11 @@ export interface IUserSettingState {
 
 const styles = {
   textField: {
-    marginLeft: 20,
-    marginRight: 20,
-    width: 200,
-  },
+    width: 200
+  }
 };
 
 class UserSetting extends React.Component<any, IUserSettingState> {
-
   private schema = {
     newPassword: Joi.string()
       .min(5)
@@ -55,7 +52,7 @@ class UserSetting extends React.Component<any, IUserSettingState> {
         open: false,
         message: ""
       }
-    }
+    };
   }
 
   public render() {
@@ -94,8 +91,8 @@ class UserSetting extends React.Component<any, IUserSettingState> {
                     value={this.state.newUsername}
                     onChange={this.newUsernameChange}
                   />
-                  <br />                 
-                  
+                  <br />
+
                   <Button
                     className="jr-btn bg-primary text-white m-2"
                     type="submit"
@@ -115,10 +112,10 @@ class UserSetting extends React.Component<any, IUserSettingState> {
   // private onFileChange = (event: any) => {
   //   this.setState({ file: event.target.files[0] });
   // }
-  private onSubmit = async(event: any) =>{
+  private onSubmit = async (event: any) => {
     event.preventDefault();
     const request: any = {
-      changes:{}
+      changes: {}
     };
     request.pw = this.state.account.oldPassword;
     // const token = localStorage.getItem("token");
@@ -129,12 +126,11 @@ class UserSetting extends React.Component<any, IUserSettingState> {
     }
     // Check if changing password
     if (this.state.account.newPassword !== "") {
-      request.changes.pw = this.state.account.newPassword
+      request.changes.pw = this.state.account.newPassword;
     }
 
     this.props.changeSettings(request);
-  }
-  
+  };
 
   private handleChange = (event: any) => {
     const errors = { ...this.state.errors };
@@ -149,11 +145,11 @@ class UserSetting extends React.Component<any, IUserSettingState> {
     account[event.currentTarget.name] = event.currentTarget.value;
     this.setState({ account, errors });
   };
-  private newUsernameChange=(event: any)=> {
+  private newUsernameChange = (event: any) => {
     this.setState({
       newUsername: event.target.value
-    })
-  }
+    });
+  };
 
   private validate = () => {
     const options = { abortEarly: false };
@@ -181,13 +177,15 @@ class UserSetting extends React.Component<any, IUserSettingState> {
 
     return error ? error.details[0].message : null;
   };
-
 }
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-      changeSettings: (request: any) => dispatch(userSettingsThunk(request))
+    changeSettings: (request: any) => dispatch(userSettingsThunk(request))
   };
 };
 
-export default connect(null,mapDispatchToProps)(UserSetting);
+export default connect(
+  null,
+  mapDispatchToProps
+)(UserSetting);
