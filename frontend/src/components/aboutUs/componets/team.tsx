@@ -2,7 +2,7 @@ import Button from "@material-ui/core/Button";
 import * as React from "react";
 
 const Team = ({ team }: any) => {
-  const { name, destination, description, image } = team;
+  const { name, destination, description, image, github } = team;
   return (
     <div className="m-1">
       <div className="jr-card px-0 pt-sm-5 text-center">
@@ -15,8 +15,8 @@ const Team = ({ team }: any) => {
           <h3 className="card-title">{name}</h3>
           <span className="post-designation">{destination}</span>
           <p className="card-text">{description}</p>
-          <Button color="primary">
-            <span>Personal Pages</span>
+          <Button href={github} target="_blank" color="primary">
+            <span>GitHub</span>
           </Button>
         </div>
       </div>

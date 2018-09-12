@@ -110,7 +110,6 @@ class CampaignDetails extends React.Component<
               >
                 Follow
               </Button>
-
               <Button
                 className="jr-btn text-uppercase text-primary d-none d-sm-none d-md-block"
                 // tslint:disable-next-line:jsx-no-lambda
@@ -121,13 +120,11 @@ class CampaignDetails extends React.Component<
               </Button>
             </div>
           </div>
-
           <div className="row  mb-4">
             <div className="xlh1 font-weight-bold break-text col-12">
               {campaign.title}
             </div>
           </div>
-
           <div className="row mb-5">
             <div className="col-12 d-md-flex align-items-center justify-content-start">
               <div className="pr-3 m-respon">
@@ -136,17 +133,14 @@ class CampaignDetails extends React.Component<
                 </span>
                 <span className="h4">Raised, Eth</span>
               </div>
-
               <div className="pr-3 m-respon">
                 <span className="d-block h1 m-0">100</span>
                 <span className="h4">Backers</span>
               </div>
-
               <div className="m-respon">
                 <span className="d-block h1 m-0">{endDateString}</span>
                 <span className="h4">End day</span>
               </div>
-
               <div className="ml-auto m-respon">
                 <LinkButton
                   variant="raised"
@@ -157,7 +151,6 @@ class CampaignDetails extends React.Component<
                   Support Campaign
                 </LinkButton>
               </div>
-
               <div className="share-respon d-xl-none d-lg-none d-md-none">
                 <Button
                   variant="fab"
@@ -170,25 +163,21 @@ class CampaignDetails extends React.Component<
               </div>
             </div>
           </div>
-
           <div>
             <div className="row d-flex justify-content-between">
               <div className="col-sm-1 text-left">
                 <span>{`${this.state.balance.toFixed(2)} ETH`}</span>
                 <span className="d-block">Raised</span>
               </div>
-
               <div className="col-sm-3 text-right">
                 <span>{`${campaign.soft_cap} ETH`}</span>
                 <span className="d-block">Soft cap</span>
               </div>
-
               <div className="col-sm-8 text-right">
                 <span>{`${campaign.hard_cap} ETH`}</span>
                 <span className="d-block">Hard cap</span>
               </div>
             </div>
-
             <Progress
               color="bg-teal"
               value={String((this.state.balance * 100) / campaign.hard_cap)}
@@ -203,7 +192,6 @@ class CampaignDetails extends React.Component<
       );
       campaignContent = <CenteredTab campaign={campaign} comments={comments} />;
     }
-
     return (
       <div className="animated slideInUpTiny animation-duration-3">
         <CardBox styleName="col-lg-12 p-0" cardStyle="p-0">
@@ -211,11 +199,9 @@ class CampaignDetails extends React.Component<
             {campaignHeader}
           </div>
         </CardBox>
-
         <div className="row">
           <div className="col-12">{campaignContent}</div>
         </div>
-
         <Dialog open={dialogOpen} onClose={this.handleDialogClose}>
           <DialogTitle>Share Campaign</DialogTitle>
           <DialogContent>
@@ -226,7 +212,6 @@ class CampaignDetails extends React.Component<
               >
                 <i className="zmdi zmdi-facebook zmdi-hc-lg" />
               </Button>
-
               <Button
                 variant="fab"
                 className="jr-fab-btn bg-light-blue accent-2 text-white mr-2"
@@ -246,7 +231,6 @@ class CampaignDetails extends React.Component<
     this.setState({ dialogOpen: false });
   };
 }
-
 const mapStateToProps = (state: IRootState, props: any) => {
   return {
     campaigns: state.campaign.campaigns,
@@ -255,14 +239,12 @@ const mapStateToProps = (state: IRootState, props: any) => {
     )
   };
 };
-
 const mapDispatchToProps = (dispatch: any) => {
   return {
     reloadCampaign: () => dispatch(loadCampaignsThunk()),
     loadComments: () => dispatch(loadCommentsThunk())
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps

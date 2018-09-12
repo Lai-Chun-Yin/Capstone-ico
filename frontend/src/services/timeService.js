@@ -22,7 +22,7 @@ export default function getDateTimeHK(isoString, format="dt") {
 // The following functiions are for calculate how long ago
 
 export function timeAgo (isoString, DWMY_timeAgo = true) { // DWMY_timeAgo = [Days,Weeks,Months,Years] ago
-  let momentDate  = moment(isoString); // Getting date and time with unix timestamp
+  let momentDate  = moment(isoString); // Getting date and time with iso string
   let dateTime    = {
         seconds        : moment().diff(momentDate, 'seconds'),
         minutes        : moment().diff(momentDate, 'minutes'),
