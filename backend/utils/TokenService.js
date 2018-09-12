@@ -26,15 +26,15 @@ module.exports = class TokenService {
     let action = this.knex("tokens").insert({
       user_id: newToken.user_id,
       type: newToken.type,
-      distributed: newToken.distributed,
+      distributed: false,
       name: newToken.name,
       symbol: newToken.symbol,
       campaign_id: newToken.campaign_id,
       token_contract: newToken.token_contract,
       total_supply: newToken.total_supply,
-      token_decimal_place: newToken.token_decimal_place,
-      receive_address: newToken.receive_address
-    });
+      token_decimal_place: newToken.decimal,
+      receive_address: newToken.genesis_address
+    }).returning('*');
 
     return action;
   }

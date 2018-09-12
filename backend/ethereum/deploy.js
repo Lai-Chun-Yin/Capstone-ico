@@ -9,20 +9,21 @@ let TokenContract = require('./build/Token.json');
 let newToken = contract(TokenContract);
 newToken.setProvider(Provider);
 
-module.exports = async (symbol,name,decimal,total_supply,genesis_address) => {
+module.exports = async (metrics) => {   // argument is an object comprised of token metrics
   const accounts = await web3.eth.getAccounts();
-  console('deploying contract from', accounts[0]);
+  console.log('deploying contract from', accounts[0]);
   // set contract owner address
   // must use lowercase or will get "private key should be a Buffer" error
   newToken.defaults({from: accounts[0].toLowerCase()}); 
 
   // deploy a new version of this contract to the network
-  let deployed = await newToken.new(symbol, name, decimal, total_supply, genesis_address);
+  console.log('arguments', JSON.stringify(metrics));
+  let deployed = await newToken.new(metrics.symbol, metrics.name, metrics.decimal, metrics.totalSupply, metrics.genesisAddress);
 
   let owner = await deployed.owner();
   console.log('Contract owner:', owner);
 
-  let balance = await deployed.balanceOf(accounts[0]);
+  let balance = await deployed.balanceOf(metrics.genesis_address);
   console.log('Balance of genesis address: ', balance);
 
   let newContractAddress = await deployed.retrieveContractAddress();
