@@ -28,6 +28,8 @@ interface ICampaignDetailsProps {
   loadComments: () => void;
   comments: CapstoneICO.IComment[];
   history: History.History;
+  user: any;
+  isAuthenticated: boolean;
 }
 interface ICampaignDetailsState {
   campaign: CapstoneICO.ICampaign | null;
@@ -190,7 +192,14 @@ class CampaignDetails extends React.Component<
           </div>
         </React.Fragment>
       );
-      campaignContent = <CenteredTab campaign={campaign} comments={comments} />;
+      campaignContent = (
+        <CenteredTab
+          campaign={campaign}
+          comments={comments}
+          user={this.props.user}
+          isAuthenticated={this.props.isAuthenticated}
+        />
+      );
     }
     return (
       <div className="animated slideInUpTiny animation-duration-3">
@@ -236,7 +245,9 @@ const mapStateToProps = (state: IRootState, props: any) => {
     campaigns: state.campaign.campaigns,
     comments: state.comment.comments.filter(
       e => e.campaign_id === Number(props.match.params.campaignId)
-    )
+    ),
+    isAuthenticated: state.auth.token !== null,
+    user: state.auth.user
   };
 };
 const mapDispatchToProps = (dispatch: any) => {

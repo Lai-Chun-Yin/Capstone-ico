@@ -7,21 +7,37 @@ import Send from "@material-ui/icons/Send";
 import * as React from "react";
 import { connect } from "react-redux";
 import { addCommentsFront } from "../../reducers/comments/actions";
-import { timeAgo } from "../../services/timeService";
+import { currentTime, timeAgo } from "../../services/timeService";
 
 export interface ICommentProps {
   comments: CapstoneICO.IComment[];
+  user: any;
+  isAuthenticated: boolean;
+  campaignId: number;
+  addComment: (comment: any) => void;
 }
 
 export interface ICommentState {
-  value: string;
+  content: string;
+  alias: string;
+  date: string;
+  campaign_id: number;
 }
 class Comment extends React.Component<ICommentProps, ICommentState> {
-  public onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      value: e.currentTarget.value
-    });
+  constructor(props: ICommentProps) {
+    super(props);
+    this.state = {
+      content: "",
+      alias: this.props.user.alias,
+      date: "",
+      campaign_id: this.props.campaignId
+    };
   }
+
+  public componentDidMount() {
+    this.setState({ content: "" });
+  }
+
   public render() {
     const { comments } = this.props;
 
@@ -35,7 +51,9 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
               <section key={i} className="mb-4 col-12">
                 <div>
                   <span className="h3 font-weight-bold">{e.alias}</span>
-                  <small className="m-2">{timeAgo(e.date)}</small>
+                  <small className="m-2">
+                    {timeAgo(e.date) ? timeAgo(e.date) : "Just Now"}
+                  </small>
                 </div>
 
                 <div className="mt-2 ml-2">
@@ -46,29 +64,51 @@ class Comment extends React.Component<ICommentProps, ICommentState> {
           })
         )}
 
-        <form className="col-8">
-          <FormControl className="mb-3" fullWidth={true}>
-            <InputLabel htmlFor="text"> Add Comment</InputLabel>
-            <Input
-              // tslint:disable-next-line:jsx-no-bind
-              onChange={this.onValueChange.bind(this)}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton>
-                    <Send type="submit" />
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-        </form>
+        {this.props.isAuthenticated && (
+          // tslint:disable-next-line:jsx-no-bind
+          <form onSubmit={this.handleSubmit.bind(this)} className="col-8">
+            <FormControl className="mb-3" fullWidth={true}>
+              <InputLabel htmlFor="text"> Add Comment</InputLabel>
+              <Input
+                value={this.state.content}
+                // tslint:disable-next-line:jsx-no-bind
+                onChange={this.onValueChange.bind(this)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton type="submit">
+                      <Send />
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+          </form>
+        )}
       </div>
     );
   }
+  private onValueChange(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({
+      content: e.currentTarget.value
+    });
+  }
+  private handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    this.setState(
+      {
+        date: currentTime()
+      },
+      () => {
+        this.props.addComment(this.state);
+        this.setState({ content: "" });
+      }
+    );
+  };
 }
 
-const mapDispatchToProps = (dispatch: any, comment: any) => {
-  return { addCommentsFront: () => dispatch(addCommentsFront(comment)) };
+const mapDispatchToProps = (dispatch: any) => {
+  return { addComment: (comment: any) => dispatch(addCommentsFront(comment)) };
 };
 
 export default connect(

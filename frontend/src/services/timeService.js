@@ -18,7 +18,6 @@ export default function getDateTimeHK(isoString, format="dt") {
 
 
 
-
 // The following functiions are for calculate how long ago
 
 export function timeAgo (isoString, DWMY_timeAgo = true) { // DWMY_timeAgo = [Days,Weeks,Months,Years] ago
@@ -141,4 +140,13 @@ function isToday(momentDate) {
 function isYesterday(momentDate) {
   let yesterday = moment().clone().subtract(1, 'days').startOf('day');
   return momentDate.isSame(yesterday , 'd');
+}
+
+
+// return current timestamp iso string
+
+export function currentTime(){
+  let CurrentDate = moment().toISOString();
+  
+  return CurrentDate;
 }
