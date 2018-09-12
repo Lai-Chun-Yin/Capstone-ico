@@ -25,6 +25,8 @@ function TabContainer({ children, dir }: any) {
 interface ICenteredTabsProps {
   campaign: CapstoneICO.ICampaign;
   comments: CapstoneICO.IComment[];
+  user: any;
+  isAuthenticated: boolean;
 }
 
 class CenteredTabs extends React.Component<ICenteredTabsProps> {
@@ -77,7 +79,12 @@ class CenteredTabs extends React.Component<ICenteredTabsProps> {
             </section>
           </TabContainer>
           <TabContainer dir="x">
-            <Comment comments={comments} />
+            <Comment
+              comments={comments}
+              user={this.props.user}
+              isAuthenticated={this.props.isAuthenticated}
+              campaignId={this.props.campaign.id}
+            />
           </TabContainer>
         </SwipeableViews>
       </Paper>

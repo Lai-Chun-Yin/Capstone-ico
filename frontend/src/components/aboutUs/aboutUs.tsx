@@ -4,6 +4,17 @@ import ContainerHeader from "../common/containerHeader";
 import { aboutus1 } from "../ImagesImport";
 import { aboutus2 } from "../ImagesImport";
 import { aboutus3 } from "../ImagesImport";
+import {
+  benImage,
+  ckImage,
+  client1,
+  client2,
+  client3,
+  client4,
+  client5,
+  maxImage,
+  tommyImage
+} from "../ImagesImport";
 import Client from "./componets/client";
 import Service from "./componets/service";
 import Team from "./componets/team";
@@ -35,51 +46,52 @@ const teams = [
   {
     name: "Tommy Chun",
     destination: "Team member",
-    description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
+    description: "Frontend / backend developer, blockchain developer",
+    image: tommyImage,
+    github: "https://github.com/Lai-Chun-Yin"
   },
   {
     name: "CK C",
     destination: "Team member",
-    description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
+    description: "Frontend / backend developer, blockchain developer",
+    image: ckImage,
+    github: "https://github.com/nerdyckc"
   },
   {
     name: "Benjamin Tin",
     destination: "Team member",
     description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
+      "Blockchain expert, frontend / backend developer, web designer, business development",
+    image: benImage,
+    github: "https://github.com/benjaimess"
   },
   {
     name: "Max Fong",
     destination: "Team member",
-    description:
-      "Nam imperdiet ornare enim ac tempor Suspendisse ac accumsan orci jomnic dr neva ketoli respecotra domeko... ",
-    image: "http://via.placeholder.com/150x150"
+    description: "Frontend / backend developer",
+    image: maxImage,
+    github: "https://github.com/plat123456789"
   }
 ];
 
 const clients = [
   {
-    image: "http://via.placeholder.com/92x53"
+    image: client1
   },
   {
-    image: "http://via.placeholder.com/102x47"
+    image: client2
   },
   {
-    image: "http://via.placeholder.com/102x53"
+    image: client3
   },
   {
-    image: "http://via.placeholder.com/61x62"
+    image: client4
   },
   {
-    image: "http://via.placeholder.com/100x58"
+    image: client5
   },
   {
-    image: "http://via.placeholder.com/102x53"
+    image: client5
   }
 ];
 

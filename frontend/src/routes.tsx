@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import AboutUs from "./components/aboutUs/aboutUs";
 import PendingCampaigns from "./components/admin/pendingCampaigns";
 import PendingDetails from "./components/admin/pendingDetails";
+import Blog from "./components/blog";
 import CampaignForm from "./components/campaignForm";
 import Campaigns from "./components/campaignPage";
 import CampaignDetails from "./components/campaignPage/campaignDetails";
@@ -19,12 +20,14 @@ import SignupForm from "./components/signupForm";
 import GenerateToken from "./components/tokenPage/generate";
 import UserProfile from "./components/userInfoPopUp/userProfile";
 import UserSetting from "./components/userInfoPopUp/userSetting";
+import ScrollToTop from "./services/scrollToTopService";
 
 const Routes = () => {
   return (
     <main className="app-main-content-wrapper">
       <div className="app-main-content">
         <div className="app-wrapper">
+          <ScrollToTop />
           <Switch>
             <Route path="/testa" component={CenteredTabs} />
             <Route
@@ -48,6 +51,7 @@ const Routes = () => {
             <Route path="/news" component={News} />
             <Route path="/faq" component={FAQ} />
             <Route path="/aboutus" component={AboutUs} />
+            <Route path="/blog" component={Blog} />
             <Route path="/register" component={SignupForm} />
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />

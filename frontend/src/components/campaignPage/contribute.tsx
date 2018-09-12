@@ -1,20 +1,28 @@
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import axios from "axios";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import * as History from "history";
 import * as React from "react";
-import { connect } from 'react-redux';
-import { match } from 'react-router-dom';
-import { Button, Card, CardImg, CardSubtitle, CardText, CardTitle, Col, Row } from 'reactstrap';
-import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
-import web3 from '../../ethereum/web3';
+import { connect } from "react-redux";
+import { match } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardImg,
+  CardSubtitle,
+  CardText,
+  CardTitle,
+  Col,
+  Row
+} from "reactstrap";
+import { Input, InputGroup, InputGroupAddon } from "reactstrap";
+import web3 from "../../ethereum/web3";
 import { IRootState } from "../../reducers";
 import * as Authactions from "../../reducers/auth/actions";
-import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
-
+import { getCampaign } from "../../services/campaignService";
+import { postTransaction } from "../../services/transactionService";
 
 // interface IContributeFormState {
 //   value: string | null;
@@ -42,18 +50,20 @@ interface IFormState {
   dialog: any;
 }
 interface ICampaignIdPathParam {
-  campaignId: number
+  campaignId: number;
 }
 
 class ContributeForm extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
-    const targetCampaign = props.campaigns.filter((campaign) => campaign.id === (+props.match.params.campaignId))
+    const targetCampaign = props.campaigns.filter(
+      campaign => campaign.id === +props.match.params.campaignId
+    );
     this.state = {
-      fromAddress: '',
-      toAddress: '',
+      fromAddress: "",
+      toAddress: "",
       balance: null,
-      value: '',
+      value: "",
       receipt: {},
       campaign: targetCampaign[0],
       dialog: {
@@ -64,37 +74,50 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
   }
 
   public componentDidMount = async () => {
-    if (!this.props.isAuthenticated) { this.onNotLogIn(); }
-
-    this.props.reloadCampaign();
+    if (!this.props.isAuthenticated) {
+      this.onNotLogIn();
+    }
 
     const accounts = await web3.eth.getAccounts();
     if (accounts.length) {
       const balance = await web3.eth.getBalance(accounts[0]);
       this.setState({
-        balance: web3.utils.fromWei(balance, 'ether'),
-        fromAddress: accounts[0],
-      })
+        balance: web3.utils.fromWei(balance, "ether"),
+        fromAddress: accounts[0]
+      });
     } else if (accounts.length === 0) {
-      this.onNoAddress(); return;
+      this.onNoAddress();
+      return;
     }
 
     this.setState({
-      toAddress: (this.state.campaign ? this.state.campaign.token_address : null)
+      toAddress: this.state.campaign ? this.state.campaign.token_address : null
     });
-  }
+
+    if (!this.state.campaign) {
+      await getCampaign(this.props.match.params.campaignId);
+    }
+    console.log(this.state.campaign);
+  };
 
   public render() {
-    const accountBalance = (this.state.balance ?
+    const accountBalance = this.state.balance ? (
       <CardText>Account Balance: {this.state.balance} ether</CardText>
-      : <CardText>Please install metamask in order to contribute!</CardText>);
+    ) : (
+      <CardText>Please install metamask in order to contribute!</CardText>
+    );
 
     let form;
     if (this.state.campaign) {
       let equivalentTokenMessage = null;
       if (this.state.value) {
-        equivalentTokenMessage =
-          <CardText>You are investing {this.state.value} Ether in exchange for {(+this.state.campaign.conversion_ratio) * (+this.state.value)} Tokens of supported campaign.</CardText>
+        equivalentTokenMessage = (
+          <CardText>
+            You are investing {this.state.value} Ether in exchange for{" "}
+            {+this.state.campaign.conversion_ratio * +this.state.value} Tokens
+            of supported campaign.
+          </CardText>
+        );
       }
       form = (
         <Row>
@@ -109,8 +132,12 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
               <CardText>To: {this.state.campaign.token_address}</CardText>
               <div>
                 {/* <input name='pay' value={this.state.value} onChange={this.handleValueChg} /> */}
-                <InputGroup name='pay' >
-                  <Input placeholder="" value={this.state.value} onChange={this.handleValueChg} />
+                <InputGroup name="pay">
+                  <Input
+                    placeholder=""
+                    value={this.state.value}
+                    onChange={this.handleValueChg}
+                  />
                   <InputGroupAddon addonType="append">ether</InputGroupAddon>
                 </InputGroup>
                 {equivalentTokenMessage}
@@ -122,36 +149,44 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
             <Card body={true}>
               <CardTitle>Receipt: </CardTitle>
               <CardText>
-                <ul>{Object.keys(this.state.receipt).map((value, k) => (
-                  <li className='list-receipt-item'>{k} {value} ---> {this.state.receipt[value]}</li>
-                ))}</ul>
+                <ul>
+                  {Object.keys(this.state.receipt).map((value, k) => (
+                    <li className="list-receipt-item">
+                      {k} {value} ---> {this.state.receipt[value]}
+                    </li>
+                  ))}
+                </ul>
               </CardText>
             </Card>
           </Col>
         </Row>
-      )
+      );
     } else {
-      form = null
+      form = null;
     }
 
     let problemMessage = "";
     if (this.state.dialog.problem === "noAddress") {
-      problemMessage = "Cannot find any addresses. Please make sure Metamask is loaded."
-    }
-    else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
-      problemMessage = "Please log in to continue."
+      problemMessage =
+        "Cannot find any addresses. Please make sure Metamask is loaded.";
+    } else if (
+      this.state.campaign &&
+      this.state.dialog.problem === "notLogIn"
+    ) {
+      problemMessage = "Please log in to continue.";
     }
 
     return (
       <React.Fragment>
         <div>{form}</div>
 
-        <Dialog open={this.state.dialog.dialogOpen} onClose={this.handlePageClose}>
+        <Dialog
+          open={this.state.dialog.dialogOpen}
+          onClose={this.handlePageClose}
+        >
           <DialogTitle>Subscribe</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              {problemMessage}
-            </DialogContentText>
+            <DialogContentText>{problemMessage}</DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handlePageClose} color="primary">
@@ -166,7 +201,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
   private handleValueChg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
     this.setState({ value });
-  }
+  };
 
   private handleSendEther = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const accounts = await web3.eth.getAccounts();
@@ -177,28 +212,24 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     const receipt = await web3.eth.sendTransaction({
       from: this.state.fromAddress,
       to: this.state.toAddress,
-      value: web3.utils.toWei(this.state.value, 'ether')
-    })
-      
+      value: web3.utils.toWei(this.state.value, "ether")
+    });
+
     this.setState({ receipt });
     const block = await web3.eth.getBlock(receipt.blockHash);
-    const txDate = (new Date(block.timestamp*1000)).toISOString();
+    const txDate = new Date(block.timestamp * 1000).toISOString();
     const txHash = receipt.transactionHash;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (this.state.campaign) {
-      await this.postTransaction(txDate, amount, txHash, this.state.campaign.id, token);
+      await postTransaction(
+        txDate,
+        amount,
+        txHash,
+        this.state.campaign.id,
+        token
+      );
     }
-  }
-
-  private async postTransaction(date:string,amount:number,txHash:string, campaignId:number, token: string | null) {
-    try {
-      await axios.post(`${process.env.REACT_APP_API_SERVER}/api/transaction`,
-        {date, amount, txHash, campaignId},   // transaction as JSON object
-        { headers: { Authorization: `Bearer ${token}` } });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  };
 
   private onNotLogIn = () => {
     this.setState({
@@ -206,22 +237,30 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
         problem: "notLogIn",
         dialogOpen: true
       }
-    })
-  }
+    });
+  };
   private onNoAddress = () => {
     this.setState({
       dialog: {
         problem: "noAddress",
         dialogOpen: true
       }
-    })
-  }
+    });
+  };
   private handlePageClose = () => {
     if (this.state.dialog.problem === "noAddress") {
       this.props.history.goBack();
+    } else if (
+      this.state.campaign &&
+      this.state.dialog.problem === "notLogIn"
+    ) {
+      this.props.onSetAuthRedirectPath(
+        `/campaign/details/${this.state.campaign.id}/contribute`
+      );
+      this.props.history.push("/login");
     }
     else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
-      this.props.onSetAuthRedirectPath(`/campaign/${this.state.campaign.id}/details/contribute`);
+      this.props.onSetAuthRedirectPath(`/campaign/${this.state.campaign.id}/contribute`);
       this.props.history.push("/login")
     }
   }
@@ -231,14 +270,16 @@ const mapStateToProps = (state: IRootState) => {
   return {
     isAuthenticated: state.auth.token !== null,
     campaigns: state.campaign.campaigns
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    reloadCampaign: () => dispatch(loadCampaignsThunk()),
     onSetAuthRedirectPath: (path: any) => dispatch(Authactions.setAuthRedirectPath(path))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContributeForm);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContributeForm);

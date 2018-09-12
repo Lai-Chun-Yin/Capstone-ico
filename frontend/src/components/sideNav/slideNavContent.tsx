@@ -42,6 +42,13 @@ class SideNavContent extends React.Component<ISideNavContentProps> {
           </li>
 
           <li className="menu no-arrow">
+            <NavLink to="/blog" onClick={linkClick}>
+              <i className="zmdi zmdi-comment-text zmdi-hc-fw" />
+              <span className="nav-text">Blog</span>
+            </NavLink>
+          </li>
+
+          <li className="menu no-arrow">
             <NavLink to="/aboutus" onClick={linkClick}>
               <i className="zmdi zmdi-airplay zmdi-hc-fw" />
               <span className="nav-text">About us</span>
