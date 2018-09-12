@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 import { reset } from 'redux-form';
 
-export type CampaignActions = ILoadCampaignListAction | ILoadPendingCampaignAction | 
+export type CampaignActions = ILoadCampaignListAction | ILoadPendingCampaignAction |
   IUploadCampaignSuccessAction | IUploadCampaignStartAction | IUploadCampaignFailureAction;
 
 export const LOAD_CAMPAIGNS = 'LOAD_CAMPAIGNS';
@@ -72,10 +72,10 @@ export function loadCampaignsThunk() {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
-    })
-      .then(res => {
-        dispatch(loadCampaigns(res.data));
-      });
+    }).then(res => {
+      console.log(`\n\n\nreloadCampaign:\n\n${JSON.stringify(res.data[0])}`);
+      dispatch(loadCampaigns(res.data));
+    });
   };
 }
 
@@ -133,6 +133,7 @@ export function loadPendingCampaignsThunk() {
       }
     })
       .then(res => {
+
         dispatch(loadPendingCampaigns(res.data));
       });
   }

@@ -13,7 +13,7 @@ import { Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import web3 from '../../ethereum/web3';
 import { IRootState } from "../../reducers";
 import * as Authactions from "../../reducers/auth/actions";
-import { getCampaign } from "../../services/campaignService";
+import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 
 
 // interface IContributeFormState {
@@ -29,6 +29,7 @@ interface IFormProps {
   match: match<ICampaignIdPathParam>;
   history: History.History;
   onSetAuthRedirectPath: (path: any) => void;
+  reloadCampaign: () => void;
 }
 interface IFormState {
   fromAddress: string;
@@ -64,6 +65,9 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
 
   public componentDidMount = async () => {
     if (!this.props.isAuthenticated) { this.onNotLogIn(); }
+
+    this.props.reloadCampaign();
+
     const accounts = await web3.eth.getAccounts();
     if (accounts.length) {
       const balance = await web3.eth.getBalance(accounts[0]);
@@ -78,11 +82,6 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     this.setState({
       toAddress: (this.state.campaign ? this.state.campaign.token_address : null)
     });
-
-    if (!this.state.campaign) {
-      await getCampaign(this.props.match.params.campaignId);
-    }
-    console.log(this.state.campaign);
   }
 
   public render() {
@@ -193,12 +192,9 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
 
   private async postTransaction(date:string,amount:number,txHash:string, campaignId:number, token: string | null) {
     try {
-      const result = await axios.post(`${process.env.REACT_APP_API_SERVER}/api/transaction`,
+      await axios.post(`${process.env.REACT_APP_API_SERVER}/api/transaction`,
         {date, amount, txHash, campaignId},   // transaction as JSON object
         { headers: { Authorization: `Bearer ${token}` } });
-      this.setState({
-        campaign: result.data[0]
-      })
     } catch (err) {
       console.log(err);
     }
@@ -225,7 +221,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
       this.props.history.goBack();
     }
     else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
-      this.props.onSetAuthRedirectPath(`/campaign/details/${this.state.campaign.id}/contribute`);
+      this.props.onSetAuthRedirectPath(`/campaign/${this.state.campaign.id}/details/contribute`);
       this.props.history.push("/login")
     }
   }
@@ -240,6 +236,7 @@ const mapStateToProps = (state: IRootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    reloadCampaign: () => dispatch(loadCampaignsThunk()),
     onSetAuthRedirectPath: (path: any) => dispatch(Authactions.setAuthRedirectPath(path))
   }
 }

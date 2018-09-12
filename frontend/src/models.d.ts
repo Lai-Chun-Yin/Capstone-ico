@@ -16,11 +16,15 @@ declare namespace CapstoneICO {
     end_date: Date;
     soft_cap: number;
     hard_cap: number;
+    token_name: string;
+    token_symbol: string;
     conversion_ratio: number;
     status: string;
     user_id: number;
     eth_address: string;
     token_address: string;
+    total_supply: number;
+    decimal_places: number;
     private_key: string;
     token_id: number;
     created_at: Date;
