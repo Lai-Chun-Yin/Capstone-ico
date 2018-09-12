@@ -65,7 +65,7 @@ class CampaignDetails extends React.Component<
     const result2 = await getCampaignBalance(campaignId);
     this.setState({
       campaign: result1.data[0],
-      balance: Number(result2.data[0].sum)
+      balance: (result2.data.length>0) ? Number(result2.data[0].sum) : 0
     });
 
     const targetCampaign = this.props.campaigns.filter(

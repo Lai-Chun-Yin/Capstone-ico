@@ -48,6 +48,10 @@ class UserService {
     uploadProfile(id,request){
         return this.knex('users').where('id',id).update(request);
     }
+
+    updateSettings(id,request){
+        return this.knex('users').where("id",id).update(request)
+    }
 }
 
 module.exports = UserService;

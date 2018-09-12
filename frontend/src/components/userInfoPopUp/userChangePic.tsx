@@ -7,7 +7,8 @@ import * as React from "react";
 import AvatarEditor from "react-avatar-editor";
 import Dropzone from 'react-dropzone';
 import { connect } from "react-redux";
-import { userSettingsThunk } from "../../reducers/auth/actions";
+import { IRootState } from "../../reducers";
+import { userPicThunk } from "../../reducers/auth/actions";
 
 export interface IUserChangePicProps {
     changePic: (request: any) => void;
@@ -30,7 +31,7 @@ class UserChangePic extends React.Component<any, IUserChangePicState>{
             imageScale: 100,
             dialog: {
                 open: false,
-                success: false,
+                trial: false,
                 message: ""
             },
         }
@@ -71,17 +72,9 @@ class UserChangePic extends React.Component<any, IUserChangePicState>{
                     <Button disabled={!newPicReady} onClick={this.onSubmit}>Confirm Change</Button>
                 </div>
                 <Dialog open={this.state.dialog.open} onClose={this.handleDialogClose}>
-                    <DialogTitle>Caution</DialogTitle>
+                    <DialogTitle>Notice</DialogTitle>
                     <DialogContent>
                         <p>{this.state.dialog.message}</p>
-                        <div className="row">
-                            <Button
-                                variant="fab"
-                                className="jr-fab-btn bg-light-blue accent-2 text-white mr-2"
-                            >
-                                <i className="zmdi zmdi-twitter zmdi-hc-lg" />
-                            </Button>
-                        </div>
                     </DialogContent>
                 </Dialog>
             </React.Fragment>
@@ -137,19 +130,19 @@ class UserChangePic extends React.Component<any, IUserChangePicState>{
                         'Content-Type': this.state.file.type
                     }
                 });
-                this.props.changePic(uploadConfig.data.key);
-
                 this.setState({
                     dialog:{
                         open:false,
-                        success: true
+                        trial:true,
+                        message: "Image has been uploaded."
                     }
-                })
+                });
+                this.props.changePic(uploadConfig.data.key);
             } catch (err) {
                 this.setState({
                     dialog: {
-                        open: true,
-                        success: false,
+                        open: true, 
+                        trial: true,
                         message: "Fail to change image."
                     }
                 });
@@ -161,16 +154,23 @@ class UserChangePic extends React.Component<any, IUserChangePicState>{
         this.setState({
             dialog:{
                 open: false,
-                success: false,
+                trial: false,
+                message: ""
             }
         })
     }
 }
 
+const mapStateToProps = (state:IRootState) =>{
+    return {
+        error: state.auth.error
+    }
+}
+
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        changePic: (image: any) => dispatch(userSettingsThunk({ url: image }))
+        changePic: (image: any) => dispatch(userPicThunk({ url: image }))
     };
 };
 
-export default connect(null, mapDispatchToProps)(UserChangePic);
+export default connect(mapStateToProps, mapDispatchToProps)(UserChangePic);

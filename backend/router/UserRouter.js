@@ -19,6 +19,7 @@ module.exports = class UserRouter {
         router.get('/user', passport.authenticate('jwt', { session: false }), this.getUserDetails.bind(this))
         router.get('/user/profilePic', passport.authenticate('jwt', { session: false }), this.fetchProfilePic.bind(this));
         router.put('/user/profilePic', passport.authenticate('jwt', { session: false }), this.uploadProfilePic.bind(this));
+        router.put('/user/settings', passport.authenticate('jwt', { session: false }), this.updateSettings.bind(this));
 
         return router;
     }
@@ -172,7 +173,7 @@ module.exports = class UserRouter {
         this.userService.uploadProfile(req.user.id, request)
             .then((result) => {
                 return this.userService.getUserDetailsById(req.user.id)
-            }).then((result)=>{
+            }).then((result) => {
                 let user = {
                     id: req.user.id,
                     alias: result[0].alias,
@@ -183,5 +184,32 @@ module.exports = class UserRouter {
             }).catch((err) => {
                 res.sendStatus(401).json(err);
             });
+    }
+
+    async updateSettings(req, res) {
+        try {
+            const result = await this.userService.getUserDetailsById(req.user.id);
+            const pwMatch = await bcrypt.checkPassword(req.body.pw, result[0].pw);
+            if (!pwMatch) {
+                res.status(400).end("Incorrect password");
+                return;   // add this line to prevent "Can't set headers after they are sent" error
+            }
+            let hash = await bcrypt.hashPassword(req.body.changes.pw);
+            let request = {
+                ...req.body.changes,
+                pw: hash
+            }
+            await this.userService.updateSettings(req.user.id, request);
+            let details = await this.userService.getUserDetailsById(req.user.id);
+            let user = {
+                id: req.user.id,
+                alias: details[0].alias,
+                photo: details[0].photo,
+                is_admin: details[0].is_admin
+            }
+            res.json({ user });
+        } catch (err) {
+            res.sendStatus(401).json(err);
+        }
     }
 }

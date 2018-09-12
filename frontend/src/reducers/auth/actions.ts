@@ -170,13 +170,31 @@ export const authCheckState = () => {
   };
 };
 
-export const userSettingsThunk = (requestObj: any) => {
+export const userPicThunk = (requestObj: any) => {
   return async (dispatch: Dispatch<AuthActions>) => {
     const token = localStorage.getItem("token");
     dispatch(authStart());
     try {
       let response = await axios.put(`${process.env.REACT_APP_API_SERVER}/api/user/profilePic`, requestObj,
         { headers: { Authorization: `Bearer ${token}` } });
+      if(!response.data){
+        throw new Error("Cannot amend user's settings");
+      }else{
+        dispatch(authSuccess(response.data.token, response.data.user));
+      }
+    } catch (err) {
+      dispatch(authFail(err));
+    }
+  }
+}
+
+export const userSettingsThunk = (requestObj: any) => {
+  return async (dispatch: Dispatch<AuthActions>)=>{
+    const token = localStorage.getItem("token");
+    dispatch(authStart());
+    try {
+      let response = await axios.put(`${process.env.REACT_APP_API_SERVER}/api/user/settings`, requestObj,
+      { headers: { Authorization: `Bearer ${token}` } });
       if(!response.data){
         throw new Error("Cannot amend user's settings");
       }else{

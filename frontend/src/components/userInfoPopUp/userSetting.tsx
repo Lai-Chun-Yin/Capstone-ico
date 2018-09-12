@@ -3,12 +3,15 @@ import TextField from '@material-ui/core/TextField';
 // import axios from "axios";
 import * as Joi from "joi";
 import * as React from "react";
+import { connect } from "react-redux";
 import { IErrors } from "../../modules";
+import { userSettingsThunk } from "../../reducers/auth/actions";
 import ContainerHeader from "../common/containerHeader";
 import Input from "../common/input";
 
 export interface IUserSettingProps {
   error: any;
+  changeSettings: (obj:any)=>void;
 }
 
 export interface IUserSettingState {
@@ -112,9 +115,11 @@ class UserSetting extends React.Component<any, IUserSettingState> {
   // private onFileChange = (event: any) => {
   //   this.setState({ file: event.target.files[0] });
   // }
-  private async onSubmit(event: any) {
+  private onSubmit = async(event: any) =>{
     event.preventDefault();
-    const request: any = {};
+    const request: any = {
+      changes:{}
+    };
     request.pw = this.state.account.oldPassword;
     // const token = localStorage.getItem("token");
 
@@ -127,11 +132,7 @@ class UserSetting extends React.Component<any, IUserSettingState> {
       request.changes.pw = this.state.account.newPassword
     }
 
-    // try{
-
-    // } catch(err){
-
-    // }
+    this.props.changeSettings(request);
   }
   
 
@@ -148,7 +149,7 @@ class UserSetting extends React.Component<any, IUserSettingState> {
     account[event.currentTarget.name] = event.currentTarget.value;
     this.setState({ account, errors });
   };
-  private newUsernameChange(event: any) {
+  private newUsernameChange=(event: any)=> {
     this.setState({
       newUsername: event.target.value
     })
@@ -183,4 +184,10 @@ class UserSetting extends React.Component<any, IUserSettingState> {
 
 }
 
-export default UserSetting;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+      changeSettings: (request: any) => dispatch(userSettingsThunk(request))
+  };
+};
+
+export default connect(null,mapDispatchToProps)(UserSetting);
