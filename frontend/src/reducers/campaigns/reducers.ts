@@ -3,13 +3,15 @@ import { CampaignActions, LOAD_CAMPAIGNS, LOAD_PENDING_CAMPAIGNS, UPLOAD_CAMPAIG
 const initialState = {
   campaigns: [],
   pendingCampaigns:[],
-  uploading: false
+  uploading: false,
+  error: null
 }
 
 export interface ICampaignState {
   campaigns: CapstoneICO.ICampaign[];
   pendingCampaigns: CapstoneICO.ICampaign[];
   uploading: boolean;
+  error: Error | null;
 }
 
 export function campaignReducer(state: ICampaignState = initialState, action: CampaignActions):ICampaignState {
@@ -27,17 +29,20 @@ export function campaignReducer(state: ICampaignState = initialState, action: Ca
     case UPLOAD_CAMPAIGN_START:
       return {
         ...state,
-        uploading: true
+        uploading: true,
+        error: null
       }
     case UPLOAD_CAMPAIGN_SUCCESS:
       return {
         ...state,
-        uploading: false
+        uploading: false,
+        error: null
       }
     case UPLOAD_CAMPAIGN_FAILURE:
       return {
         ...state,
-        uploading: false
+        uploading: false,
+        error: action.err
       }
   }
   return state;

@@ -30,6 +30,7 @@ export interface IUploadCampaignSuccessAction {
 }
 export interface IUploadCampaignFailureAction {
   type: UPLOAD_CAMPAIGN_FAILURE;
+  err: Error;
 }
 export interface IUploadCampaignStartAction {
   type: UPLOAD_CAMPAIGN_START;
@@ -54,8 +55,9 @@ export function uploadCampaign(): IUploadCampaignSuccessAction {
     type: UPLOAD_CAMPAIGN_SUCCESS
   }
 }
-export function uploadCampaignFailure(): IUploadCampaignFailureAction {
+export function uploadCampaignFailure(err:Error): IUploadCampaignFailureAction {
   return {
+    err,
     type: UPLOAD_CAMPAIGN_FAILURE
   }
 }
@@ -119,7 +121,7 @@ export function uploadCampaignThunk(campaign: any) {
       dispatch(uploadCampaign());
       dispatch(reset('wizard'));
     } catch (err) {
-      dispatch(uploadCampaignFailure());
+      dispatch(uploadCampaignFailure(err));
     }
   }
 }

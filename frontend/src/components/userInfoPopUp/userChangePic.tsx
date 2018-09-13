@@ -21,8 +21,8 @@ export interface IUserChangePicState {
   dialog: any;
 }
 
-class UserChangePic extends React.Component<any, IUserChangePicState> {
-  constructor(props: any) {
+class UserChangePic extends React.Component<IUserChangePicProps, IUserChangePicState> {
+  constructor(props: IUserChangePicProps) {
     super(props);
     this.state = {
       file: null,
@@ -142,14 +142,14 @@ class UserChangePic extends React.Component<any, IUserChangePicState> {
             "Content-Type": this.state.file.type
           }
         });
+        this.props.changePic(uploadConfig.data.key);
         this.setState({
           dialog: {
-            open: false,
+            open: true,
             trial: true,
             message: "Image has been uploaded."
           }
         });
-        this.props.changePic(uploadConfig.data.key);
       } catch (err) {
         this.setState({
           dialog: {
