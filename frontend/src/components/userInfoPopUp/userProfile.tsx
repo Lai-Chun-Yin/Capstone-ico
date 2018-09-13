@@ -1,6 +1,6 @@
 import { Avatar } from "@material-ui/core";
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
+import Button from "@material-ui/core/Button";
+import Icon from "@material-ui/core/Icon";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -13,40 +13,48 @@ import FollowedTable from "./table/followedTable";
 import UserChangePic from "./userChangePic";
 
 export interface IUserProfileProps {
-  profilePic: string
+  profilePic: string;
 }
 
 export interface IUserProfileState {
   editPic: boolean;
 }
 
-class UserProfile extends React.Component<IUserProfileProps, IUserProfileState> {
+class UserProfile extends React.Component<
+  IUserProfileProps,
+  IUserProfileState
+> {
   constructor(props: any) {
     super(props);
     this.state = {
       editPic: false
-    }
+    };
   }
 
   public render() {
-    const profilePic = `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${this.props.profilePic}` || "http://via.placeholder.com/150x150";
+    const profilePic =
+      `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
+        this.props.profilePic
+      }` || "http://via.placeholder.com/150x150";
     let avatar;
     if (this.state.editPic) {
-      avatar = <UserChangePic />
+      avatar = <UserChangePic />;
     } else {
-      avatar =
+      avatar = (
         <React.Fragment>
-          <Avatar
-            className="size-120 m-auto"
-            alt=" user image"
-            src={profilePic}
-          />
-          <div className="m-auto">
-            <Button variant="fab" color="secondary" aria-label="Edit" onClick={this.openEdit} >
+          <Avatar className="size-120 m-auto" alt="usrImg" src={profilePic} />
+          <div className="text-center mt-3 mb-4">
+            <Button
+              variant="fab"
+              color="secondary"
+              aria-label="Edit"
+              onClick={this.openEdit}
+            >
               <Icon>edit_icon</Icon>
             </Button>
           </div>
         </React.Fragment>
+      );
     }
 
     return (
@@ -54,7 +62,7 @@ class UserProfile extends React.Component<IUserProfileProps, IUserProfileState> 
         <ContainerHeader title="User Profile" />
 
         <div className="row">
-          <div className="col-md-4 col-sm-5 col-12">
+          <div className="col-md-6 col-sm-8 col-12">
             <div className="jr-card">
               <div className="jr-card-body ">
                 {avatar}
@@ -107,14 +115,14 @@ class UserProfile extends React.Component<IUserProfileProps, IUserProfileState> 
     event.preventDefault();
     this.setState({
       editPic: true
-    })
-  }
+    });
+  };
 }
 
 const mapStateToProps = (state: IRootState) => {
   return {
     profilePic: state.auth.user.photo
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(UserProfile);

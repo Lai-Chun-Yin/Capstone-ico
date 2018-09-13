@@ -1,7 +1,6 @@
 /* tslint:disable */
 import axios from "axios";
 import { Dispatch, Action } from "redux";
-// import * as jwtDecode from "jwt-decode";
 
 export type AuthActions =
   | AuthStartAction
@@ -162,10 +161,15 @@ export const authCheckState = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      const response = await axios.get(`${process.env.REACT_APP_API_SERVER}/api/user`,
-        { headers: { Authorization: `Bearer ${token}` } });
-      if (response.data.user) { dispatch(authSuccess(token, response.data.user)); }
-      else { dispatch(logout()); }
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_SERVER}/api/user`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (response.data.user) {
+        dispatch(authSuccess(token, response.data.user));
+      } else {
+        dispatch(logout());
+      }
     }
   };
 };
@@ -175,33 +179,39 @@ export const userPicThunk = (requestObj: any) => {
     const token = localStorage.getItem("token");
     dispatch(authStart());
     try {
-      let response = await axios.put(`${process.env.REACT_APP_API_SERVER}/api/user/profilePic`, requestObj,
-        { headers: { Authorization: `Bearer ${token}` } });
-      if(!response.data){
+      let response = await axios.put(
+        `${process.env.REACT_APP_API_SERVER}/api/user/profilePic`,
+        requestObj,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!response.data) {
         throw new Error("Cannot amend user's settings");
-      }else{
+      } else {
         dispatch(authSuccess(response.data.token, response.data.user));
       }
     } catch (err) {
       dispatch(authFail(err));
     }
-  }
-}
+  };
+};
 
 export const userSettingsThunk = (requestObj: any) => {
-  return async (dispatch: Dispatch<AuthActions>)=>{
+  return async (dispatch: Dispatch<AuthActions>) => {
     const token = localStorage.getItem("token");
     dispatch(authStart());
     try {
-      let response = await axios.put(`${process.env.REACT_APP_API_SERVER}/api/user/settings`, requestObj,
-      { headers: { Authorization: `Bearer ${token}` } });
-      if(!response.data){
+      let response = await axios.put(
+        `${process.env.REACT_APP_API_SERVER}/api/user/settings`,
+        requestObj,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!response.data) {
         throw new Error("Cannot amend user's settings");
-      }else{
+      } else {
         dispatch(authSuccess(response.data.token, response.data.user));
       }
     } catch (err) {
       dispatch(authFail(err));
     }
-  }
-}
+  };
+};

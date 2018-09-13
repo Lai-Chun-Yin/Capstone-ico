@@ -13,7 +13,10 @@ export interface IUserInfoPopupProps {
 
 class UserInfoPopup extends React.Component<IUserInfoPopupProps> {
   public render() {
-    const profilePic = `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${this.props.user.photo}` || "http://via.placeholder.com/150x150";
+    const profilePic =
+      `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
+        this.props.user.photo
+      }` ||"http://via.placeholder.com/150x150" ;
     return (
       <div>
         <div className="user-profile">

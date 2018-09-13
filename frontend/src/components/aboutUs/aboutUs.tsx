@@ -44,7 +44,7 @@ const services = [
 ];
 const teams = [
   {
-    name: "Tommy Chun",
+    name: "Tommy Lai",
     destination: "Team member",
     description: "Frontend / backend developer, blockchain developer",
     image: tommyImage,
