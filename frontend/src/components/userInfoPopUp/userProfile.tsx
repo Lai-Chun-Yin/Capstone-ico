@@ -32,10 +32,10 @@ class UserProfile extends React.Component<
   }
 
   public render() {
-    const profilePic =
+    const profilePic = this.props.profilePic?
       `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
         this.props.profilePic
-      }` || "http://via.placeholder.com/150x150";
+      }` : "http://via.placeholder.com/150x150";
     let avatar;
     if (this.state.editPic) {
       avatar = <UserChangePic />;

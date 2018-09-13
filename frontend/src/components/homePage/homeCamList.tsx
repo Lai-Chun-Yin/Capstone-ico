@@ -22,7 +22,7 @@ class CampaignList extends React.Component<ICampaignListProps> {
             return (
               <div key={i} className="col-lg-4 col-sm-6 col-12">
                 <BasicCard
-                  image={e.project_photo}
+                  image={`https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${e.project_photo}`}
                   title={e.title}
                   subTitle={`End at: ${getDateTimeHK(e.end_date_)}`}
                   description={e.short_description}
