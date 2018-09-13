@@ -1,6 +1,7 @@
-import Button from "@material-ui/core/Button";
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { Card, CardBody, CardImg, CardSubtitle, CardText } from "reactstrap";
+import LinkButton from "./linkButton";
 
 const BasicCard = ({
   image,
@@ -8,7 +9,8 @@ const BasicCard = ({
   subTitle,
   description,
   btnText,
-  btnStyle = "bg-primary"
+  btnStyle = "bg-primary",
+  toId
 }: any) => {
   return (
     <Card className="shadow border-0">
@@ -17,9 +19,14 @@ const BasicCard = ({
         <h3 className="card-title">{title}</h3>
         <CardSubtitle>{subTitle}</CardSubtitle>
         <CardText>{description}</CardText>
-        <Button variant="raised" className={`${btnStyle} text-white`}>
+        <LinkButton
+          variant="raised"
+          to={`/campaign/${toId}/details`}
+          className={`${btnStyle} text-white`}
+          component={Link}
+        >
           {btnText}
-        </Button>
+        </LinkButton>
       </CardBody>
     </Card>
   );

@@ -46,20 +46,16 @@ class UserChangePic extends React.Component<any, IUserChangePicState> {
           </p>
           <div>
             <Dropzone
+              className="p-0"
               multiple={false}
               accept="image/*"
-              style={{
-                width: "350px",
-                height: "350px",
-                margin: "auto"
-              }}
               // tslint:disable-next-line:jsx-no-bind
               onDrop={this.onImageDrop.bind(this)}
             >
               <AvatarEditor
-                width={250}
-                height={250}
-                border={50}
+                // @ts-ignore
+                className="col-12 p-0"
+                height={150}
                 scale={this.state.imageScale / 100}
                 image={this.state.file || ""}
                 // tslint:disable-next-line:jsx-no-bind
@@ -67,6 +63,7 @@ class UserChangePic extends React.Component<any, IUserChangePicState> {
               />
             </Dropzone>
           </div>
+
           <div>
             <p className="h2">Scale:</p>
             <input
