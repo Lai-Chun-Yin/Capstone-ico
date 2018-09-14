@@ -14,8 +14,7 @@ export const ytlink = (link:string) => {
     return undefined;
 }
 export const maxChar100 = (value:string) => (value.length<=100?undefined:"Must be shorter than 100 characters");
-// export const dateCompare = (dateStr:string) => ();
-// export const dateEnd = (dateStr:string) => ()
+
 export const campaignDates:any = {
     startDate : null,
     endDate : null,
@@ -49,8 +48,8 @@ export const campaignDates:any = {
         }
     }
 }
-export const positiveNum = (value:number)=>{
-    if(value>0){return undefined;}
+export const positiveNum = (value:any)=>{
+    if(+value>0 && typeof (+value) === "number"){return undefined;}
     else{return "Must be a positive number"}
 }
 export const tokenQuantity:any={
@@ -81,7 +80,7 @@ export const tokenQuantity:any={
         }
     },
     validateSoftCap:(value:number)=>{
-        tokenQuantity.setSoftCap(value);
+        tokenQuantity.setSoftCap(+value);
         if(tokenQuantity.softCap&&tokenQuantity.hardCap){
             return tokenQuantity.validateCap();
         }else{
@@ -89,7 +88,7 @@ export const tokenQuantity:any={
         }
     },
     validateHardCap:(value:number)=>{
-        tokenQuantity.setHardCap(value);
+        tokenQuantity.setHardCap(+value);
         if(tokenQuantity.softCap&&tokenQuantity.hardCap){
             return tokenQuantity.validateCap();
         }else{
@@ -97,7 +96,7 @@ export const tokenQuantity:any={
         }
     },
     validateTotalSupply:(value:number)=>{
-        tokenQuantity.setTotalSupply(value);
+        tokenQuantity.setTotalSupply(+value);
         if(tokenQuantity.hardCap&&tokenQuantity.totalSupply){
             return tokenQuantity.validateSupply();
         }else{

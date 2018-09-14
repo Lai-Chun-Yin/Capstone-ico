@@ -112,7 +112,7 @@ class CampaignForm extends React.Component<ICampaignFormProps, ICampaignFormStat
           message: "The campaign has been uploaded successfully"
         }
       })
-      
+
     } else {
       this.setState({
         dialog: {
@@ -123,14 +123,14 @@ class CampaignForm extends React.Component<ICampaignFormProps, ICampaignFormStat
     }
   }
 
-  private handleDialogClose =async()=>{
+  private handleDialogClose = async () => {
     await this.setState({
-      dialog:{
+      dialog: {
         open: false,
         message: ""
       }
     });
-    if(!this.props.error){
+    if (!this.props.error) {
       this.props.history.push("/campaign");
     }
   }

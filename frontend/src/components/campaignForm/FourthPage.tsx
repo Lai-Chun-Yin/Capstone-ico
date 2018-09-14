@@ -26,6 +26,7 @@ const FourthPage: React.ComponentType<
         placeholder="Soft Cap: eg 10"
         validate={[
           validation.required,
+          validation.positiveNum,
           validation.tokenQuantity.validateSoftCap
         ]}
       />
@@ -37,6 +38,7 @@ const FourthPage: React.ComponentType<
         placeholder="Hard Cap: eg 10"
         validate={[
           validation.required,
+          validation.positiveNum,
           validation.tokenQuantity.validateHardCap
         ]}
       />
@@ -48,6 +50,7 @@ const FourthPage: React.ComponentType<
         placeholder="Total Supply: eg 10000"
         validate={[
           validation.required,
+          validation.positiveNum,
           validation.tokenQuantity.validateTotalSupply
         ]}
       />
@@ -65,7 +68,10 @@ const FourthPage: React.ComponentType<
         component={renderField}
         label="Decimal Places"
         placeholder="Decimal Places: eg 5"
-        validate={validation.required}
+        validate={
+          [validation.required,
+            validation.positiveNum]
+        }
       />
       <Field
         name="tokenSymbol"
@@ -81,7 +87,7 @@ const FourthPage: React.ComponentType<
         component={renderField}
         label="How many tokens can be exchanged for 1 ETH"
         placeholder="Decimal Places: eg 10"
-        validate={[validation.required, validation.positiveNum]}
+        validate={[validation.required,validation.positiveNum]}
       />
 
       <div>
