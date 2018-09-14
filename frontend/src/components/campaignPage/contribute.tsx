@@ -89,7 +89,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
       const result2 = await getCampaignBalance(this.props.match.params.campaignId);
       this.setState({
         campaign: result1.data[0],
-        campaignBalance: (result2.data.length ? result2.data[0] : 0)
+        campaignBalance: (result2.data.length ? result2.data[0].sum : 0)
       });
     }
 
@@ -204,17 +204,16 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
   };
 
   private handleSendEther = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    this.setState({ loading: true });
+    this.setState({ 
+      loading: true,
+      errorMessage: ''
+    });
 
-    console.log('handleSendEther');
-    console.log(this.state.campaign);
-    console.log(this.state.campaignBalance);
     if (this.state.campaign) {
       const remainingCap = this.state.campaign.hard_cap - this.state.campaignBalance;
-      console.log('remainingCap', remainingCap, '   this.state.value', this.state.value);
       if (Number(this.state.value) > remainingCap) {
         this.setState({ 
-          errorMessage: 'your contribute amount exceeds maximum possible contribution of ' + String(remainingCap),
+          errorMessage: `Maximum possible contribution is ${String(remainingCap)} ether`,
           loading: false
         });
         return;
