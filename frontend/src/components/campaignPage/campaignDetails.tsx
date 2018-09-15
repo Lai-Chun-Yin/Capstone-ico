@@ -10,7 +10,10 @@ import { Progress } from "reactstrap";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 import { loadCommentsThunk } from "../../reducers/comments/actions";
-import { getCampaign, getCampaignBalance } from "../../services/campaignService";
+import {
+  getCampaign,
+  getCampaignBalance
+} from "../../services/campaignService";
 import getDateTimeHK from "../../services/timeService";
 import CardBox from "../common/cardBox";
 import LinkButton from "../common/linkButton";
@@ -61,7 +64,7 @@ class CampaignDetails extends React.Component<
     const result2 = await getCampaignBalance(campaignId);
     this.setState({
       campaign: result1.data[0],
-      balance: (result2.data.length>0) ? Number(result2.data[0].sum) : 0
+      balance: result2.data.length > 0 ? Number(result2.data[0].sum) : 0
     });
 
     const targetCampaign = this.props.campaigns.filter(
@@ -212,12 +215,22 @@ class CampaignDetails extends React.Component<
               <Button
                 variant="fab"
                 className="jr-fab-btn bg-indigo lighten-1 text-white mr-2"
+                href="https://www.facebook.com/sharer/sharer.php?u="
+                target="_blank"
               >
                 <i className="zmdi zmdi-facebook zmdi-hc-lg" />
               </Button>
               <Button
                 variant="fab"
                 className="jr-fab-btn bg-light-blue accent-2 text-white mr-2"
+                href={
+                  campaign
+                    ? `https://twitter.com/intent/tweet?url=https://localhost:3000/campaign/${
+                        campaign.id
+                      }/details&text=${campaign.short_description}`
+                    : undefined
+                }
+                target="_blank"
               >
                 <i className="zmdi zmdi-twitter zmdi-hc-lg" />
               </Button>

@@ -8,12 +8,24 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { match } from "react-router-dom";
 import { Input, InputGroup, InputGroupAddon } from "reactstrap";
-import { Button, Card, CardImg, CardSubtitle, CardText, CardTitle, Col, Row } from "reactstrap";
-import LinearIndeterminate from '../../components/loading';
+import {
+  Button,
+  Card,
+  CardImg,
+  CardSubtitle,
+  CardText,
+  CardTitle,
+  Col,
+  Row
+} from "reactstrap";
+import LinearIndeterminate from "../../components/loading";
 import web3 from "../../ethereum/web3";
 import { IRootState } from "../../reducers";
 import * as Authactions from "../../reducers/auth/actions";
-import { getCampaign, getCampaignBalance } from "../../services/campaignService";
+import {
+  getCampaign,
+  getCampaignBalance
+} from "../../services/campaignService";
 import { postTransaction } from "../../services/transactionService";
 
 // interface IContributeFormState {
@@ -67,7 +79,7 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
         dialogOpen: false
       },
       loading: false,
-      errorMessage: ''
+      errorMessage: ""
     };
   }
 
@@ -86,10 +98,12 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
 
     if (!this.state.campaign) {
       const result1 = await getCampaign(this.props.match.params.campaignId);
-      const result2 = await getCampaignBalance(this.props.match.params.campaignId);
+      const result2 = await getCampaignBalance(
+        this.props.match.params.campaignId
+      );
       this.setState({
         campaign: result1.data[0],
-        campaignBalance: (result2.data.length ? result2.data[0].sum : 0)
+        campaignBalance: result2.data.length ? result2.data[0].sum : 0
       });
     }
 
@@ -106,10 +120,16 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
     const userBalance = this.state.userBalance ? (
       <CardText>Account Balance: {this.state.userBalance} ether</CardText>
     ) : (
-        <CardText>Please install metamask in order to contribute!</CardText>
-      );
+      <CardText>Please install metamask in order to contribute!</CardText>
+    );
 
-    const successMessage = this.state.receipt ? (<h3><p className='text-success'>Transaction confirmed!</p></h3>) : (<div />);
+    const successMessage = this.state.receipt ? (
+      <h3>
+        <p className="text-success">Transaction confirmed!</p>
+      </h3>
+    ) : (
+      <div />
+    );
 
     let form;
     if (this.state.campaign) {
@@ -145,8 +165,19 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
                   <InputGroupAddon addonType="append">ether</InputGroupAddon>
                 </InputGroup>
                 {equivalentTokenMessage}
-                {this.state.loading ? <LinearIndeterminate /> : <p className="text-danger">{this.state.errorMessage}</p>}
-                <Button onClick={this.handleSendEther} disabled={this.state.loading}>Send Ether</Button>
+                {this.state.loading ? (
+                  <div className="mb-2">
+                    <LinearIndeterminate />
+                  </div>
+                ) : (
+                  <p className="text-danger">{this.state.errorMessage}</p>
+                )}
+                <Button
+                  onClick={this.handleSendEther}
+                  disabled={this.state.loading}
+                >
+                  Send Ether
+                </Button>
                 {successMessage}
               </div>
             </Card>
@@ -182,12 +213,12 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
           <DialogActions>
             <Button onClick={this.handlePageClose} color="primary">
               OK
-        </Button>
+            </Button>
           </DialogActions>
         </Dialog>
-      )
+      );
     } else {
-      problemDialog = <div />
+      problemDialog = <div />;
     }
 
     return (
@@ -204,16 +235,19 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
   };
 
   private handleSendEther = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    this.setState({ 
+    this.setState({
       loading: true,
-      errorMessage: ''
+      errorMessage: ""
     });
 
     if (this.state.campaign) {
-      const remainingCap = this.state.campaign.hard_cap - this.state.campaignBalance;
+      const remainingCap =
+        this.state.campaign.hard_cap - this.state.campaignBalance;
       if (Number(this.state.value) > remainingCap) {
-        this.setState({ 
-          errorMessage: `Maximum possible contribution is ${String(remainingCap)} ether`,
+        this.setState({
+          errorMessage: `Maximum possible contribution is ${String(
+            remainingCap
+          )} ether`,
           loading: false
         });
         return;
@@ -280,12 +314,16 @@ class ContributeForm extends React.Component<IFormProps, IFormState> {
         `/campaign/details/${this.state.campaign.id}/contribute`
       );
       this.props.history.push("/login");
+    } else if (
+      this.state.campaign &&
+      this.state.dialog.problem === "notLogIn"
+    ) {
+      this.props.onSetAuthRedirectPath(
+        `/campaign/${this.state.campaign.id}/contribute`
+      );
+      this.props.history.push("/login");
     }
-    else if (this.state.campaign && this.state.dialog.problem === "notLogIn") {
-      this.props.onSetAuthRedirectPath(`/campaign/${this.state.campaign.id}/contribute`);
-      this.props.history.push("/login")
-    }
-  }
+  };
 }
 
 const mapStateToProps = (state: IRootState) => {
@@ -297,9 +335,10 @@ const mapStateToProps = (state: IRootState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSetAuthRedirectPath: (path: any) => dispatch(Authactions.setAuthRedirectPath(path))
-  }
-}
+    onSetAuthRedirectPath: (path: any) =>
+      dispatch(Authactions.setAuthRedirectPath(path))
+  };
+};
 
 export default connect(
   mapStateToProps,

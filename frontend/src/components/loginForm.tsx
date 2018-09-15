@@ -128,42 +128,6 @@ class LoginForm extends React.Component<ILoginFormProps, ILoginFormState> {
                           />
                         </IconButton>
                       </li>
-
-                      <li>
-                        <IconButton
-                          className="icon"
-                          // onClick={() => {
-                          //   this.props.showAuthLoader();
-                          //   this.props.userTwitterSignIn();
-                          // }}
-                        >
-                          <i className="zmdi zmdi-twitter" />
-                        </IconButton>
-                      </li>
-
-                      <li>
-                        <IconButton
-                          className="icon"
-                          // onClick={() => {
-                          //   this.props.showAuthLoader();
-                          //   this.props.userGoogleSignIn();
-                          // }}
-                        >
-                          <i className="zmdi zmdi-google-plus" />
-                        </IconButton>
-                      </li>
-
-                      <li>
-                        <IconButton
-                          className="icon"
-                          // onClick={() => {
-                          //   this.props.showAuthLoader();
-                          //   this.props.userGithubSignIn();
-                          // }}
-                        >
-                          <i className="zmdi zmdi-github" />
-                        </IconButton>
-                      </li>
                     </ul>
                   </div>
                 </form>
