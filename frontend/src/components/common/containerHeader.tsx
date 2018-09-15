@@ -7,7 +7,7 @@ export interface IContainerHeaderProps {
 const ContainerHeader: React.SFC<IContainerHeaderProps> = (props: any) => {
   return (
     <div className="page-heading d-sm-flex justify-content-sm-between align-items-sm-center">
-      <h2 className="title mb-3 mb-sm-0">{props.title}</h2>
+      <h2 className="title mb-0">{props.title}</h2>
     </div>
   );
 };
