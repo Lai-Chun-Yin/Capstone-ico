@@ -35,6 +35,7 @@ class HomePage extends React.Component<IHomePageProps> {
             <BasicCarousel />
           </CardBox>
         </div>
+        <ContainerHeader title="Popular Campaign" />
         <CampaignList campaigns={campaigns} />
         <TimeLine />
         <ContainerHeader title="Why & how to Install MetaMask" />
