@@ -14,9 +14,8 @@ const LinearIndeterminate: React.StatelessComponent = (props:any) => {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      {/* <LinearProgress />
-      <br /> */}
-      <LinearProgress color="secondary" />
+      <LinearProgress />
+      {/* <LinearProgress color="secondary" /> */}
     </div>
   );
 }

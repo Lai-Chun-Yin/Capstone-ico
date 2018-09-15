@@ -2,7 +2,8 @@ import axios from 'axios';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Button, Card, CardSubtitle, CardText, CardTitle, Col, Row } from 'reactstrap';
-// Button, CardImg, CardText, Col, Row
+import etherscan_img from '../../assets/images/Etherscan-rinkeby.png';
+import LinearIndeterminate from '../../components/loading';
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 
@@ -15,8 +16,10 @@ interface IGenerateTokenProps {
 
 interface IGenerateTokenState {
   issuedCampaign: CapstoneICO.ICampaign | null;
-  loading: boolean;
   newToken: CapstoneICO.IToken | null;
+  loading: boolean;
+  errorMessage: string;
+  disableButton: boolean;
 }
 
 class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenState> {
@@ -25,7 +28,9 @@ class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenS
     this.state = {
       issuedCampaign: null,
       loading: false,
-      newToken: null
+      newToken: null,
+      errorMessage: '',
+      disableButton: false
     }
   }
 
@@ -94,25 +99,30 @@ class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenS
               <Row>
                 <Col><CardText>Implied Circulating Supply % if hard cap is reached: {circulatingSupply}%</CardText></Col>
               </Row><br />
-              <Button color="success" onClick={this.handleGenerateToken}>GENERATE TOKEN</Button>
+              {this.state.loading ? <LinearIndeterminate /> : <p className="text-danger">{this.state.errorMessage}</p>}
+              <Button color="success" onClick={this.handleGenerateToken} disabled={this.state.disableButton}>GENERATE TOKEN</Button>
             </Card>
           </Col>
 
           <Col sm="6">
-            <Card body={true}>
+            {this.state.newToken ?
+            (<Card body={true}>
               <CardTitle>New Token</CardTitle>
               <CardText>
-              {this.state.newToken ?
-              (<ul>{Object.keys(this.state.newToken).map((value, k) => (
-                  <li className='list-newToken-item'>{k} {value} ---> {this.state.newToken ? this.state.newToken[value] : ''}</li>
-                ))}</ul>) : null}
+                <a href={`https://rinkeby.etherscan.io/address/${this.state.newToken.token_contract}`} target="_blank">View Contract on Etherscan</a>
+                <br />
+                <a href={`https://rinkeby.etherscan.io/token/${this.state.newToken.token_contract}`} target="_blank">View Token on Etherscan</a>
+                <p />
+                <a href="https://rinkeby.etherscan.io/" target="_blank"><img src={etherscan_img} alt="etherscan-logo" title="etherscan-logo" /></a>
               </CardText>
-            </Card>
+            </Card>) : null}
           </Col>
         </Row>
       )
     } else {
-      tokenMetrics = ''
+      tokenMetrics = (
+        <Card body={true}><CardSubtitle>You must create a campaign before launching a token.</CardSubtitle></Card>
+      )
     }
 
     return (
@@ -123,20 +133,28 @@ class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenS
   }
 
   private handleGenerateToken = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    this.setState({ 
+      loading: true,
+      errorMessage: '',
+      disableButton: true
+    });
+
     console.log('deploying token contract');
     const { campaigns, user } = this.props;
     const c = campaigns.filter(
       campaign => campaign.user_id === user.id
     )[0];
     const token = localStorage.getItem('token');
-    const newToken = await this.postToken(c.token_symbol, c.token_name, c.decimal_places, c.total_supply, c.token_address, c.id, token);
+    const newToken = await this.postToken(c.token_symbol, c.token_name, String(c.decimal_places), String(c.total_supply), c.token_address, c.id, token);
     this.setState({
       newToken
     })
     console.log('newly deployed token: ', this.state.newToken);
+
+    this.setState({ loading: false });
   }
 
-  private async postToken(symbol: string, name: string, decimal: number, totalSupply: number, genesisAddress: string, campaignId: number, token: string | null) {
+  private async postToken(symbol: string, name: string, decimal: string, totalSupply: string, genesisAddress: string, campaignId: number, token: string | null) {
     try {
       const newToken = await axios.post(`${process.env.REACT_APP_API_SERVER}/api/token/deploy`,
         { symbol, name, decimal, total_supply: totalSupply, genesis_address: genesisAddress, campaign_id: campaignId, receive_address: genesisAddress },
