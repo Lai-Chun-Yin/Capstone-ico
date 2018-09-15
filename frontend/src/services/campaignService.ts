@@ -20,3 +20,11 @@ export function getCampaignBalance(campaignId: number | null) {
 
   return http.get(apiEndpoint);
 }
+
+export function getCampaignsByCreator(){
+  const token = localStorage.getItem("token");
+  const apiEndpoint = `${process.env.REACT_APP_API_SERVER}/api/campaign/byCreator`;
+  const header = { headers: { Authorization: `Bearer ${token}` } };
+
+  return http.get(apiEndpoint,header);
+}

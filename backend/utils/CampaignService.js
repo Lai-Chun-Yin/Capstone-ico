@@ -52,6 +52,14 @@ module.exports = class CampaignService {
     }
   }
 
+  getByCreator(user_id){
+    let query = this.knex.select()
+      .from('campaigns')
+      .where("user_id", user_id);
+
+      return query;
+  }
+
   async postCampaign(newCampaign, user_id) {
     // create new Eth account from HDwallet
     const newAccount = await web3.eth.accounts.create();

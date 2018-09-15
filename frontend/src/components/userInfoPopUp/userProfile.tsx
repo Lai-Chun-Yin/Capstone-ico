@@ -18,23 +18,25 @@ export interface IUserProfileProps {
 
 export interface IUserProfileState {
   editPic: boolean;
+  createdCampaigns: CapstoneICO.ICampaign[];
 }
 
 class UserProfile extends React.Component<
   IUserProfileProps,
   IUserProfileState
-> {
+  > {
   constructor(props: any) {
     super(props);
     this.state = {
-      editPic: false
+      editPic: false,
+      createdCampaigns: []
     };
   }
 
   public render() {
-    const profilePic = this.props.profilePic?
+    const profilePic = this.props.profilePic ?
       `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
-        this.props.profilePic
+      this.props.profilePic
       }` : "http://via.placeholder.com/150x150";
     let avatar;
     if (this.state.editPic) {
@@ -86,7 +88,7 @@ class UserProfile extends React.Component<
           <div className="col-12">
             <div className="jr-card">
               <div className="jr-card-body ">
-                <CreatedTable />
+                <CreatedTable createdCampaigns={this.state.createdCampaigns}/>
               </div>
             </div>
           </div>
