@@ -10,7 +10,7 @@ import WithIconTimeLineItem from "./WithIconTimeLineItem";
 
 const TimeLine = () => {
   return (
-    <div>
+    <div className="mt-5">
       <div className="timeline-section timeline-center clearfix">
         <WithIconTimeLineItem timeLine={timeLineData[0]} color="pink">
           <AccountBox />

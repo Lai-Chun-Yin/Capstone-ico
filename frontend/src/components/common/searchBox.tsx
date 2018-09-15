@@ -4,10 +4,11 @@ const SearchBox = ({
   styleName = "",
   placeholder,
   onChange,
-  value = ""
+  value = "",
+  onSubmit
 }: any) => {
   return (
-    <div className={`search-bar right-side-icon bg-transparent ${styleName}`}>
+    <form className={`search-bar right-side-icon bg-transparent ${styleName}`}>
       <div className="form-group">
         <input
           className="form-control border-0"
@@ -16,11 +17,11 @@ const SearchBox = ({
           onChange={onChange}
           value={value}
         />
-        <button className="search-icon">
+        <button className="search-icon" onClick={onSubmit}>
           <i className="zmdi zmdi-search zmdi-hc-lg" />
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 export default SearchBox;

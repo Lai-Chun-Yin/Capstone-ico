@@ -4,10 +4,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
 import logo from "../assets/images/logo.png";
 import { authCheckState } from "../reducers/auth/actions";
+import { searchCampaignsThunk } from "../reducers/campaigns/actions";
 import { IRootState } from "../reducers/index";
 import { toggleCollapsedNav } from "../reducers/sideNav/action";
 import LinkButton from "./common/linkButton";
@@ -18,12 +19,14 @@ interface IHeaderProps {
   isAuthenticated: boolean;
   onTryAutoSignup: () => void;
   toggleSideNav: (val: boolean) => void;
+  searchCampaign: (keyword: string) => void;
   user: {
     [key: string]: any;
   };
   sideNav: {
     navCollapsed: boolean;
   };
+  history: any;
 }
 
 interface IHeaderstate {
@@ -71,6 +74,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
             // tslint:disable-next-line:jsx-no-bind
             onChange={this.updateSearchText.bind(this)}
             value={searchText}
+            onSubmit={this.handleSubmit}
           />
 
           <ul className="header-notifications list-inline ml-auto navbar p-0">
@@ -97,6 +101,7 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
                     // tslint:disable-next-line:jsx-no-bind
                     onChange={this.updateSearchText.bind(this)}
                     value={searchText}
+                    onSubmit={this.handleSubmit}
                   />
                 </DropdownMenu>
               </Dropdown>
@@ -196,6 +201,12 @@ class Header extends React.Component<IHeaderProps, IHeaderstate> {
       searchText: evt.target.value
     });
   }
+
+  private handleSubmit = (e: any) => {
+    e.preventDefault();
+    this.props.history.push("/campaign");
+    this.props.searchCampaign(this.state.searchText);
+  };
 }
 
 const mapStateToProps = (state: IRootState) => {
@@ -209,11 +220,15 @@ const mapStateToProps = (state: IRootState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     onTryAutoSignup: () => dispatch(authCheckState()),
-    toggleSideNav: (val: boolean) => dispatch(toggleCollapsedNav(val))
+    toggleSideNav: (val: boolean) => dispatch(toggleCollapsedNav(val)),
+    searchCampaign: (keyword: string) => dispatch(searchCampaignsThunk(keyword))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default withRouter(
+  // @ts-ignore
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Header)
+);
