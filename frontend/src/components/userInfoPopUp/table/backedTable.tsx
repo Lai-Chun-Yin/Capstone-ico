@@ -1,5 +1,5 @@
 import Table from "@material-ui/core/Table";
-// import TableBody from "@material-ui/core/TableBody";
+import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
@@ -11,25 +11,15 @@ import Tooltip from "@material-ui/core/Tooltip";
 // tslint:disable-next-line:no-var-requires
 const Typography = require("@material-ui/core/Typography").default;
 import * as React from "react";
+import { Link } from "react-router-dom";
+import { getCampaignsBySupporter } from "../../../services/campaignService";
+import getDateTimeHK from "../../../services/timeService";
 
 interface IEnhancedTableHeadProps {
   onRequestSort: (event: any, property: any) => void;
   order: string;
   orderBy: string;
   rowCount: number;
-}
-
-let counter = 0;
-
-function createData(
-  name: any,
-  calories: any,
-  fat: any,
-  carbs: any,
-  protein: any
-) {
-  counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
 }
 
 const columnData = [
@@ -39,15 +29,15 @@ const columnData = [
     disablePadding: true,
     label: "Title"
   },
-  { id: "start day", numeric: true, disablePadding: false, label: "Start day" },
-  { id: "end day", numeric: true, disablePadding: false, label: "End day" },
+  { id: "start day", numeric: false, disablePadding: false, label: "Start day" },
+  { id: "end day", numeric: false, disablePadding: false, label: "End day" },
   {
     id: "cap",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Soft / hard cap"
   },
-  { id: "backers", numeric: true, disablePadding: false, label: "Backers" }
+  { id: "status", numeric: false, disablePadding: false, label: "Backers" }
 ];
 
 class EnhancedTableHead extends React.Component<IEnhancedTableHeadProps> {
@@ -116,26 +106,22 @@ class BackedTable extends React.Component<any, IEnhancedTableState> {
 
     this.state = {
       order: "asc",
-      orderBy: "calories",
-      data: [
-        createData("Cupcake", 305, 3.7, 67, 4.3),
-        createData("Donut", 452, 25.0, 51, 4.9),
-        createData("Eclair", 262, 16.0, 24, 6.0),
-        createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-        createData("Gingerbread", 356, 16.0, 49, 3.9),
-        createData("Honeycomb", 408, 3.2, 87, 6.5),
-        createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-        createData("Jelly Bean", 375, 0.0, 94, 0.0),
-        createData("KitKat", 518, 26.0, 65, 7.0),
-        createData("Lollipop", 392, 0.2, 98, 0.0),
-        createData("Marshmallow", 318, 0, 81, 2.0),
-        createData("Nougat", 360, 19.0, 9, 37.0),
-        createData("Oreo", 437, 18.0, 63, 4.0)
-      ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+      orderBy: "",
+      data: [],
       page: 0,
       rowsPerPage: 5
     };
   }
+
+  public componentDidMount() {
+    getCampaignsBySupporter()
+      .then((result) => {
+        this.setState({
+          data: result.data
+        });
+      })
+  }
+
   public handleRequestSort = (event: any, property: any) => {
     const orderBy = property;
     let order = "desc";
@@ -147,11 +133,11 @@ class BackedTable extends React.Component<any, IEnhancedTableState> {
     const data =
       order === "desc"
         ? this.state.data.sort(
-            (a: any, b: any) => (b[orderBy] < a[orderBy] ? -1 : 1)
-          )
+          (a: any, b: any) => (b[orderBy] < a[orderBy] ? -1 : 1)
+        )
         : this.state.data.sort(
-            (a: any, b: any) => (a[orderBy] < b[orderBy] ? -1 : 1)
-          );
+          (a: any, b: any) => (a[orderBy] < b[orderBy] ? -1 : 1)
+        );
 
     this.setState({ data, order, orderBy });
   };
@@ -178,21 +164,29 @@ class BackedTable extends React.Component<any, IEnhancedTableState> {
                 onRequestSort={this.handleRequestSort}
                 rowCount={data.length}
               />
-              {/* <TableBody>
+              <TableBody>
                 {data
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((n: any) => {
+                    const startDateString = getDateTimeHK(n.start_date, "d");
+                    const endDateString = getDateTimeHK(n.end_date, "d");
                     return (
                       <TableRow hover={true} key={n.id}>
-                        <TableCell padding="none">{n.name}</TableCell>
-                        <TableCell numeric={true}>{n.calories}</TableCell>
-                        <TableCell numeric={true}>{n.fat}</TableCell>
-                        <TableCell numeric={true}>{n.carbs}</TableCell>
-                        <TableCell numeric={true}>{n.protein}</TableCell>
+                        
+                          <TableCell padding="none">
+                            <Link to={`/campaign/${n.id}/details`}>
+                            {n.title}
+                            </Link>
+                          </TableCell>
+                          <TableCell >{startDateString}</TableCell>
+                          <TableCell >{endDateString}</TableCell>
+                          <TableCell >{n.soft_cap + " / " + n.hard_cap}</TableCell>
+                          <TableCell >{n.status}</TableCell>
+                        
                       </TableRow>
                     );
                   })}
-              </TableBody> */}
+              </TableBody>
               <TableFooter>
                 <TableRow>
                   <TablePagination
