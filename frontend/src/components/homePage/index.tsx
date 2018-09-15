@@ -3,9 +3,12 @@ import { connect } from "react-redux";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 import { IRootState } from "../../reducers/index";
 import CardBox from "../common/cardBox";
+import ContainerHeader from "../common/containerHeader";
+import Youtube from "../Youtube";
 import BasicCarousel from "./basicCarousel";
 import ContactUs from "./contractUs";
 import CampaignList from "./homeCamList";
+import TimeLine from "./timeLine";
 
 export interface IHomePageProps {
   campaigns: any;
@@ -32,7 +35,17 @@ class HomePage extends React.Component<IHomePageProps> {
             <BasicCarousel />
           </CardBox>
         </div>
+        <ContainerHeader title="Popular Campaign" />
         <CampaignList campaigns={campaigns} />
+        <TimeLine />
+        <ContainerHeader title="Why & how to Install MetaMask" />
+        <div className="col-lg-8 m-auto">
+          <div className="jr-card p-0">
+            <div className="jr-card-body">
+              <Youtube videoId="6Gf_kRE4MJU" />
+            </div>
+          </div>
+        </div>
         <ContactUs match={this.props.match} />
       </div>
     );

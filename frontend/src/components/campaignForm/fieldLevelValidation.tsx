@@ -49,7 +49,7 @@ export const campaignDates:any = {
     }
 }
 export const positiveNum = (value:any)=>{
-    if(+value>0 && typeof (+value) === "number"){return undefined;}
+    if(+value>=0 && typeof (+value) === "number"){return undefined;}
     else{return "Must be a positive number"}
 }
 export const tokenQuantity:any={

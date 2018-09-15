@@ -10,19 +10,18 @@ let loadToken = contract(TokenContract);
 loadToken.setProvider(Provider);
 
 (async () => {
-  const newAccount1 = await web3.eth.accounts.create();
-  let keystore1 = newAccount1.encrypt('passcode');  // encrypt ---> generate keystore
-  console.log('Account 1:', newAccount1);
-  console.log('Keystore 1:', keystore1);
-  let pk = web3.eth.accounts.decrypt(keystore1, 'passcode');
-  console.log('Decrypted keystore --> private key:', pk)
-  
-  const newAccount2 = await web3.eth.accounts.create();
-  console.log('Account 2:', newAccount2);
+  // const newAccount1 = await web3.eth.accounts.create();
+  // let keystore1 = newAccount1.encrypt('passcode');  // encrypt ---> generate keystore
+  // console.log('Account 1:', newAccount1);
+  // console.log('Keystore 1:', keystore1);
+  // let pk = web3.eth.accounts.decrypt(keystore1, 'passcode');
+  // console.log('Decrypted keystore --> private key:', pk)
+
+  const accounts = await web3.eth.getAccounts();
 
   // set contract owner address
   // must use lowercase or will get "private key should be a Buffer" error
-  loadToken.defaults({from: newAccount1.address.toLowerCase()});
+  loadToken.defaults({from: accounts[0].address.toLowerCase()});
 
   // load an existing contract on the network
   let deployed = await loadToken.at('0xcd83F32f547a8Ed75D00bFFf17bBDFd64FAb0Bd8');
