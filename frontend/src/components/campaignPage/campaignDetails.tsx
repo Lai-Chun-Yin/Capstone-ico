@@ -10,10 +10,7 @@ import { Progress } from "reactstrap";
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
 import { loadCommentsThunk } from "../../reducers/comments/actions";
-import {
-  getCampaign,
-  getCampaignBalance
-} from "../../services/campaignService";
+import { getBackersCount, getCampaign, getCampaignBalance } from "../../services/campaignService";
 import getDateTimeHK from "../../services/timeService";
 import CardBox from "../common/cardBox";
 import LinkButton from "../common/linkButton";
@@ -33,6 +30,7 @@ interface ICampaignDetailsProps {
 }
 interface ICampaignDetailsState {
   campaign: CapstoneICO.ICampaign | null;
+  backersCount: number;
   balance: number;
   dialogOpen: boolean;
 }
@@ -48,6 +46,7 @@ class CampaignDetails extends React.Component<
     super(props);
     this.state = {
       campaign: null,
+      backersCount: 0,
       balance: 0,
       dialogOpen: false
     };
@@ -62,9 +61,11 @@ class CampaignDetails extends React.Component<
     const campaignId = this.props.match.params.campaignId;
     const result1 = await getCampaign(campaignId);
     const result2 = await getCampaignBalance(campaignId);
+    const result3 = await getBackersCount(campaignId);
     this.setState({
-      campaign: result1.data[0],
-      balance: result2.data.length > 0 ? Number(result2.data[0].sum) : 0
+      backersCount: (result3.data.length>0) ? Number(result3.data[0].count) : 0,
+      balance: (result2.data.length>0) ? Number(result2.data[0].sum) : 0,
+      campaign: result1.data[0]
     });
 
     const targetCampaign = this.props.campaigns.filter(
@@ -133,7 +134,7 @@ class CampaignDetails extends React.Component<
                 <span className="h4">Raised, Eth</span>
               </div>
               <div className="pr-3 m-respon">
-                <span className="d-block h1 m-0">100</span>
+                <span className="d-block h1 m-0">{this.state.backersCount}</span>
                 <span className="h4">Backers</span>
               </div>
               <div className="m-respon">

@@ -11,6 +11,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 // tslint:disable-next-line:no-var-requires
 const Typography = require("@material-ui/core/Typography").default;
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { getCampaignsByCreator } from "../../../services/campaignService";
 import getDateTimeHK from "../../../services/timeService";
 
@@ -28,15 +29,15 @@ const columnData = [
     disablePadding: true,
     label: "Title"
   },
-  { id: "start day", numeric: true, disablePadding: false, label: "Start day" },
-  { id: "end day", numeric: true, disablePadding: false, label: "End day" },
+  { id: "start day", numeric: false, disablePadding: false, label: "Start day" },
+  { id: "end day", numeric: false, disablePadding: false, label: "End day" },
   {
     id: "cap",
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: "Soft / hard cap"
   },
-  { id: "status", numeric: true, disablePadding: false, label: "Status" }
+  { id: "status", numeric: false, disablePadding: false, label: "Status" }
 ];
 
 class EnhancedTableHead extends React.Component<IEnhancedTableHeadProps> {
@@ -112,13 +113,13 @@ class CreatedTable extends React.Component<any, IEnhancedTableState> {
     };
   }
 
-  public componentDidMount(){
+  public componentDidMount() {
     getCampaignsByCreator()
-    .then((result)=>{
-      this.setState({
-        data: result.data
-      });
-    })
+      .then((result) => {
+        this.setState({
+          data: result.data
+        });
+      })
   }
 
   public handleRequestSort = (event: any, property: any) => {
@@ -132,11 +133,11 @@ class CreatedTable extends React.Component<any, IEnhancedTableState> {
     const data =
       order === "desc"
         ? this.state.data.sort(
-            (a: any, b: any) => (b[orderBy] < a[orderBy] ? -1 : 1)
-          )
+          (a: any, b: any) => (b[orderBy] < a[orderBy] ? -1 : 1)
+        )
         : this.state.data.sort(
-            (a: any, b: any) => (a[orderBy] < b[orderBy] ? -1 : 1)
-          );
+          (a: any, b: any) => (a[orderBy] < b[orderBy] ? -1 : 1)
+        );
 
     this.setState({ data, order, orderBy });
   };
@@ -171,11 +172,16 @@ class CreatedTable extends React.Component<any, IEnhancedTableState> {
                     const endDateString = getDateTimeHK(n.end_date, "d");
                     return (
                       <TableRow hover={true} key={n.id}>
-                        <TableCell padding="none">{n.title}</TableCell>
+                        <TableCell padding="none">
+                          <Link to={`/campaign/${n.id}/details`}>
+                            {n.title}
+                          </Link>
+                        </TableCell>
                         <TableCell >{startDateString}</TableCell>
                         <TableCell >{endDateString}</TableCell>
-                        <TableCell >{n.soft_cap+" / "+n.hard_cap}</TableCell>
+                        <TableCell >{n.soft_cap + " / " + n.hard_cap}</TableCell>
                         <TableCell >{n.status}</TableCell>
+
                       </TableRow>
                     );
                   })}

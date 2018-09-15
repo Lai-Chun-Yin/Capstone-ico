@@ -13,6 +13,7 @@ module.exports = class CampaignRouter {
     router.get('/search', this.searchCampaigns.bind(this));
     router.get('/watchlist', auth.authenticate(), this.getWatchlistedCampaigns.bind(this));
     router.get('/byCreator', auth.authenticate(),this.getByCreator.bind(this));
+    router.get('/bySupporter',auth.authenticate(), this.getBySupporter.bind(this));
     router.get('/pending',auth.authenticate(),this.getPending.bind(this));
     router.get('/:cid', this.get.bind(this));
     router.post('/', auth.authenticate(), this.post.bind(this));
@@ -48,6 +49,18 @@ module.exports = class CampaignRouter {
   getByCreator(req,res){
     return this.campaignService.getByCreator(req.user.id)
     .then(results => res.json(results))
+    .catch(err => res.status(500).json(err));
+  }
+
+  getBySupporter(req,res){
+    return this.campaignService.getBySupporter(req.user.id)
+    .then(results => {
+      let onlyUnique = (value, index, self) => { 
+        return self.findIndex(element => element.id === value.id)===index;
+      }
+      let uniqueData = results.filter(onlyUnique);
+      res.json(uniqueData);
+    })
     .catch(err => res.status(500).json(err));
   }
 

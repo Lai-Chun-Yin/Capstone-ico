@@ -60,6 +60,16 @@ module.exports = class CampaignService {
       return query;
   }
 
+  getBySupporter(user_id){
+    let query = this.knex.from('campaigns')
+    .innerJoin('transactions','campaigns.id','transactions.campaign_id')
+    .where('transactions.id',user_id);
+    // let query = this.knex.with('support',this.knex.raw(`SELECT campaign_id from (SELECT user_id, campaign_id FROM transactions WHERE user_id=${user_id}) GROUP BY campaign_id`))
+    //   .select('*').from('campaigns').innerJoin('support','campaigns.id','support.campaign_id');
+      
+    return query;
+  }
+
   async postCampaign(newCampaign, user_id) {
     // create new Eth account from HDwallet
     const newAccount = await web3.eth.accounts.create();
