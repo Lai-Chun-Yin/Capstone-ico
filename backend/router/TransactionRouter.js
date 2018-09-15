@@ -10,6 +10,7 @@ module.exports = class TransactionRouter {
   router() {
     let router = express.Router();
     // router.get('/', auth.authenticate(), this.get.bind(this));
+    router.get('/backersCount/:cid', this.getBackersCount.bind(this));
     router.get('/balance', this.getBalance.bind(this));
     router.get('/:txid', auth.authenticate(), this.get.bind(this));
     router.get('/balance/:cid', this.getBalance.bind(this));
@@ -22,6 +23,12 @@ module.exports = class TransactionRouter {
 
   get(req, res) {
     return this.transactionService.getTxn(req.user.id)
+    .then(results => res.json(results))
+    .catch(err => res.status(500).json(err));
+  }
+
+  getBackersCount(req, res) {
+    return this.transactionService.getBackersCount(req.params.cid)
     .then(results => res.json(results))
     .catch(err => res.status(500).json(err));
   }

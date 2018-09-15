@@ -28,3 +28,8 @@ export function getCampaignsByCreator(){
 
   return http.get(apiEndpoint,header);
 }
+
+export function getBackersCount(campaignId: number | null){
+  const apiEndpoint = `${process.env.REACT_APP_API_SERVER}/api/transaction/backersCount/${campaignId}`;
+  return http.get(apiEndpoint);
+}

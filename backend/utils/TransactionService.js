@@ -5,16 +5,14 @@ module.exports = class TransactionService {
     this.knex = knex;
   }
 
-  getTxn(user_id) {
-    if (user_id) {   // return user's transactions
-      let query = this.knex
-        .select()
-        .from('transactions')
-        .where('user_id',user_id);
-      
+  getBackersCount(campaign_id) {
+    // return sum of supporters grouped by campaign
+    if (campaign_id) {  // for one user
+      let query = this.knex('transactions').select('campaign_id').countDistinct('user_id').where('campaign_id',campaign_id).groupBy('campaign_id');
+
       return query;
-    } else {      // return all transactions
-      let query = this.knex.select().from('transactions');
+    } else {  // for all users
+      let query = this.knex('transactions').select('campaign_id').countDistinct('user_id').groupBy('campaign_id');
 
       return query;
     }
@@ -28,6 +26,21 @@ module.exports = class TransactionService {
       return query;
     } else {  // for all users
       let query = this.knex('transactions').select('campaign_id').sum('amount').groupBy('campaign_id');
+
+      return query;
+    }
+  }
+
+  getTxn(user_id) {
+    if (user_id) {   // return user's transactions
+      let query = this.knex
+        .select()
+        .from('transactions')
+        .where('user_id',user_id);
+      
+      return query;
+    } else {      // return all transactions
+      let query = this.knex.select().from('transactions');
 
       return query;
     }
