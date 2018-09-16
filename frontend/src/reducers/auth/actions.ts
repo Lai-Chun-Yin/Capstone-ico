@@ -28,7 +28,7 @@ export interface AuthStartAction extends Action {
   type: AUTH_START;
 }
 
-const authStart = (): AuthStartAction => {
+export const authStart = (): AuthStartAction => {
   return {
     type: AUTH_START
   };
@@ -40,7 +40,7 @@ export interface AuthSuccessAction extends Action {
   user: object;
 }
 
-const authSuccess = (token: string, user: any): AuthSuccessAction => {
+export const authSuccess = (token: string, user: any): AuthSuccessAction => {
   return {
     type: AUTH_SUCCESS,
     token: token,
@@ -53,7 +53,7 @@ export interface AuthFailAction extends Action {
   error: Error;
 }
 
-const authFail = (error: Error): AuthFailAction => {
+export const authFail = (error: Error): AuthFailAction => {
   return {
     type: AUTH_FAILURE,
     error: error
