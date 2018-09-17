@@ -46,6 +46,7 @@ const Routes = () => {
               exact={true}
               component={CampaignDetails}
             />
+            <Route path="/campaign/:campaignId/generate" component={GenerateToken} />
             <Route path="/campaign/create/basic" component={CampaignForm} />
             <Route path="/campaign" component={Campaigns} />
             <Route path="/userProfile" component={UserProfile} />
@@ -58,7 +59,6 @@ const Routes = () => {
             <Route path="/login" component={LoginForm} />
             <Route path="/logout" component={Logout} />
             <Route path="/not-found" component={NotFound} />
-            <Route path="/generate" component={GenerateToken} />
             <Route path="/" exact={true} component={HomePage} />
             <Redirect to="/not-found" />
           </Switch>

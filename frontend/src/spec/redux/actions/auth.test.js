@@ -20,10 +20,10 @@ jest.mock('../../__mocks__/authAsync');
 describe("Auth action", () => {
     const fakeToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiYWxpYXMiOiJzZGciLCJwaG90byI6bnVsbCwiaXNfYWRtaW4iOmZhbHNlfQ.--BIGZOTKlq37ykkSZ0h1B3hXqvE6j-C1GlAVMc67AU"
     const fakeUser = {
-        id: 3,
-        alias: "sdg",
-        photo: null,
-        is_admin: false
+      alias: "sdg",  
+      id: 3,
+      is_admin: false,
+      photo: null
     }
     const fakeFailError = "User not found";
     const fakePath = "/home"
@@ -71,11 +71,11 @@ describe("Auth action", () => {
         expect(action.path).toBe(fakePath)
     })
 
-    it("auth, sign in correct", () => {
-        console.log(auth({
-            email: '123@dwq.com',
-            password: "123",
-            username: "max"
-        }));
-    })
+    // it("auth, sign in correct", () => {
+    //     console.log(auth({
+    //         email: '123@dwq.com',
+    //         password: "123",
+    //         username: "max"
+    //     }));
+    // })
 })

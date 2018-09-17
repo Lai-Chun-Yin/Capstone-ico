@@ -37,7 +37,8 @@ const columnData = [
     disablePadding: false,
     label: "Soft / hard cap"
   },
-  { id: "status", numeric: false, disablePadding: false, label: "Status" }
+  { id: "status", numeric: false, disablePadding: false, label: "Status" },
+  { id: "token", numeric: false, disablePadding: false, label: "Token" }
 ];
 
 class EnhancedTableHead extends React.Component<IEnhancedTableHeadProps> {
@@ -181,6 +182,11 @@ class CreatedTable extends React.Component<any, IEnhancedTableState> {
                         <TableCell >{endDateString}</TableCell>
                         <TableCell >{n.soft_cap + " / " + n.hard_cap}</TableCell>
                         <TableCell >{n.status}</TableCell>
+                        <TableCell >
+                          <Link to={`/campaign/${n.id}/generate`}>
+                            Generate
+                          </Link>
+                        </TableCell>
 
                       </TableRow>
                     );

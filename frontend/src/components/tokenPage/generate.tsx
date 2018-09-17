@@ -1,32 +1,40 @@
 import axios from 'axios';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { match } from "react-router-dom";
 import { Button, Card, CardSubtitle, CardText, CardTitle, Col, Row } from 'reactstrap';
 import etherscan_img from '../../assets/images/Etherscan-rinkeby.png';
 import LinearIndeterminate from '../../components/loading';
 import { IRootState } from "../../reducers";
 import { loadCampaignsThunk } from "../../reducers/campaigns/actions";
+import { getCampaign } from "../../services/campaignService";
 
 interface IGenerateTokenProps {
   campaigns: CapstoneICO.ICampaign[];
   isAuthenticated: boolean;
+  match: match<ICampaignIdPathParam>;
   user: { [key: string]: any };
   reloadCampaign: () => void;
 }
-
 interface IGenerateTokenState {
-  issuedCampaign: CapstoneICO.ICampaign | null;
+  campaign: CapstoneICO.ICampaign | null;
   newToken: CapstoneICO.IToken | null;
   loading: boolean;
   errorMessage: string;
   disableButton: boolean;
 }
+interface ICampaignIdPathParam {
+  campaignId: number;
+}
 
 class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenState> {
   constructor(props: IGenerateTokenProps) {
     super(props);
+    const targetCampaign = props.campaigns.filter(
+      campaign => campaign.id === +props.match.params.campaignId
+    );
     this.state = {
-      issuedCampaign: null,
+      campaign: targetCampaign[0],
       loading: false,
       newToken: null,
       errorMessage: '',
@@ -37,27 +45,20 @@ class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenS
   public async componentDidMount() {
     await this.props.reloadCampaign();
 
-    if (this.props.campaigns.length > 0) {
-      console.log('\n\n\nChecking user\n\nthis.props.user ', this.props.user);
-      this.setState({
-        issuedCampaign: this.props.campaigns.filter(
-          campaign => campaign.user_id === this.props.user.id
-        )[0]
-      })
+    if (!this.state.campaign) {
+      
+        const result1 = await getCampaign(this.props.match.params.campaignId);
+        this.setState({
+          campaign: result1.data[0]
+        });
+      
     }
+
+    console.log('this.state.campaign', this.state.campaign);
   }
 
   public render() {
-    const { campaigns, user } = this.props;
-    console.log('render user ', user);
-    console.log('render campaigns', campaigns);
-
-    const issuedCampaign = campaigns.filter(
-      campaign => campaign.user_id === user.id
-    )[0];
-
-
-    console.log('render issuedCampaign', issuedCampaign);
+    const issuedCampaign = this.state.campaign;
 
     // const issuedCampaign = this.props.campaigns.filter(
     //   campaign => campaign.user_id === this.props.user.id
@@ -68,7 +69,7 @@ class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenS
 
     let tokenMetrics;
 
-    if (issuedCampaign) {
+    if (issuedCampaign && this.props.user.id === issuedCampaign.user_id) {
       const circulatingSupply = (100 * issuedCampaign.hard_cap * issuedCampaign.conversion_ratio / issuedCampaign.total_supply).toFixed(1);
       tokenMetrics = (
         <Row>
@@ -121,7 +122,7 @@ class GenerateToken extends React.Component<IGenerateTokenProps, IGenerateTokenS
       )
     } else {
       tokenMetrics = (
-        <Card body={true}><CardSubtitle>You must create a campaign before launching a token.</CardSubtitle></Card>
+        <Card body={true}><CardSubtitle>You are not authorized to view this page.</CardSubtitle></Card>
       )
     }
 
