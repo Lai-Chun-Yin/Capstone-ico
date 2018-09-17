@@ -42,6 +42,7 @@ module.exports = class UserRouter {
                 var payload = {
                     id: result[0].id,
                     alias: result[0].alias,
+                    email: result[0].email,
                     photo: result[0].photo,
                     is_admin: result[0].is_admin
                 };
@@ -52,6 +53,7 @@ module.exports = class UserRouter {
                     user: {
                         id: result[0].id,
                         alias: result[0].alias,
+                        email: result[0].email,
                         photo: result[0].photo,
                         is_admin: result[0].is_admin
                     }
