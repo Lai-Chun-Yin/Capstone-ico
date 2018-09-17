@@ -14,6 +14,7 @@ import UserChangePic from "./userChangePic";
 
 export interface IUserProfileProps {
   profilePic: string;
+  user: any;
 }
 
 export interface IUserProfileState {
@@ -24,7 +25,7 @@ export interface IUserProfileState {
 class UserProfile extends React.Component<
   IUserProfileProps,
   IUserProfileState
-  > {
+> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -34,10 +35,11 @@ class UserProfile extends React.Component<
   }
 
   public render() {
-    const profilePic = this.props.profilePic ?
-      `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
-      this.props.profilePic
-      }` : "http://via.placeholder.com/150x150";
+    const profilePic = this.props.profilePic
+      ? `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
+          this.props.profilePic
+        }`
+      : "http://via.placeholder.com/150x150";
     let avatar;
     if (this.state.editPic) {
       avatar = <UserChangePic />;
@@ -50,8 +52,7 @@ class UserProfile extends React.Component<
               variant="fab"
               color="secondary"
               aria-label="Edit"
-              onClick={this.openEdit}
-            >
+              onClick={this.openEdit}>
               <Icon>edit_icon</Icon>
             </Button>
           </div>
@@ -68,7 +69,9 @@ class UserProfile extends React.Component<
             <div className="jr-card">
               <div className="jr-card-body ">
                 {avatar}
-                <h2 className="text-center mb-2 mt-2">max</h2>
+                <h2 className="text-center mb-2 mt-2">
+                  {this.props.user.alias}
+                </h2>
 
                 <h2 className="text-center mb-2 mt-2">abc@email.com</h2>
 
@@ -77,8 +80,7 @@ class UserProfile extends React.Component<
                     className="jr-btn bg-deep-purple text-white"
                     component={Link}
                     variant="raised"
-                    to="/userSetting"
-                  >
+                    to="/userSetting">
                     Edit
                   </LinkButton>
                 </div>
@@ -88,7 +90,7 @@ class UserProfile extends React.Component<
           <div className="col-12">
             <div className="jr-card">
               <div className="jr-card-body ">
-                <CreatedTable createdCampaigns={this.state.createdCampaigns}/>
+                <CreatedTable createdCampaigns={this.state.createdCampaigns} />
               </div>
             </div>
           </div>
@@ -123,7 +125,8 @@ class UserProfile extends React.Component<
 
 const mapStateToProps = (state: IRootState) => {
   return {
-    profilePic: state.auth.user.photo
+    profilePic: state.auth.user.photo,
+    user: state.auth.user
   };
 };
 
