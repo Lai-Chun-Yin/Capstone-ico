@@ -29,7 +29,7 @@ class UserInfoPopup extends React.Component<IUserInfoPopupProps> {
             <h4 className="user-name mb-0">{this.props.user.alias}</h4>
 
             {/* TODO: add user's email later */}
-            <small>abc@123.com</small>
+            <small>{this.props.user.email}</small>
           </div>
         </div>
         <Link className="dropdown-item text-muted" to="/userProfile">

@@ -73,7 +73,9 @@ class UserProfile extends React.Component<
                   {this.props.user.alias}
                 </h2>
 
-                <h2 className="text-center mb-2 mt-2">abc@email.com</h2>
+                <h2 className="text-center mb-2 mt-2">
+                  {this.props.user.email}
+                </h2>
 
                 <div className="text-center">
                   <LinkButton
