@@ -67,7 +67,10 @@ module.exports = class UserRouter {
     async localSignUp(req, res) {
         try {
             let checkEmail = await this.userService.verifyUserByEmail(req.body.email);
-            if (checkEmail.length > 0) { res.status(400).send("User already registered") }
+            if (checkEmail.length > 0) { 
+              res.status(400).send("User already registered");
+              return;
+            }
             let hash = await bcrypt.hashPassword(req.body.password)
             let newUser = await this.userService.localSignUp(req.body.email, hash, req.body.username);
             let userDetails = await this.userService.getUserDetailsById(newUser[0]);
