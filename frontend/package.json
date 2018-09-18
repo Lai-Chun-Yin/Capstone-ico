@@ -57,6 +57,7 @@
     "react-draft-wysiwyg": "^1.12.13",
     "react-dropzone": "^5.1.0",
     "react-facebook-login": "^4.0.1",
+    "react-notifications": "1.4.3",
     "react-owl-carousel": "2.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

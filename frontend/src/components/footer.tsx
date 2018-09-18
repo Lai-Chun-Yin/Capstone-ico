@@ -9,7 +9,7 @@ const Footer: React.SFC = () => {
     <footer className="app-footer">
       <div className="d-flex flex-row">
         <div>
-          <span> Copyright Company Name &copy; 2018</span>
+          <span> Copyright StarToken &copy; 2018</span>
         </div>
       </div>
     </footer>

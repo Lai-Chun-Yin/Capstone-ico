@@ -24,7 +24,9 @@ const CampaignList = ({
           <div className="card-header border-0 p-0">
             <div className="card-image">
               <div className="grid-thumb-equal">
-                <a className="grid-thumb-cover" href="javascript:void(0)">
+                <Link
+                  className="grid-thumb-cover"
+                  to={`/campaign/${id}/details`}>
                   <img
                     className="img-fluid"
                     src={
@@ -33,7 +35,7 @@ const CampaignList = ({
                     }
                     alt="..."
                   />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -59,7 +61,7 @@ const CampaignList = ({
               </div>
 
               <p>{description}</p>
-              
+
               <div className="d-flex justify-content-between">
                 <div className="text-left">
                   {`${balance ? Number(balance.sum).toFixed(2) : 0} ETH`} <br />
@@ -74,10 +76,9 @@ const CampaignList = ({
 
               <Progress
                 color="bg-teal"
-                value={String((balance ? balance.sum * 100 : 0)/soft)}
-                className="bg-grey lighten-2"
-              >
-                {`${((balance ? balance.sum * 100 : 0)/soft).toFixed(1)}%`}
+                value={String((balance ? balance.sum * 100 : 0) / soft)}
+                className="bg-grey lighten-2">
+                {`${((balance ? balance.sum * 100 : 0) / soft).toFixed(1)}%`}
               </Progress>
             </div>
           </div>
@@ -90,8 +91,7 @@ const CampaignList = ({
                 variant="raised"
                 className="bg-secondary text-white text-capitalize"
                 component={Link}
-                to={`/campaign/${id}/details`}
-              >
+                to={`/campaign/${id}/details`}>
                 Read more
               </LinkButton>
             </div>
@@ -99,8 +99,7 @@ const CampaignList = ({
             <LinkButton
               className="text-capitalize text-light-blue"
               component={Link}
-              to={`/campaign/${id}/contribute`}
-            >
+              to={`/campaign/${id}/contribute`}>
               back campaign
             </LinkButton>
           </div>
