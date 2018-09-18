@@ -45,6 +45,7 @@
     "jest-enzyme": "^6.0.4",
     "joi": "^13.6.0",
     "jwt-decode": "^2.2.0",
+    "material-design-iconic-font": "^2.2.0",
     "moment-timezone": "^0.5.21",
     "nprogress": "^0.2.0",
     "raven-js": "3.26.4",

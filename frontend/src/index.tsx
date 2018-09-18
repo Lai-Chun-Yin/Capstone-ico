@@ -1,3 +1,4 @@
+import "material-design-iconic-font/dist/css/material-design-iconic-font.css";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
