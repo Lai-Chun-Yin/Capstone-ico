@@ -6,7 +6,7 @@ import CardBox from "../common/cardBox";
 import ContainerHeader from "../common/containerHeader";
 import Youtube from "../Youtube";
 import BasicCarousel from "./basicCarousel";
-import ContactUs from "./contractUs";
+import ContactUs from "./contactUs";
 import CampaignList from "./homeCamList";
 import TimeLine from "./timeLine";
 
