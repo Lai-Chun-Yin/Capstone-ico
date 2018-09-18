@@ -151,9 +151,9 @@ const mapDispatchToProps = (dispatch: any) => {
       let videoMatch1 = null;
       let videoMatch2 = null;
       if (values.video) {
-        videoMatch1 = values.video.match(/^https:\/\/youtu\.be\/([\w]+)/);
+        videoMatch1 = values.video.match(/^https:\/\/youtu\.be\/([\w-]+)/);
         videoMatch2 = values.video.match(
-          /^https:\/\/www\.youtube\.com\/watch\?v=([\w]+)/
+          /^https:\/\/www\.youtube\.com\/watch\?v=([\w-]+)/
         );
       }
       if (videoMatch1) {
