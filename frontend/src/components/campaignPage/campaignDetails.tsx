@@ -216,7 +216,13 @@ class CampaignDetails extends React.Component<
               <Button
                 variant="fab"
                 className="jr-fab-btn bg-indigo lighten-1 text-white mr-2"
-                href="https://www.facebook.com/sharer/sharer.php?u="
+                href={
+                  campaign
+                    ? `https://www.facebook.com/sharer/sharer.php?u=https://startoken.network/campaign/${
+                        campaign.id
+                      }/details&text=${campaign.short_description}`
+                    : undefined
+                }
                 target="_blank"
               >
                 <i className="zmdi zmdi-facebook zmdi-hc-lg" />
@@ -226,7 +232,7 @@ class CampaignDetails extends React.Component<
                 className="jr-fab-btn bg-light-blue accent-2 text-white mr-2"
                 href={
                   campaign
-                    ? `https://twitter.com/intent/tweet?url=https://localhost:3000/campaign/${
+                    ? `https://twitter.com/intent/tweet?url=https://startoken.network/campaign/${
                         campaign.id
                       }/details&text=${campaign.short_description}`
                     : undefined
