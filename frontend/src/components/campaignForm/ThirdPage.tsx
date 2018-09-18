@@ -29,6 +29,7 @@ const ThirdPage: React.ComponentType<
         component={RenderTextField}
         label="Full Name"
         validate={validation.required}
+        multiline={false}
       />
       <Field
         name="email"
@@ -36,6 +37,7 @@ const ThirdPage: React.ComponentType<
         component={RenderTextField}
         label="Email"
         validate={[validation.required, validation.email]}
+        multiline={false}
       />
 
       <h2 className="entry-heading mt-5 mb-3 col-12 text-center">
@@ -47,6 +49,7 @@ const ThirdPage: React.ComponentType<
         component={RenderTextField}
         label="Company Name"
         validate={validation.required}
+        multiline={false}
       />
       <Field
         name="legalForm"
@@ -54,6 +57,7 @@ const ThirdPage: React.ComponentType<
         component={RenderTextField}
         label="Legel Form"
         validate={validation.required}
+        multiline={false}
       />
       <Field
         name="regId"
@@ -61,6 +65,7 @@ const ThirdPage: React.ComponentType<
         component={RenderTextField}
         label="Entity Reg. ID"
         validate={validation.required}
+        multiline={false}
       />
       <Field
         name="country"
@@ -69,6 +74,7 @@ const ThirdPage: React.ComponentType<
         label="Country"
         helper="The User will not forge, or otherwise manipulate any personal or non-personal information and will provide it in the form and format requested by the {} and in accordance with the applicable law."
         validate={validation.required}
+        multiline={false}
       />
 
       <div>

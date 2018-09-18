@@ -39,6 +39,7 @@ const SecondPage: React.ComponentType<
         label="Link to the campaign video"
         helper="Upload your video to YouTube and paste the link here. It doesn't have to be fancy or professional. Just be yourself and tell everyone about your dream."
         validate={validation.ytlink}
+        multiline={false}
       />
 
       <Field

@@ -29,6 +29,7 @@ const FourthPage: React.ComponentType<
           validation.positiveNum,
           validation.tokenQuantity.validateSoftCap
         ]}
+        multiline={false}
       />
       <Field
         name="hardCap"
@@ -41,6 +42,7 @@ const FourthPage: React.ComponentType<
           validation.positiveNum,
           validation.tokenQuantity.validateHardCap
         ]}
+        multiline={false}
       />
       <Field
         name="totalSupply"
@@ -53,6 +55,7 @@ const FourthPage: React.ComponentType<
           validation.positiveNum,
           validation.tokenQuantity.validateTotalSupply
         ]}
+        multiline={false}
       />
       <Field
         name="tokenName"
@@ -61,6 +64,7 @@ const FourthPage: React.ComponentType<
         label="Token Name"
         placeholder="Token Name: eg Max Coin"
         validate={validation.required}
+        multiline={false}
       />
       <Field
         name="decimalPlaces"
@@ -72,6 +76,7 @@ const FourthPage: React.ComponentType<
           [validation.required,
             validation.positiveNum]
         }
+        multiline={false}
       />
       <Field
         name="tokenSymbol"
@@ -80,6 +85,7 @@ const FourthPage: React.ComponentType<
         label="Token Symbol"
         placeholder="Decimal Places: eg MXC"
         validate={validation.required}
+        multiline={false}
       />
       <Field
         name="conversionRatio"
@@ -88,6 +94,7 @@ const FourthPage: React.ComponentType<
         label="How many tokens can be exchanged for 1 ETH"
         placeholder="Decimal Places: eg 10"
         validate={[validation.required,validation.positiveNum]}
+        multiline={false}
       />
 
       <div>
