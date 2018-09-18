@@ -16572,6 +16572,26 @@ label {
   font-size: 43.2px;
 }
 
+.xlh2 {
+  font-size: 36px;
+}
+
+.xlh3 {
+  font-size: 30.6px;
+}
+
+.xlh4 {
+  font-size: 27px;
+}
+
+.xlh5 {
+  font-size: 23.4px;
+}
+
+.xlh6 {
+  font-size: 21.6px;
+}
+
 @media screen and (max-width: 768px) {
   .m-respon {
     margin-top: 20px;

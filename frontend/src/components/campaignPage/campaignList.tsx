@@ -17,9 +17,9 @@ const CampaignList = ({
 }: any) => {
   const startDstring = getDateTimeHK(startD, "d");
   const endDstring = getDateTimeHK(endD, "d");
-  const camPic = image ?
-  `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${image}`:
-  "http://via.placeholder.com/720x720";
+  const camPic = image
+    ? `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${image}`
+    : "http://via.placeholder.com/720x720";
   return (
     <div className="card product-item-vertical hoverable animation flipInX">
       <div className="row d-flex align-items-sm-center">
@@ -30,11 +30,7 @@ const CampaignList = ({
                 <Link
                   className="grid-thumb-cover"
                   to={`/campaign/${id}/details`}>
-                  <img
-                    className="img-fluid"
-                    src={camPic}
-                    alt="..."
-                  />
+                  <img className="img-fluid" src={camPic} alt="..." />
                 </Link>
               </div>
             </div>
@@ -44,23 +40,23 @@ const CampaignList = ({
         <div className="col-xl-6 col-lg-5 col-md-6 col-12">
           <div className="card-body">
             <div className="product-details">
-              <h3 className="card-title fw-regular">
+              <h1 className="card-title fw-regular xlh3">
                 {title}
                 <small className="text-grey text-darken-2 m-3">{creator}</small>
-              </h3>
+              </h1>
 
               <div className="d-flex justify-content-between">
-                <p className="">
+                <h3>
                   {startDstring}{" "}
                   <p className="card-subtitle mt-1">Start day </p>
-                </p>
-                <p className="">
+                </h3>
+                <h3 className="">
                   {endDstring}
                   <p className="card-subtitle mt-1">End day </p>
-                </p>
+                </h3>
               </div>
 
-              <p>{description}</p>
+              <h2 className="font-italic">{description}</h2>
 
               <div className="d-flex justify-content-between">
                 <div className="text-left">
