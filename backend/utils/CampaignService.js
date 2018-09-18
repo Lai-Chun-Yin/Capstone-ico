@@ -63,7 +63,7 @@ module.exports = class CampaignService {
   getBySupporter(user_id){
     let query = this.knex.from('campaigns')
     .innerJoin('transactions','campaigns.id','transactions.campaign_id')
-    .where('transactions.id',user_id);
+    .where('transactions.user_id',user_id);
     // let query = this.knex.with('support',this.knex.raw(`SELECT campaign_id from (SELECT user_id, campaign_id FROM transactions WHERE user_id=${user_id}) GROUP BY campaign_id`))
     //   .select('*').from('campaigns').innerJoin('support','campaigns.id','support.campaign_id');
       

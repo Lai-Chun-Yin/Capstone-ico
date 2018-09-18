@@ -25,6 +25,7 @@ const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
         label="Campaign Name"
         validate={validation.required}
         helper="Choose something simple, specific, and memorable. Don’t use words like ‘help’, ‘support’, or ‘fund’."
+        multiline={false}
       />
 
       <Field
@@ -33,6 +34,7 @@ const FirstPage: React.ComponentType<InjectedFormProps> = (props: any) => {
         label="Short description"
         validate={[validation.required, validation.maxChar100]}
         helper="Your elevator pitch. Describe your project in a few well-phrased sentences, so people can easily understand what it’s all about."
+        multiline={true}
       />
 
       <Field

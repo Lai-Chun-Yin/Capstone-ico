@@ -9,6 +9,7 @@ export interface ITextFieldProps {
   label: string;
   meta: WrappedFieldMetaProps;
   placeholder: string;
+  multiline: boolean;
 }
 
 const RenderTextField: ComponentType<ITextFieldProps> = ({
@@ -16,13 +17,14 @@ const RenderTextField: ComponentType<ITextFieldProps> = ({
   input,
   label,
   meta: { touched, error },
-  placeholder
+  placeholder,
+  multiline
 }) => {
   return (
     <div className="col-10 mb-4">
       <TextField
         label={label}
-        multiline={true}
+        multiline={multiline}
         rowsMax="4"
         {...input}
         placeholder={placeholder}
