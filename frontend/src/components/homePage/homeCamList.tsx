@@ -11,16 +11,18 @@ export interface ICampaignListProps {
 // }
 
 class CampaignList extends React.Component<ICampaignListProps> {
+
   public render() {
     return (
       <div className="row mb-md-4">
         {this.props.campaigns.map((e: any, i: number) => {
+          const camPic = e.project_photo?
+          `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${e.project_photo}`:
+          "http://via.placeholder.com/1280x720";
           return (
             <div key={i} className="col-lg-4 col-sm-6 col-12 mb-md-4">
               <BasicCard
-                image={`https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${
-                  e.project_photo
-                }`}
+                image={camPic}
                 title={e.title}
                 subTitle={`End at: ${getDateTimeHK(e.end_date_)}`}
                 description={e.short_description}

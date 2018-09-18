@@ -17,6 +17,9 @@ const CampaignList = ({
 }: any) => {
   const startDstring = getDateTimeHK(startD, "d");
   const endDstring = getDateTimeHK(endD, "d");
+  const camPic = image ?
+  `https://s3.ap-northeast-2.amazonaws.com/capstone-ico/${image}`:
+  "http://via.placeholder.com/720x720";
   return (
     <div className="card product-item-vertical hoverable animation flipInX">
       <div className="row d-flex align-items-sm-center">
@@ -29,10 +32,7 @@ const CampaignList = ({
                   to={`/campaign/${id}/details`}>
                   <img
                     className="img-fluid"
-                    src={
-                      "https://s3.ap-northeast-2.amazonaws.com/capstone-ico/" +
-                      image
-                    }
+                    src={camPic}
                     alt="..."
                   />
                 </Link>

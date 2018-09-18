@@ -37,6 +37,7 @@ class HomePage extends React.Component<IHomePageProps> {
         </div>
         <ContainerHeader title="Popular Campaign" />
         <CampaignList campaigns={campaigns} />
+        <ContainerHeader title="Get Started in Following Steps" />
         <TimeLine />
         <ContainerHeader title="Why & how to Install MetaMask" />
         <div className="col-lg-8 m-auto">
