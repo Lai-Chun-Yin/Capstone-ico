@@ -55,9 +55,12 @@ class BasicCarousel extends React.Component<any, IBasicCarouselState> {
         <CarouselItem
           key={item.id}
           onExiting={this.onExiting}
-          onExited={this.onExited}
-        >
-          <img src={item.src} alt={item.altText} className="img-fluid" />
+          onExited={this.onExited}>
+          <img
+            src={item.src}
+            alt={item.altText}
+            className="img-fluid home-carousel"
+          />
         </CarouselItem>
       );
     });
@@ -66,8 +69,7 @@ class BasicCarousel extends React.Component<any, IBasicCarouselState> {
       <Carousel
         activeIndex={activeIndex}
         next={this.next}
-        previous={this.previous}
-      >
+        previous={this.previous}>
         <CarouselIndicators
           items={items}
           activeIndex={activeIndex}

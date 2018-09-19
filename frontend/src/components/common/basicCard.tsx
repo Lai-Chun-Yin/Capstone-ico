@@ -14,7 +14,13 @@ const BasicCard = ({
 }: any) => {
   return (
     <Card className="shadow border-0">
-      <CardImg top={true} width="100%" src={image} alt="Card image cap" />
+      <CardImg
+        top={true}
+        width="100%"
+        src={image}
+        alt="Card image cap"
+        className="home-card-img-top"
+      />
       <CardBody>
         <h3 className="card-title">{title}</h3>
         <CardSubtitle>{subTitle}</CardSubtitle>
@@ -23,8 +29,7 @@ const BasicCard = ({
           variant="raised"
           to={`/campaign/${toId}/details`}
           className={`${btnStyle} text-white`}
-          component={Link}
-        >
+          component={Link}>
           {btnText}
         </LinkButton>
       </CardBody>

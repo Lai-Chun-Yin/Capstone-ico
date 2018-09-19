@@ -26,6 +26,22 @@
   font-size: $h6-font-size * 1.8
 }
 
+.home-card-img-top {
+  width: 100%;
+  height: 22vw;
+  object-fit: cover;
+
+  @media screen and (max-width: 576px) {
+    height: 55vw;
+  }
+}
+
+.home-carousel{
+  @media screen and (max-width: 576px) {
+    height: 35vw;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .m-respon {

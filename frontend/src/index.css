@@ -16592,6 +16592,23 @@ label {
   font-size: 21.6px;
 }
 
+.home-card-img-top {
+  width: 100%;
+  height: 22vw;
+  object-fit: cover;
+}
+@media screen and (max-width: 576px) {
+  .home-card-img-top {
+    height: 55vw;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .home-carousel {
+    height: 35vw;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .m-respon {
     margin-top: 20px;
