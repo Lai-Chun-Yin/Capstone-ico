@@ -11,5 +11,7 @@ export function postCommentBackend(
 ) {
   const requestBody = { userId, content, date, campaignId };
 
-  return http.post(apiEndpoint, requestBody);
+  const auth = { headers: { Authorization: `Bearer ${token}` } };
+
+  return http.post(apiEndpoint, requestBody, auth);
 }

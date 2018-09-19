@@ -1,4 +1,6 @@
 const express = require("express");
+const authClass = require("../utils/auth");
+const auth = authClass();
 
 module.exports = class CommentRouter {
   constructor(commentService) {
@@ -9,7 +11,7 @@ module.exports = class CommentRouter {
     let router = express.Router();
     router.get('/', this.get.bind(this));
     router.get("/campaign/:campaign_id", this.get.bind(this));
-    router.post("/", this.post.bind(this));
+    router.post("/", auth.authenticate(), this.post.bind(this));
     router.put("/:co_id", this.put.bind(this));
     router.delete("/:co_id", this.delete.bind(this));
 
