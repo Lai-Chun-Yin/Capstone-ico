@@ -30,7 +30,11 @@ const CampaignList = ({
                 <Link
                   className="grid-thumb-cover"
                   to={`/campaign/${id}/details`}>
-                  <img className="img-fluid" src={camPic} alt="..." />
+                  <img
+                    className="img-fluid campaign-list-img"
+                    src={camPic}
+                    alt="..."
+                  />
                 </Link>
               </div>
             </div>

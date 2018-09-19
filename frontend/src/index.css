@@ -16609,6 +16609,12 @@ label {
   }
 }
 
+@media screen and (max-width: 576px) {
+  .campaign-list-img {
+    height: 50vw;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .m-respon {
     margin-top: 20px;

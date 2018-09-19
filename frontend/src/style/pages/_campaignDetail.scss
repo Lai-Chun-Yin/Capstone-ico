@@ -42,6 +42,12 @@
   }
 }
 
+.campaign-list-img{
+  @media screen and (max-width: 576px) {
+    height: 50vw;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   .m-respon {
